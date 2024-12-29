@@ -1,8 +1,11 @@
+import { RouterProvider } from "react-router-dom";
+import router from "./routers/Router";
+
 function App() {
   return (
-    <>
-      <h1>Innovstem</h1>
-    </>
+    <div className=" text-black">
+      <RouterProvider router={router} />
+    </div>
   );
 }
 
