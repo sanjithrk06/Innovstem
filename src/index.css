@@ -1,3 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "regarn";
+  src: local("Regarn-Light"),
+    url("./assets/fonts/Regarn-Light.otf") format("opentype");
+}
+
+@layer utilities {
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/40 rounded-full border-2 border-primary/40;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-8 mb-32 text-center max-w-6xl mx-auto;
+  }
+
+  .btn-primary {
+    @apply bg-orange-200 text-white text-sm font-semibold font-newsreader hover:ring-1 hover:ring-primary hover:bg-primary/40 hover:text-primary duration-300 cursor-pointer py-2 px-5 w-auto rounded-full z-10;
+  }
+
+  .logo {
+    @apply text-primary font-newsreader font-medium text-4xl;
+  }
+
+  .nav-title {
+    @apply font-noto font-medium text-lg text-primary;
+  }
+
+  .nav-content {
+    @apply font-noto font-normal text-base text-slate-900 leading-relaxed;
+  }
+}
