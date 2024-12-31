@@ -5,62 +5,60 @@ import { FaLinkedinIn } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className=" shadow-2xl p-10">
-      <div className="flex flex-row">
-        <div className="w-5/12 flex flex-col items-start gap-3">
+      <div className="flex flex-col flex-wrap sm:flex-row items-center text-center gap-0">
+        <div className="lg:w-5/12 w-full flex flex-col items-center sm:text-start sm:items-start sm:px-4 py-6 lg:py-2 gap-3">
           <span className="logo">Innovstem</span>
           <p className=" nav-content">
             Innovstem is a dynamic startup transforming everyday products by
             offering innovative, eco-friendly alternatives to traditional
             plastics.{" "}
           </p>
-          <span className="">
+          <span className=" nav-content">
             © Copyright {new Date().getFullYear()}{" "}
             <a href="/#" className="hover:underline">
               Innovstem
             </a>
           </span>
         </div>
-        <div className="w-4/12 border-x-2 px-4 pb-2 flex flex-col items-center justify-start gap-4">
-          <h2 className=" nav-title">Navigation</h2>
-          <div className="flex flex-col items-center justify-center gap-2">
-            <div className=" flex flex-row justify-center items-start text-start gap-6">
-              <ul className=" flex flex-col flex-wrap gap-2 pl-4 font-normal">
-                {[
-                  "About Us",
-                  "Serices",
-                  "Courses & Webinars",
-                  "Resources & Blogs",
-                ].map((item, index) => (
-                  <li key={item}>
-                    <a
-                      href={`/${item.toLowerCase().replace(" ", "-")}`}
-                      className=" nav-content hover:text-primary"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <ul className=" flex flex-col flex-wrap gap-2 pl-4 font-normal">
-                {["Industrial Connection"].map((item, index) => (
-                  <li key={item}>
-                    <a
-                      href={`/${item.toLowerCase().replace(" ", "-")}`}
-                      className="nav-content hover:text-primary"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-                <button className="bg-primary/10 my-3 text-primary text-base font-noto font-medium cursor-pointer py-2 px-5 w-auto rounded-full duration-300 z-10 flex flex-row group ease-in">
-                  Go to Dashboard
-                </button>
-              </ul>
-            </div>
+        <div className="lg:w-4/12 sm:w-8/12 border-y-2 py-6 sm:py-2 sm:border-y-0 sm:border-r-2 lg:border-x-2 px-4 flex flex-col items-center justify-start gap-4">
+          <h2 className=" nav-title py-2">Navigation</h2>
+          <div className=" flex flex-col sm:flex-row justify-center items-center sm:items-start sm:text-start gap-2 sm:gap-6">
+            <ul className=" flex flex-col flex-wrap gap-2 lg:pl-4 font-normal">
+              {[
+                "About Us",
+                "Serices",
+                "Courses & Webinars",
+                "Resources & Blogs",
+              ].map((item, index) => (
+                <li key={item}>
+                  <a
+                    href={`/${item.toLowerCase().replace(" ", "-")}`}
+                    className=" nav-content hover:text-primary"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <ul className=" flex flex-col flex-wrap gap-2 lg:pl-4 font-normal">
+              {["Industrial Connection"].map((item, index) => (
+                <li key={item}>
+                  <a
+                    href={`/${item.toLowerCase().replace(" ", "-")}`}
+                    className="nav-content hover:text-primary"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+              <button className="bg-primary/10 my-3 text-primary text-base font-noto font-medium cursor-pointer py-2 px-5 w-auto rounded-full duration-300 z-10 flex flex-row group ease-in">
+                Go to Dashboard
+              </button>
+            </ul>
           </div>
         </div>
-        <div className="w-3/12 text-center flex flex-col gap-2">
-          <h2 className=" nav-title">Social Media</h2>
+        <div className="lg:w-3/12 sm:w-4/12 text-center flex flex-col py-6 lg:py-2 gap-3">
+          <h2 className=" nav-title py-2">Contact</h2>
           <p className=" nav-content">+123 4567 9876</p>
           <p className=" nav-content">innovstem@gmail.com</p>
           <ul className="flex justify-center gap-1 space-x-2">
