@@ -1,13 +1,18 @@
 import React from "react";
 import { Mail } from "lucide-react";
 import { FaLinkedinIn } from "react-icons/fa";
+import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
     <footer className=" shadow-2xl p-10">
-      <div className="flex flex-col flex-wrap sm:flex-row items-center text-center gap-0">
+      <div className="max-w-[90rem] mx-auto flex flex-col flex-wrap sm:flex-row items-center text-center gap-0">
         <div className="lg:w-5/12 w-full flex flex-col items-center sm:text-start sm:items-start sm:px-4 py-6 lg:py-2 gap-3">
-          <span className="logo">Innovstem</span>
+          <img
+            src={logo}
+            className="w-56 transform transition-transform duration-300"
+            alt="Innovstem"
+          />
           <p className=" nav-content">
             Innovstem is a dynamic startup transforming everyday products by
             offering innovative, eco-friendly alternatives to traditional

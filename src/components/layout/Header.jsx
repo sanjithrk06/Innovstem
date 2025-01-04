@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/logo.png";
 import { useState } from "react";
 
 const Header = () => {
@@ -15,25 +16,15 @@ const Header = () => {
   return (
     <nav className="border-gray-200 bg-gradient-to-b from-secondary via-secondary/70 to-secondary/20 backdrop-blur-3xl drop-shadow-2xl shadow-secondary/10 sticky top-0 z-40 transition-all duration-300">
       <div className="max-w-screen-2xl px-16 flex flex-row flex-wrap items-center justify-between mx-auto lg:mx-auto py-6">
-        <a
-          href="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse group"
-        >
-          {/* <img
+        <a href="/" className=" inline-block">
+          <img
             src={logo}
-            className="w-[45px] transform transition-transform duration-300"
-            alt="Eco-logicAds Logo"
-          /> */}
-          <span className="logo transform transition-all duration-300">
-            Innovstem
-          </span>
+            className="w-40 transform transition-transform duration-300"
+            alt="Innovstem"
+          />
         </a>
 
         <div className=" xl:hidden flex flex-row gap-4">
-          <button className="bg-primary/10 text-primary text-sm font-semibold font-raleway cursor-pointer py-2 px-5 w-auto rounded-full duration-300 z-10 flex flex-row group ease-in">
-            Go to Dashboard
-          </button>
-
           <button
             onClick={toggleMenu}
             type="button"
@@ -185,9 +176,9 @@ const Header = () => {
           </ul>
         </div>
 
-        <button className=" invisible xl:visible bg-primary/10 text-primary text-sm font-semibold font-raleway cursor-pointer py-2 px-5 w-auto rounded-full duration-300 z-10 flex flex-row group ease-in">
-            Go to Dashboard
-          </button>
+        <button className=" invisible xl:visible bg-primary/10 text-primary text-sm font-semibold font-outfit cursor-pointer py-2 px-5 w-auto rounded-full duration-300 z-10 flex flex-row group ease-in">
+          Go to Dashboard
+        </button>
       </div>
     </nav>
   );

@@ -1,14 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: "regarn";
-  src: local("Regarn-Light"),
-    url("./assets/fonts/Regarn-Light.otf") format("opentype");
-}
 
 @layer utilities {
   /* Custom scrollbar */
@@ -31,7 +27,7 @@
 
 @layer components {
   .container {
-    @apply px-8 mb-32 text-center max-w-6xl mx-auto;
+    @apply px-8 my-16 text-center max-w-7xl mx-auto;
   }
 
   .btn-primary {
@@ -39,14 +35,30 @@
   }
 
   .logo {
-    @apply text-primary font-newsreader font-medium text-4xl;
+    @apply text-primary font-hedvig font-medium text-4xl;
   }
 
   .nav-title {
-    @apply font-noto font-medium text-lg text-primary;
+    @apply font-outfit font-medium text-lg text-primary;
   }
 
   .nav-content {
-    @apply font-noto font-normal text-base text-slate-900 leading-relaxed;
+    @apply font-outfit font-normal text-base text-slate-900 leading-relaxed;
   }
+}
+
+/* Ensure this targets Swiper components */
+.mySwiper .swiper-pagination-progressbar {
+  position: absolute;
+  bottom: -20px; /* Moves the progress bar below cards */
+  left: 0;
+  width: 100%;
+  height: 4px; /* Thickness */
+  background-color: rgba(0, 0, 0, 0.1); /* Background track */
+}
+
+.mySwiper .swiper-pagination-progressbar-fill {
+  background-color: #f67009; /* Progress bar color */
+  height: 100%;
+  transition: transform 0.3s ease; /* Smooth animation */
 }

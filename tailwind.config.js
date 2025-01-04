@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        regarn: ["regarn", "sans-serif"],
-        newsreader: ["Newsreader", "serif"],
-        noto: ["Noto Sans KR", "sans-serif"],
+        outfit: ["Outfit", "serif"],
+        hedvig: ["Hedvig Letters Serif"],
+        publicsans: ["Public Sans"],
       },
       colors: {
         primary: "#f67009",
