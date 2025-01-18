@@ -1,5 +1,6 @@
 import React from "react";
 import { Blogs, Courses, Services, Testimonials } from "../sections";
+import Connections from "./../sections/Home/Connections";
 const Home = () => {
   return (
     <>
@@ -7,6 +8,7 @@ const Home = () => {
       <Services />
       <Courses />
       <Blogs />
+      {/* <Connections /> */}
       <Testimonials />
     </>
   );

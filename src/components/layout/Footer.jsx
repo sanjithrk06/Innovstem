@@ -5,7 +5,7 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className=" shadow-2xl p-10">
+    <footer className=" shadow-lg shadow-secondary/10 p-10">
       <div className="max-w-[90rem] mx-auto flex flex-col flex-wrap sm:flex-row items-center text-center gap-0">
         <div className="lg:w-5/12 w-full flex flex-col items-center sm:text-start sm:items-start sm:px-4 py-6 lg:py-2 gap-3">
           <img
@@ -31,7 +31,7 @@ const Footer = () => {
             <ul className=" flex flex-col flex-wrap gap-2 lg:pl-4 font-normal">
               {[
                 "About Us",
-                "Serices",
+                "Services",
                 "Courses & Webinars",
                 "Resources & Blogs",
               ].map((item, index) => (

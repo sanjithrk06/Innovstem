@@ -9,7 +9,9 @@ export default {
         publicsans: ["Public Sans"],
       },
       colors: {
-        primary: "#f67009",
+        whiteDim: "hsl(0, 0%, 96%)",
+        secondary: "#002359",
+        primary: "#FF5E15",
       },
     },
   },
