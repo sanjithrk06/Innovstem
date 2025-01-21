@@ -71,9 +71,9 @@ const StarIcon = () => (
 
 const Testimonials = () => {
   return (
-    <div className=" bg-whiteDim py-1">
+    <div className=" bg-gray-100 py-1">
       <section className="container text-left mb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl  px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
             <span className=" font-outfit text-base tracking-widest text-primary uppercase font-medium block mb-2 mx-auto lg:mx-0">
               TESTIMONIAL
@@ -91,7 +91,7 @@ const Testimonials = () => {
             loop={true}
             autoplay={{
               delay: 2500,
-              disableOnInteraction: false,
+              disableOnInteraction: true,
             }}
             autoplayspeed={10000}
             pagination={{
@@ -118,7 +118,7 @@ const Testimonials = () => {
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index}>
-                <div className="group bg-white my-1 mb-10 font-publicsans mx-2 rounded-xl p-6 transition-all duration-500 hover:bg-primary/5 hover:drop-shadow-lg hover:ring-1 hover:ring-primary/30 h-full flex flex-col drop-shadow-sm">
+                <div className="group bg-gray-50/90 shadow-inner shadow-gray-200 my-1 mb-10 font-publicsans mx-2 rounded-xl p-6 transition-all duration-500 hover:bg-white hover:shadow-xl h-full flex flex-col drop-shadow-sm">
                   <div className="flex-grow">
                     <div className="flex items-center mb-7 gap-2 text-amber-500">
                       <StarIcon />

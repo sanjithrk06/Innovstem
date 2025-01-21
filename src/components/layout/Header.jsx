@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Popover,
+  PopoverButton,
+  PopoverGroup,
+  PopoverPanel,
+} from "@headlessui/react";
 import {
   Bars3Icon,
   ChartPieIcon,
@@ -7,24 +17,32 @@ import {
 } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
 import { NavLink } from "react-router-dom";
+import { ChevronDownIcon } from "lucide-react";
 
 const products = [
   {
-    name: "Career Guidance",
+    name: "Courses",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
     href: "#",
     icon: ChartPieIcon,
   },
   {
-    name: "Personality Development",
+    name: "Webinars",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
     href: "#",
     icon: ChartPieIcon,
   },
   {
-    name: "Exam Guidance",
+    name: "Resources",
+    description:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
+    href: "#",
+    icon: ChartPieIcon,
+  },
+  {
+    name: "Blogs",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
     href: "#",
@@ -36,7 +54,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-gray-50 sticky top-0 z-20 font-outfit shadow-lg shadow-secondary/5">
+    <header className="bg-gray-50 sticky top-0 z-20 font-outfit drop-shadow shadow-secondary/5">
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -58,9 +76,50 @@ const Header = () => {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12 z-40">
-          {/* <Popover className="relative">
+          <NavLink
+            to="/"
+            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
+          >
+            Home
+            <span
+              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
+                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
+            ></span>
+          </NavLink>
+          <NavLink
+            to="services"
+            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
+          >
+            Services
+            <span
+              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
+                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
+            ></span>
+          </NavLink>
+          {/* <NavLink
+            to="#"
+            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
+          >
+            Courses & Webinars
+            <span
+              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
+                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
+            ></span>
+          </NavLink>
+          <NavLink
+            to="resources-blogs"
+            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
+          >
+            Resources & Blogs
+            <span
+              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
+                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
+            ></span>
+          </NavLink> */}
+
+          <Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-base/6 font-medium outline-none text-secondary/90 group hover:text-primary">
-              Services
+              Resources
               <ChevronDownIcon
                 aria-hidden="true"
                 className="size-5 flex-none text-secondary group-hover:text-primary"
@@ -98,48 +157,8 @@ const Header = () => {
                 ))}
               </div>
             </PopoverPanel>
-          </Popover> */}
+          </Popover>
 
-          <NavLink
-            to="/"
-            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
-          >
-            Home
-            <span
-              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
-                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
-            ></span>
-          </NavLink>
-          <NavLink
-            to="services"
-            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
-          >
-            Services
-            <span
-              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
-                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
-            ></span>
-          </NavLink>
-          <NavLink
-            to="#"
-            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
-          >
-            Courses & Webinars
-            <span
-              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
-                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
-            ></span>
-          </NavLink>
-          <NavLink
-            to="resources-blogs"
-            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
-          >
-            Resources & Blogs
-            <span
-              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
-                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
-            ></span>
-          </NavLink>
           <NavLink
             to="#"
             className="text-base/6 font-medium text-secondary/90 hover:text-primary "
@@ -160,13 +179,14 @@ const Header = () => {
           </NavLink>
         </div>
       </nav>
+
+      {/* Mobile Navigation */}
       <Dialog
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
-        className="lg:hidden z-50"
+        className="lg:hidden"
       >
-        <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto bg-gray-100/5 backdrop-blur-3xl px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <NavLink to="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Innovstem</span>
@@ -184,16 +204,32 @@ const Header = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {/* <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50">
-                    Services
+                <NavLink
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                >
+                  Home
+                </NavLink>
+
+                <NavLink
+                  to="services"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                >
+                  Services
+                </NavLink>
+
+                <Disclosure>
+                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg -mx-3 py-2 pr-3.5 pl-3 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50">
+                    Resources
                     <ChevronDownIcon
                       aria-hidden="true"
                       className="size-5 flex-none group-data-open:rotate-180"
                     />
                   </DisclosureButton>
                   <DisclosurePanel className="mt-2 space-y-2">
-                    {[...products].map((item) => (
+                    {products.map((item) => (
                       <DisclosureButton
                         key={item.name}
                         as="a"
@@ -204,30 +240,10 @@ const Header = () => {
                       </DisclosureButton>
                     ))}
                   </DisclosurePanel>
-                </Disclosure> */}
+                </Disclosure>
+
                 <NavLink
-                  to="services"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
-                >
-                  Services
-                </NavLink>
-                <NavLink
-                  to="#"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
-                >
-                  Courses & Webinars
-                </NavLink>
-                <NavLink
-                  to="#"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
-                >
-                  Resources & Blogs
-                </NavLink>
-                <NavLink
-                  to="#"
+                  to="/"
                   onClick={() => setMobileMenuOpen(false)}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
                 >
