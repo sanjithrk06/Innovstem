@@ -4,6 +4,7 @@ import { useAuthStore } from "../store/authStore.js";
 import MainLayout from "../layouts/MainLayout.jsx";
 import {
   AdminDashboard,
+  Courses,
   Home,
   Login,
   ResourcesBlogs,
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "services",
         element: <Services />,
+      },
+      {
+        path: "courses",
+        element: <Courses />,
       },
       {
         path: "resources-blogs",

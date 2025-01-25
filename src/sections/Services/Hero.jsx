@@ -18,13 +18,13 @@ const Hero = () => {
 
         {/* Content with backdrop blur */}
         <div className="relative h-full w-full backdrop-blur-md bg-white/60">
-          <div className="flex flex-row justify-between items-center h-full px-8 max-w-7xl mx-auto text-left">
+          <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-4 items-center h-full px-8 max-w-7xl mx-auto text-left">
             {/* Left Text Content */}
             <div className="sm:max-w-lg bg-transparent">
-              <h1 className="font-outfit text-3xl text-primary font-normal tracking-wider uppercase sm:text-2xl">
+              <h1 className="font-outfit text-xl text-primary font-normal tracking-wider uppercase sm:text-2xl">
                 Our Services
               </h1>
-              <h2 className="font-hedvig text-5xl text-secondary font-medium tracking-tight sm:text-6xl/none">
+              <h2 className="font-hedvig text-4xl/none text-secondary font-medium tracking-tight sm:text-6xl/none">
                 Empowering Your Journey with E-Learning & Career Solutions
               </h2>
               <p className="font-publicsans text-slate-800 text-base font-normal mt-4">
@@ -38,7 +38,7 @@ const Hero = () => {
             </div>
 
             {/* Right Image Content */}
-            <div className="relative w-1/2">
+            <div className="relative lg:w-1/2">
               <img
                 alt="E-Learning Image"
                 src="https://pagedone.io/asset/uploads/1696244059.png"

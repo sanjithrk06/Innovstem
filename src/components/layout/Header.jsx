@@ -10,43 +10,20 @@ import {
   PopoverGroup,
   PopoverPanel,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  ChartPieIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ChevronDownIcon } from "lucide-react";
 
 const products = [
   {
-    name: "Courses",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
     name: "Webinars",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
-    href: "#",
-    icon: ChartPieIcon,
   },
   {
     name: "Resources",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
-    href: "#",
-    icon: ChartPieIcon,
   },
   {
     name: "Blogs",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt et repellat animi.",
-    href: "#",
-    icon: ChartPieIcon,
   },
 ];
 
@@ -57,7 +34,7 @@ const Header = () => {
     <header className="bg-gray-50 sticky top-0 z-20 font-outfit drop-shadow shadow-secondary/5">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
       >
         <div className="flex lg:flex-1">
           <NavLink to="/" className="-m-1.5 p-1.5">
@@ -77,16 +54,6 @@ const Header = () => {
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12 z-40">
           <NavLink
-            to="/"
-            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
-          >
-            Home
-            <span
-              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
-                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
-            ></span>
-          </NavLink>
-          <NavLink
             to="services"
             className="text-base/6 font-medium text-secondary/90 hover:text-primary "
           >
@@ -96,17 +63,28 @@ const Header = () => {
                                  hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
             ></span>
           </NavLink>
-          {/* <NavLink
-            to="#"
+          <Link
+            to="https://innovstem.edumilestones.com/"
+            target="_blank"
             className="text-base/6 font-medium text-secondary/90 hover:text-primary "
           >
-            Courses & Webinars
+            Career Guidance
+            <span
+              className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
+                                 hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
+            ></span>
+          </Link>
+          <NavLink
+            to="courses"
+            className="text-base/6 font-medium text-secondary/90 hover:text-primary "
+          >
+            Courses
             <span
               className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
                                  hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
             ></span>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="resources-blogs"
             className="text-base/6 font-medium text-secondary/90 hover:text-primary "
           >
@@ -116,7 +94,6 @@ const Header = () => {
                                  hover:w-full xl:opacity-0 xl:hover:opacity-100 `}
             ></span>
           </NavLink> */}
-
           <Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-base/6 font-medium outline-none text-secondary/90 group hover:text-primary">
               Resources
@@ -127,7 +104,7 @@ const Header = () => {
             </PopoverButton>
             <PopoverPanel
               transition
-              className="absolute top-full -left-8 z-40 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
+              className="absolute top-full -left-8 -z-10 mt-3 w-screen max-w-64 overflow-hidden rounded-2xl bg-white ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
               <div className="p-4">
                 {products.map((item) => (
@@ -135,12 +112,12 @@ const Header = () => {
                     key={item.name}
                     className="group relative flex items-center gap-x-6 rounded-lg p-4 text-base/6 hover:bg-gray-50"
                   >
-                    <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    {/* <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                       <item.icon
                         aria-hidden="true"
                         className="size-6 text-gray-600 group-hover:text-indigo-600"
                       />
-                    </div>
+                    </div> */}
                     <div className="flex-auto">
                       <NavLink
                         to={item.href}
@@ -149,9 +126,9 @@ const Header = () => {
                         {item.name}
                         <span className="absolute inset-0" />
                       </NavLink>
-                      <p className="mt-1 text-gray-600 line-clamp-1">
+                      {/* <p className="mt-1 text-gray-600 line-clamp-1">
                         {item.description}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 ))}
@@ -163,7 +140,7 @@ const Header = () => {
             to="#"
             className="text-base/6 font-medium text-secondary/90 hover:text-primary "
           >
-            Our Connections
+            About Us
             <span
               className={`absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-out 
                                  hover:w-full xl:opacity-0 xl:hover:opacity-100 `}

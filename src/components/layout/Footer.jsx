@@ -67,7 +67,7 @@ const Footer = () => {
           <p className=" nav-content">+123 4567 9876</p>
           <p className=" nav-content">innovstem@gmail.com</p>
           <ul className="flex justify-center gap-1 space-x-2">
-            {[
+            {/* {[
               {
                 icon: (
                   <FaLinkedinIn className="w-7 h-7 text-white bg-primary rounded-xl p-1" />
@@ -90,7 +90,7 @@ const Footer = () => {
                   {social.icon}
                 </a>
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
       </div>
