@@ -1,0 +1,123 @@
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { CourseCard } from "../../components";
+
+const Courses = () => {
+  return (
+    <>
+      <div className="relative bg-primary/5 rounded-3xl mx-4 overflow-hidden">
+        <div className="absolute max-lg:-left-52 -bottom-40 lg:-left-12 w-[450px] h-[400px] bg-primary/10 rounded-full  border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
+        {/* Background Ring */}
+        <div className=" backdrop-blur-2xl h-full">
+          <section className="relative container px-4 bg-transparent my-0 py-16">
+            <div>
+              <div className="flex justify-center flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between gap-8">
+                {/* Left Section */}
+                <div className="w-full flex flex-col justify-between lg:w-2/5 h-full">
+                  <div className="lg:text-left text-center flex flex-col">
+                    <span className="font-outfit uppercase text-base tracking-widest text-primary font-medium block mb-2 mx-auto lg:mx-0">
+                      Courses & Webinars
+                    </span>
+                    <h2 className="font-hedvig font-medium text-5xl text-secondary leading-[3.25rem] mb-4">
+                      Explore New Learning Horizons
+                    </h2>
+                  </div>
+
+                  <div className="lg:text-left text-center flex flex-col mt-auto mb-4">
+                    <p className="text-gray-500 font-publicsans mb-4 max-lg:max-w-xl max-lg:mx-auto lg:text-justify lg:mt-4">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Accusamus animi beatae exercitationem molestias, debitis
+                      sapiente.
+                    </p>
+                    <a
+                      href="#"
+                      className="font-publicsans text-base font-medium text-secondary hover:underline hover:underline-offset-4 lg:mt-2 "
+                    >
+                      View More
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right Section */}
+                <div className="w-full lg:w-3/5 lg:pt-4">
+                  <Swiper
+                    loop={true}
+                    speed={800}
+                    slidesPerView={2}
+                    spaceBetween={28}
+                    autoplay={{
+                      delay: 4000,
+                      disableOnInteraction: false,
+                    }}
+                    pagination={{
+                      clickable: true,
+                      bulletClass:
+                        "swiper-pagination-bullet !mt-10 !w-4 !rounded-none !h-1 !mx-0",
+                      bulletActiveClass: "!bg-primary !opacity-80 !rounded-xl",
+                    }}
+                    breakpoints={{
+                      0: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                      },
+                      768: {
+                        slidesPerView: 2,
+                        spaceBetween: 28,
+                      },
+                      1024: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                      },
+                    }}
+                    modules={[Pagination, Autoplay, Navigation]}
+                    className="mySwiper"
+                  >
+                    {courses.map((item, index) => (
+                      <SwiperSlide key={index} className=" mb-8">
+                        <CourseCard item={item} key={index} />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Courses;
+
+const courses = [
+  {
+    name: "STEM Skills",
+    avail: "Class 6-12",
+    category: ["Stem Skills", "Career Guidance"],
+  },
+  {
+    name: "Entrepreneurship",
+    avail: "Class 6-12",
+    category: ["Stem Skills", "Career Guidance"],
+  },
+  {
+    name: "Financial Literacy",
+    avail: "Class 6-12",
+    category: ["Stem Skills", "Career Guidance"],
+  },
+  {
+    name: "Career Guidance",
+    avail: "All",
+    category: ["Stem Skills", "Career Guidance"],
+  },
+  {
+    name: "Defense Training",
+    avail: "Class 6-12",
+    category: ["Stem Skills", "Career Guidance"],
+  },
+];

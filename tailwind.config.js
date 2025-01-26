@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        outfit: ["Outfit", "serif"],
+        hedvig: ["Hedvig Letters Serif"],
+        publicsans: ["Public Sans"],
+      },
+      colors: {
+        whiteDim: "hsl(0, 0%, 96%)",
+        secondary: "#002359",
+        primary: "#FF5E15",
+      },
+    },
   },
   plugins: [],
-}
-
+};
