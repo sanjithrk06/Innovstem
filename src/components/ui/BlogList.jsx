@@ -20,12 +20,14 @@ const BlogList = ({ featureBlog, blogs }) => {
       <div className="flex flex-col gap-4 col-span-2">
         {blogs.map((blog, index) => (
           <BlogCard
-            key={index}
-            image={blog.image}
-            category={blog.category}
-            readTime={blog.readTime}
-            title={blog.title}
-            description={blog.description}
+            item={{
+              key: index,
+              image: blog.image,
+              category: blog.category,
+              readTime: blog.readTime,
+              title: blog.title,
+              description: blog.description,
+            }}
           />
         ))}
       </div>

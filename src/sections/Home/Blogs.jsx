@@ -35,7 +35,7 @@ export default Blogs;
 const featureBlog = {
   image: "https://pagedone.io/asset/uploads/1696244059.png",
   category: "CRM Strategies",
-  readTime: "7 min",
+  readTime: "2025-01-08T11:06:37+05:30",
   title: "From Leads to Loyalists: How a CRM Fuels Your Sales Pipeline",
   description:
     "Stop juggling spreadsheets and contacts. Learn how a CRM automates repetitive tasks, streamlines communication, and nurtures leads into loyal customers. Empower your business to grow sustainably by focusing on your customer relationships.",
@@ -45,7 +45,7 @@ const blogs = [
   {
     image: "https://pagedone.io/asset/uploads/1696244059.png",
     category: "CRM Integration",
-    readTime: "8 min",
+    readTime: "2025-01-08T11:06:37+05:30",
     title: "How a CRM Can Unify Your Customer Journey",
     description:
       "Learn how a CRM nurtures leads into loyal customers by providing a seamless and personalized experience at every touchpoint. Unify sales, marketing, and support to deliver value-driven solutions effortlessly.",
@@ -53,7 +53,7 @@ const blogs = [
   {
     image: "https://pagedone.io/asset/uploads/1696244059.png",
     category: "Productivity",
-    readTime: "9 min",
+    readTime: "2025-01-08T11:06:37+05:30",
     title: "Boost Productivity, Not Paperwork",
     description:
       "Discover how automating routine tasks allows your team to focus on meaningful work. With streamlined workflows, a CRM can reduce administrative burdens and foster a culture of efficiency.",

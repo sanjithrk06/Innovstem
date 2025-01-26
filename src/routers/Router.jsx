@@ -8,9 +8,10 @@ import {
   Courses,
   Home,
   Login,
-  ResourcesBlogs,
+  Resources,
   Services,
   StudentDashboard,
+  Webinars,
 } from "../pages";
 
 const ProtectedRoute = ({ role, children }) => {
@@ -67,8 +68,12 @@ const router = createBrowserRouter([
         element: <Blogs />,
       },
       {
-        path: "resources-blogs",
-        element: <ResourcesBlogs />,
+        path: "resources",
+        element: <Resources />,
+      },
+      {
+        path: "webinars",
+        element: <Webinars />,
       },
     ],
   },

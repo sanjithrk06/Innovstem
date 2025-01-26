@@ -124,6 +124,7 @@ const Header = () => {
                     <div className="flex-auto">
                       <NavLink
                         to={item.href}
+                        
                         className="block font-semibold text-secondary/90 hover:text-primary"
                       >
                         {item.name}
