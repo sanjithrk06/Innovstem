@@ -3,7 +3,7 @@ import React from "react";
 
 const FeatureCard = ({ image, category, readTime, title, description }) => {
   return (
-    <div className="py-5 px-2 lg:px-6 w-full bg-transparent text-left flex flex-col gap-4 h-full hover:bg-gray-100/70 hover:shadow rounded-2xl">
+    <div className="py-5 px-2 lg:px-6 w-full bg-transparent text-left flex flex-col gap-4 h-full duration-300 hover:bg-gray-100/70 hover:shadow rounded-2xl">
       <div className="overflow-hidden rounded-xl drop-shadow">
         <img src={image} alt={title} className="w-full h-40 object-cover" />
       </div>

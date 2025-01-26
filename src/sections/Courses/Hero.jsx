@@ -1,6 +1,6 @@
 import React from "react";
 
-const Hero = () => {
+const Hero = ({ title }) => {
   return (
     <>
       <div className="relative h-[30vh] overflow-hidden shadow-inner">
@@ -21,7 +21,7 @@ const Hero = () => {
           <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-4 items-center h-full px-8 max-w-7xl mx-auto text-left">
             <div className="sm:max-w-lg bg-transparent">
               <h1 className="font-hedvig text-3xl text-primary font-normal tracking-wider uppercase sm:text-4xl">
-                Courses
+                {title}
               </h1>
               <p className="font-publicsans text-slate-700 text-base font-normal mt-4">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.

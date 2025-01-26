@@ -8,4 +8,5 @@ export { default as Login } from "./auth/Login.jsx";
 export { default as Home } from "./Home.jsx";
 export { default as Services } from "./Services.jsx";
 export { default as Courses } from "./Courses.jsx";
+export { default as Blogs } from "./Blogs.jsx";
 export { default as ResourcesBlogs } from "./ResourcesBlogs.jsx";

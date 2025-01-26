@@ -17,13 +17,16 @@ import { ChevronDownIcon } from "lucide-react";
 
 const products = [
   {
+    name: "Blogs",
+    href: "blogs",
+  },
+  {
     name: "Webinars",
+    href: "webinars",
   },
   {
     name: "Resources",
-  },
-  {
-    name: "Blogs",
+    href: "resources",
   },
 ];
 

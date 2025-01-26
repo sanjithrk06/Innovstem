@@ -86,7 +86,7 @@ import { PiStudentDuotone } from "react-icons/pi";
 
 const CourseCard = ({ item }) => {
   return (
-    <div className="bg-white shadow hover:shadow-xl border border-gray-50 m-2 p-4 rounded-2xl">
+    <div className="bg-white shadow hover:shadow-xl duration-300 border border-gray-50 m-2 p-4 rounded-2xl">
       <div className="flex items-center mb-4 h-28">
         <img
           src="https://pagedone.io/asset/uploads/1696244059.png"
@@ -138,7 +138,7 @@ const CourseCard = ({ item }) => {
               {item.category?.map((tag, index) => (
                 <p
                   key={index}
-                  className="bg-gray-100 rounded-2xl p-1 px-3 text-xs/4 text-gray-500 font-medium"
+                  className="bg-primary/5 rounded-2xl p-1 px-3 text-xs/4 text-gray-500 font-medium"
                 >
                   {tag}
                 </p>

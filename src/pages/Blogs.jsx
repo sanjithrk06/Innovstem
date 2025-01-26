@@ -1,61 +1,61 @@
 import React, { useState, useEffect } from "react";
-import { CourseCard } from "../components";
+import { BlogCard } from "../components";
 import { CourseHero } from "../sections";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 
-const Courses = () => {
-  const [courses, setCourses] = useState([]);
+const Blogs = () => {
+  const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalResults, setTotalResults] = useState(0);
 
-  // Fetch courses from API
-  const fetchCourses = async (page = 1, search = "") => {
+  // Fetch blogs from API
+  const fetchBlogs = async (page = 1, search = "") => {
     try {
       setIsLoading(true);
       const response = await axios.get(
         search
-          ? `https://admin-dev.innovstem.com/api/courses/search?query=${search}&page=${page}`
-          : `https://admin-dev.innovstem.com/api/courses?page=${page}`
+          ? `https://admin-dev.innovstem.com/api/blogs/search?query=${search}&page=${page}`
+          : `https://admin-dev.innovstem.com/api/blogs?page=${page}`
       );
 
       const responseData = response.data.data;
-      setCourses(responseData.data);
+      setBlogs(responseData.data);
       setCurrentPage(responseData.current_page);
       setTotalPages(responseData.last_page);
       setTotalResults(responseData.total);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching courses:", error);
+      console.error("Error fetching blogs:", error);
       setIsLoading(false);
-      setCourses([]);
+      setBlogs([]);
     }
   };
 
-  // Initial course fetch
+  // Initial blog fetch
   useEffect(() => {
-    fetchCourses();
+    fetchBlogs();
   }, []);
 
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchCourses(1, searchTerm);
+    fetchBlogs(1, searchTerm);
   };
 
   // Pagination handlers
   const nextPage = () => {
     if (currentPage < totalPages) {
-      fetchCourses(currentPage + 1, searchTerm);
+      fetchBlogs(currentPage + 1, searchTerm);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      fetchCourses(currentPage - 1, searchTerm);
+      fetchBlogs(currentPage - 1, searchTerm);
     }
   };
 
@@ -79,7 +79,7 @@ const Courses = () => {
 
   return (
     <>
-      <CourseHero title={"Courses"} />
+      <CourseHero title={"Blogs"} />
       <div className="bg-gray-50 py-1 sm:py-1">
         <div className="container">
           {/* Search form remains the same */}
@@ -97,7 +97,7 @@ const Courses = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="bg-white border-b border-gray-300 text-secondary text-sm rounded-none focus:bg-primary/5 focus:border-primary outline-none block w-full p-2.5"
-                  placeholder="Search course name..."
+                  placeholder="Search blogs name..."
                 />
               </div>
               <button
@@ -126,21 +126,21 @@ const Courses = () => {
 
           {/* Loading State */}
           {isLoading && (
-            <div className="text-center py-10">Loading courses...</div>
+            <div className="text-center py-10">Loading blogs...</div>
           )}
 
-          {/* Courses Grid */}
-          {!isLoading && courses.length > 0 && (
-            <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
-              {courses.map((item) => (
-                <div key={item.id}>
-                  <CourseCard
+          {/* Blogs Grid */}
+          {!isLoading && blogs.length > 0 && (
+            <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
+              {blogs.map((blog) => (
+                <div key={blog.id}>
+                  <BlogCard
                     item={{
-                      id: item.id,
-                      name: item.title,
-                      avail: item.class_level_name,
-                      category: [item.category_name],
-                      description: item.content_short_description,
+                      key: blog.id,
+                      category: blog.category_name,
+                      readTime: blog.created_at,
+                      title: blog.title,
+                      description: blog.description,
                     }}
                   />
                 </div>
@@ -149,9 +149,9 @@ const Courses = () => {
           )}
 
           {/* No Results */}
-          {!isLoading && courses.length === 0 && (
+          {!isLoading && blogs.length === 0 && (
             <div className="text-center py-10 text-gray-500">
-              No courses found
+              No blogs found
             </div>
           )}
 
@@ -211,7 +211,7 @@ const Courses = () => {
                     {getPageNumbers().map((number) => (
                       <button
                         key={number}
-                        onClick={() => fetchCourses(number, searchTerm)}
+                        onClick={() => fetchBlogs(number, searchTerm)}
                         aria-current={
                           currentPage === number ? "page" : undefined
                         }
@@ -245,4 +245,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default Blogs;
