@@ -11,3 +11,4 @@ export { default as BlogCardVertical } from "./ui/BlogCardVertical.jsx";
 export { default as BlogList } from "./ui/BlogList.jsx";
 export { default as FeatureCard } from "./ui/FeatureCard.jsx";
 export { default as TitleBanner } from "./ui/TitleBanner.jsx";
+export { default as Button } from "./ui/Button.jsx";

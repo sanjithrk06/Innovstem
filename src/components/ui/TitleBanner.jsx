@@ -14,7 +14,7 @@ const TitleBanner = ({ title, subtitle, description }) => {
                 <span className="font-outfit uppercase text-xl tracking-widest text-primary font-normal block mb-2 mx-auto lg:mx-0">
                   {title || "Courses"}
                 </span>
-                <h2 className="font-outfit font-semibold text-5xl text-title leading-[3.25rem] mb-4">
+                <h2 className="font-outfit font-semibold text-5xl text-secondary leading-[3.25rem] mb-4">
                   {subtitle || "Explore New Learning Horizons"}
                 </h2>
               </div>

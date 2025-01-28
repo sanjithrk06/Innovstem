@@ -10,8 +10,9 @@ export default {
       },
       colors: {
         whiteDim: "hsl(0, 0%, 97%)",
-        secondary: "#024CAA", // 002359
-        primary: "#EC8305",
+        secondary: "#002479", // 002359
+        primary: "#FF5F00",
+        header: "#FF5F00",
         cream: "#eae2b7", // cream
         title: "#024CAA", // blue
         c3: "#f77f00", // orange

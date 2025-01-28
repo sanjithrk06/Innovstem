@@ -34,7 +34,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-gray-50 sticky top-0 z-20 font-outfit drop-shadow shadow-secondary/5">
+    <header className=" bg-gray-50 sticky top-0 z-20 font-outfit drop-shadow shadow-secondary/5">
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
@@ -124,7 +124,6 @@ const Header = () => {
                     <div className="flex-auto">
                       <NavLink
                         to={item.href}
-                        
                         className="block font-semibold text-secondary/90 hover:text-primary"
                       >
                         {item.name}

@@ -5,7 +5,7 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className=" shadow-lg shadow-secondary/10 p-10">
+    <footer className=" bg-cream/30 shadow-lg shadow-secondary/10 p-10">
       <div className="max-w-7xl mx-auto flex flex-col flex-wrap sm:flex-row items-center text-center gap-0">
         <div className="lg:w-5/12 w-full flex flex-col items-center sm:text-start sm:items-start sm:px-4 py-6 lg:py-2 gap-3">
           <img
