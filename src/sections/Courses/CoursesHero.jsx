@@ -9,7 +9,7 @@ import { CourseCard } from "../../components";
 const Courses = () => {
   return (
     <>
-      <div className="relative bg-primary/5 rounded-3xl mx-4 overflow-hidden">
+      <div className="relative bg-primary/5 rounded-3xl mt-5 mx-4 overflow-hidden">
         <div className="absolute max-lg:-left-52 -bottom-40 lg:-left-12 w-[450px] h-[400px] bg-primary/10 rounded-full  border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
         {/* Background Ring */}
         <div className=" backdrop-blur-2xl h-full">
@@ -20,7 +20,7 @@ const Courses = () => {
                 <div className="w-full flex flex-col justify-between lg:w-2/5 h-full">
                   <div className="lg:text-left text-center flex flex-col">
                     <span className="font-outfit uppercase text-base tracking-widest text-primary font-medium block mb-2 mx-auto lg:mx-0">
-                      Courses & Webinars
+                      Top Courses
                     </span>
                     <h2 className="font-hedvig font-medium text-5xl text-secondary leading-[3.25rem] mb-4">
                       Explore New Learning Horizons
@@ -33,12 +33,12 @@ const Courses = () => {
                       Accusamus animi beatae exercitationem molestias, debitis
                       sapiente.
                     </p>
-                    <a
+                    {/* <a
                       href="#"
                       className="font-publicsans text-base font-medium text-secondary hover:underline hover:underline-offset-4 lg:mt-2 "
                     >
                       View More
-                    </a>
+                    </a> */}
                   </div>
                 </div>
 

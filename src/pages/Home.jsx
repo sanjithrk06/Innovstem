@@ -1,12 +1,13 @@
 import React from "react";
-import { Blogs, Courses, Services, Testimonials } from "../sections";
+import { Blogs, HCourses, Services, Testimonials } from "../sections";
 import Connections from "./../sections/Home/Connections";
+import Courses from "../sections/Home/Courses";
 const Home = () => {
   return (
     <>
       <div>Home</div>
       <Services />
-      {/* <Courses /> */}
+      <Courses />
       <Blogs />
       {/* <Connections /> */}
       <Testimonials />

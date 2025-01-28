@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import React from "react";
 import { formatDistance, parseISO } from "date-fns";
 
-const BlogCard = ({ item }) => {
+const BlogCardVertical = ({ item }) => {
   const formattedReadTime = formatDistance(
     parseISO(item.readTime),
     new Date(),
@@ -10,7 +10,7 @@ const BlogCard = ({ item }) => {
   );
 
   return (
-    <div className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col lg:flex-row gap-4 h-full duration-300 hover:bg-whiteDim hover:shadow rounded-2xl">
+    <div className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col gap-4 h-full duration-300 hover:bg-gray-100/70 hover:shadow rounded-2xl">
       <div className="lg:w-2/6 overflow-hidden rounded-xl drop-shadow">
         <img
           src="https://pagedone.io/asset/uploads/1696244059.png"
@@ -41,4 +41,4 @@ const BlogCard = ({ item }) => {
   );
 };
 
-export default BlogCard;
+export default BlogCardVertical;
