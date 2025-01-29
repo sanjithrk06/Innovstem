@@ -10,7 +10,7 @@ const Services = () => {
               <span className="font-outfit uppercase text-base tracking-widest text-primary font-medium block mb-2 mx-auto lg:mx-0">
                 Services We Provide
               </span>
-              <h2 className="font-hedvig text-5xl font-semibold text-secondary leading-[3.25rem] lg:mb-6 mx-auto max-w-max lg:max-w-md lg:mx-0">
+              <h2 className="font-outfit text-5xl font-semibold text-secondary leading-[3.25rem] lg:mb-6 mx-auto max-w-max lg:max-w-md lg:mx-0">
                 Our Toolkit for Your Growth!
               </h2>
             </div>

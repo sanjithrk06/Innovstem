@@ -20,7 +20,7 @@ const Hero = ({ title }) => {
         <div className="relative h-full w-full backdrop-blur-3xl bg-white/60">
           <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-4 items-center h-full px-8 max-w-7xl mx-auto text-left">
             <div className="sm:max-w-lg bg-transparent">
-              <h1 className="font-hedvig text-3xl text-primary font-normal tracking-wider uppercase sm:text-4xl">
+              <h1 className="font-outfit text-3xl text-primary font-normal tracking-wider uppercase sm:text-4xl">
                 {title}
               </h1>
               <p className="font-publicsans text-slate-700 text-base font-normal mt-4">

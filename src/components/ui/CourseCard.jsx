@@ -57,13 +57,13 @@ const CourseCard = ({ item }) => {
               {item.category?.map((tag, index) => (
                 <p
                   key={index}
-                  className="bg-primary/5 rounded-2xl p-1 px-3 text-xs/4 text-gray-500 font-medium"
+                  className="bg-cream/20 rounded-2xl p-1 px-3 text-xs/4 text-slate-800 font-medium"
                 >
                   {tag}
                 </p>
               ))}
             </div>
-            <p className="text-xs text-gray-400 font-medium">
+            <p className="text-xs text-slate-400 font-medium">
               Last Uploaded Recently
             </p>
           </div>

@@ -1,5 +1,10 @@
 import React from "react";
-import { AboutHero, AboutWhat, AboutWhy, VisionMission } from "../sections";
+import {
+  AboutConnection,
+  AboutWhat,
+  AboutWhy,
+  VisionMission,
+} from "../sections";
 
 const About = () => {
   return (
@@ -8,6 +13,7 @@ const About = () => {
       <AboutWhy />
       <VisionMission />
       <AboutWhat />
+      <AboutConnection />
     </>
   );
 };

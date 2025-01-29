@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         outfit: ["Outfit", "serif"],
-        hedvig: ["Outfit"], // Hedvig Letters Serif
+        hedvig: ["Hedvig Letters Serif"], // Hedvig Letters Serif
         publicsans: ["Public Sans"],
       },
       colors: {

@@ -22,7 +22,7 @@ const Courses = () => {
                     <span className="font-outfit uppercase text-base tracking-widest text-primary font-medium block mb-2 mx-auto lg:mx-0">
                       Courses & Webinars
                     </span>
-                    <h2 className="font-hedvig font-medium text-5xl text-secondary leading-[3.25rem] mb-4">
+                    <h2 className="font-outfit font-medium text-5xl text-secondary leading-[3.25rem] mb-4">
                       Explore New Learning Horizons
                     </h2>
                   </div>

@@ -35,15 +35,15 @@
   }
 
   .logo {
-    @apply text-primary font-hedvig font-medium text-4xl;
+    @apply text-primary font-outfit font-medium text-4xl;
   }
 
   .nav-title {
-    @apply font-outfit font-medium text-lg text-primary;
+    @apply font-outfit font-medium text-lg text-secondary;
   }
 
   .nav-content {
-    @apply font-outfit font-normal text-base text-slate-900 leading-relaxed;
+    @apply font-outfit font-normal text-base text-slate-500 leading-relaxed;
   }
 }
 
