@@ -12,7 +12,7 @@ const About = () => {
       {/* <AboutHero /> */}
       <AboutWhy />
       <VisionMission />
-      <AboutWhat />
+      {/* <AboutWhat /> */}
       <AboutConnection />
     </>
   );

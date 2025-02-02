@@ -102,11 +102,11 @@ const Header = () => {
       initial="hidden"
       animate="visible"
       variants={headerVariants}
-      className="bg-gray-50 sticky top-0 z-20 font-outfit drop-shadow shadow-secondary/5"
+      className="bg-white sticky top-0 z-20 font-outfit shadow-lg shadow-cream/5"
     >
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
+        className="mx-auto bg-cream/20 flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
       >
         <motion.div variants={navItemVariants} className="flex lg:flex-1">
           <NavLink to="/" className="-m-1.5 p-1.5">
@@ -134,7 +134,7 @@ const Header = () => {
         </div>
 
         <PopoverGroup className="hidden lg:flex lg:gap-x-12 z-40">
-          {["services", "courses", "about"].map((item) => (
+          {["services", "courses", "webinars", "blogs", "about"].map((item) => (
             <motion.div
               key={item}
               variants={navItemVariants}
@@ -169,7 +169,7 @@ const Header = () => {
             </Link>
           </motion.div>
 
-          <Popover className="relative">
+          {/* <Popover className="relative">
             {({ open }) => (
               <>
                 <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
@@ -222,19 +222,19 @@ const Header = () => {
                 </AnimatePresence>
               </>
             )}
-          </Popover>
+          </Popover> */}
         </PopoverGroup>
 
         <motion.div
           variants={navItemVariants}
           className="hidden lg:flex lg:flex-1 lg:justify-end"
         >
-          <motion.div whileHover={{ x: 5 }}>
+          <motion.div whileHover={{ x: 3 }}>
             <NavLink
               to="#"
-              className="text-base/6 font-medium text-secondary/90 hover:text-primary"
+              className="text-base/6 font-medium text-cream bg-secondary border-2 border-secondary p-2 px-3"
             >
-              Log in <span aria-hidden="true">&rarr;</span>
+              Log in
             </NavLink>
           </motion.div>
         </motion.div>
@@ -286,21 +286,23 @@ const Header = () => {
               <motion.div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
                   <div className="space-y-2 py-6">
-                    {["services", "courses", "about"].map((item) => (
-                      <motion.div
-                        key={item}
-                        whileHover={{ x: 5 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <NavLink
-                          to={item}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                    {["services", "courses", "webinars", "blogs", "about"].map(
+                      (item) => (
+                        <motion.div
+                          key={item}
+                          whileHover={{ x: 5 }}
+                          whileTap={{ scale: 0.98 }}
                         >
-                          {item.charAt(0).toUpperCase() + item.slice(1)}
-                        </NavLink>
-                      </motion.div>
-                    ))}
+                          <NavLink
+                            to={item}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                          >
+                            {item.charAt(0).toUpperCase() + item.slice(1)}
+                          </NavLink>
+                        </motion.div>
+                      )
+                    )}
 
                     <motion.div
                       whileHover={{ x: 5 }}
@@ -315,7 +317,7 @@ const Header = () => {
                       </NavLink>
                     </motion.div>
 
-                    <Disclosure>
+                    {/* <Disclosure>
                       {({ open }) => (
                         <>
                           <motion.div
@@ -365,7 +367,7 @@ const Header = () => {
                           </AnimatePresence>
                         </>
                       )}
-                    </Disclosure>
+                    </Disclosure> */}
                   </div>
 
                   <div className="py-6">

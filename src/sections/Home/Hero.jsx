@@ -50,7 +50,7 @@ const Hero = () => {
         style={{ backgroundImage: `url(${bg})` }}
       >
         {/* Content with backdrop blur */}
-        <div className="relative h-full w-full backdrop-blur-sm bg-black/40">
+        <div className="relative h-full w-full backdrop-blur-sm bg-black/50">
           <div className=" flex justify-center gap-4 items-center h-full px-8 max-w-7xl mx-auto text-center">
             {/* Left Text Content */}
             <motion.div
@@ -61,13 +61,13 @@ const Hero = () => {
             >
               <motion.h2
                 variants={textVariants}
-                className="font-outfit text-4xl/none text-primary font-medium tracking-tight sm:text-6xl/none"
+                className="font-outfit text-4xl/none text-cream font-medium tracking-tight sm:text-6xl/none"
               >
                 Empowering Your Journey with E-Learning & Career Solutions
               </motion.h2>
               <motion.p
                 variants={textVariants}
-                className="font-publicsans text-whiteDim text-base font-normal mt-4"
+                className="font-publicsans text-slate-300/70 text-base font-normal mt-4"
               >
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 Placeat recusandae dolor assumenda nisi nihil, voluptas animi

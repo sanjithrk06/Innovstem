@@ -47,7 +47,7 @@ const Footer = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="bg-gray-50 border border-gray-100 shadow-lg shadow-secondary/10 p-10"
+      className="bg-gradient-to-t from-cream/30 via-cream/20 to-cream/5 shadow-lg shadow-secondary/10 p-10"
     >
       <motion.div
         variants={containerVariants}
@@ -113,7 +113,7 @@ const Footer = () => {
               ))}
             </motion.ul>
             <motion.ul className="flex flex-col flex-wrap gap-2 lg:pl-4 font-normal">
-              {["Industrial Connection"].map((item) => (
+              {["Industrial Connection", "Go to Dashboard"].map((item) => (
                 <motion.li
                   key={item}
                   variants={listItemVariants}
@@ -127,13 +127,13 @@ const Footer = () => {
                   </a>
                 </motion.li>
               ))}
-              <motion.button
+              {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-primary/10 my-3 text-primary text-base font-noto font-medium cursor-pointer py-2 px-5 w-auto rounded-xl duration-300 z-10 flex flex-row group ease-in"
               >
                 Go to Dashboard
-              </motion.button>
+              </motion.button> */}
             </motion.ul>
           </div>
         </motion.div>

@@ -46,8 +46,8 @@ const Hero = () => {
     <>
       <div className="relative h-[90vh] overflow-hidden">
         {/* Content with backdrop blur */}
-        <div className="relative h-full w-full backdrop-blur-md bg-cream/30">
-          <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-4 items-center h-full px-8 max-w-7xl mx-auto text-left">
+        <div className="relative h-full w-full backdrop-blur-md bg-cream/5">
+          <div className="flex flex-col-reverse lg:flex-row justify-center lg:justify-between gap-4 items-center h-full px-8 max-w-7xl mx-auto text-left">
             {/* Left Text Content */}
             <motion.div
               className="sm:max-w-lg bg-transparent"
@@ -82,7 +82,7 @@ const Hero = () => {
 
             {/* Right Image Content */}
             <motion.div
-              className="relative lg:w-1/2 h-3/5"
+              className="relative lg:w-1/2 h-2/5 w-full lg:h-3/5"
               variants={imageVariants}
               initial="hidden"
               animate="visible"

@@ -36,7 +36,7 @@ const accordionData = [
 ];
 
 const What = () => {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState();
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -47,7 +47,7 @@ const What = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="bg-gray-50 py-20"
+      className="bg-gray-50 py-10"
     >
       <div className="container">
         <motion.div
@@ -88,7 +88,7 @@ const What = () => {
                     onClick={() => toggleAccordion(index)}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="bg-primary/10 rounded-xl text-primary shadow p-2">
+                      <div className="bg-cream/30 rounded-xl text-primary shadow p-2">
                         <div className="w-8 h-8 flex justify-center items-center">
                           {item.icon}
                         </div>

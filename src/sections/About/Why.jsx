@@ -8,9 +8,9 @@ const Why = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="bg-gray-50"
+      className="bg-gray-100 py-10"
     >
-      <div className="gap-20 items-center py-16 px-8 mx-auto max-w-screen-xl flex lg:flex-row flex-col-reverse lg:py-24 lg:px-6">
+      <div className=" container gap-20 items-center flex lg:flex-row flex-col-reverse">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -40,7 +40,7 @@ const Why = () => {
           transition={{ duration: 0.8 }}
           className="font-light text-gray-500 sm:text-lg text-left lg:w-3/5"
         >
-          <div className="relative w-full text-center lg:text-left">
+          <div className="relative w-full text-center lg:text-left mb-6">
             <span className="font-outfit uppercase text-xl tracking-widest text-primary font-medium block mb-2 mx-auto lg:mx-0">
               About Us
             </span>

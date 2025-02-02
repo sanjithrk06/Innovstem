@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import React from "react";
 import { formatDistance, parseISO } from "date-fns";
+import { Link } from "react-router-dom";
 
 const BlogCard = ({ item }) => {
   const formattedReadTime = formatDistance(
@@ -33,9 +34,12 @@ const BlogCard = ({ item }) => {
         <div className="text-sm/5 font-normal line-clamp-2 text-gray-600 text-justify">
           {item.description}
         </div>
-        <button className="flex flex-row items-center gap-1 text-sm font-semibold text-secondary/80 hover:text-primary hover:cursor-pointer">
+        <Link
+          to={"/blogpage"}
+          className="flex flex-row items-center gap-1 text-sm font-semibold text-secondary/80 hover:text-primary hover:cursor-pointer"
+        >
           Learn More <ArrowRight className="w-3 h-3" />
-        </button>
+        </Link>
       </div>
     </div>
   );
