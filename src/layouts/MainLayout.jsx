@@ -5,7 +5,7 @@ import { Banner, Footer, Header } from "../components";
 const MainLayout = () => {
   return (
     <>
-      {/* <Banner /> */}
+      <Banner />
       <Header />
       <Outlet />
       <Footer />

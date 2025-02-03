@@ -47,7 +47,7 @@ const Footer = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="bg-gradient-to-t from-cream/30 via-cream/20 to-cream/5 shadow-lg shadow-secondary/10 p-10"
+      className="bg-gradient-to-t from-cream/40 via-cream/20 from-60% to-cream/10 shadow-lg shadow-secondary/10 p-10"
     >
       <motion.div
         variants={containerVariants}
@@ -85,7 +85,7 @@ const Footer = () => {
         {/* Navigation Section */}
         <motion.div
           variants={sectionVariants}
-          className="lg:w-4/12 sm:w-8/12 border-y-2 py-6 sm:py-2 sm:border-y-0 sm:border-r-2 lg:border-x-2 px-4 flex flex-col items-center justify-start gap-4"
+          className="lg:w-4/12 sm:w-8/12 border-y-2 py-6 sm:py-2 sm:border-y-0 sm:border-r-2 lg:border-x-2 border-secondary/20 px-4 flex flex-col items-center justify-start gap-4"
         >
           <motion.h2 variants={listItemVariants} className="nav-title py-2">
             Navigation

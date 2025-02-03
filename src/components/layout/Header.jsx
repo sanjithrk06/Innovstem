@@ -98,12 +98,17 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={headerVariants}
+      className="bg-white sticky top-0 z-20"
+    >
       <motion.header
         initial="hidden"
         animate="visible"
         variants={headerVariants}
-        className="bg-cream/20 sticky top-0 z-20 font-outfit shadow-lg shadow-cream/5"
+        className="bg-cream/20 font-outfit shadow-lg shadow-cream/5"
       >
         <nav
           aria-label="Global"
@@ -398,7 +403,7 @@ const Header = () => {
           )}
         </AnimatePresence>
       </motion.header>
-    </div>
+    </motion.div>
   );
 };
 
