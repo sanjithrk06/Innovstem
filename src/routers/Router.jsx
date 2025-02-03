@@ -7,6 +7,7 @@ import {
   AdminDashboard,
   BlogPage,
   Blogs,
+  CoursePage,
   Courses,
   Home,
   Login,
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "courses",
         element: <Courses />,
+      },
+      {
+        path: "coursepage",
+        element: <CoursePage />,
       },
       {
         path: "blogs",

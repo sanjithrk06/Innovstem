@@ -1,5 +1,5 @@
 import React from "react";
-import { UserRoundPlus } from "lucide-react";
+import { Eye, UserRoundPlus } from "lucide-react";
 import { TbCategory } from "react-icons/tb";
 import { PiStudentDuotone } from "react-icons/pi";
 
@@ -53,19 +53,26 @@ const CourseCard = ({ item }) => {
 
         <div className="flex flex-row justify-between items-end mx-2 mb-2">
           <div className="flex flex-col gap-3 justify-start items-start">
-            <div className="flex flex-row flex-wrap gap-2 mt-2">
+            <div className="flex flex-row flex-wrap gap-2 mt-2 -ml-2">
               {item.category?.map((tag, index) => (
                 <p
                   key={index}
-                  className="bg-cream/20 rounded-2xl p-1 px-3 text-xs/4 text-slate-800 font-medium"
+                  className="bg-cream/30 rounded-2xl p-1 px-3 text-xs/4 text-primary font-medium"
                 >
                   {tag}
                 </p>
               ))}
             </div>
-            <p className="text-xs text-slate-400 font-medium">
-              Last Uploaded Recently
-            </p>
+            <div className=" flex flex-row items-center gap-2">
+              <div className="flex flex-row gap-1">
+                <Eye className=" w-4 h-4 text-primary/60" />
+                <span className="text-xs text-slate-500 font-medium">103</span>
+              </div>
+              <div className="h-1 w-1 rounded-full bg-primary/60"></div>
+              <p className="text-xs text-slate-400 font-medium">
+                Last Uploaded Recently
+              </p>
+            </div>
           </div>
 
           <a

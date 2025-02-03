@@ -98,78 +98,81 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <motion.header
-      initial="hidden"
-      animate="visible"
-      variants={headerVariants}
-      className="bg-white sticky top-0 z-20 font-outfit shadow-lg shadow-cream/5"
-    >
-      <nav
-        aria-label="Global"
-        className="mx-auto bg-cream/20 flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
+    <div className="bg-white">
+      <motion.header
+        initial="hidden"
+        animate="visible"
+        variants={headerVariants}
+        className="bg-cream/20 sticky top-0 z-20 font-outfit shadow-lg shadow-cream/5"
       >
-        <motion.div variants={navItemVariants} className="flex lg:flex-1">
-          <NavLink to="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Innovstem</span>
-            <motion.img
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-              alt=""
-              src={logo}
-              className="h-10 w-auto"
-            />
-          </NavLink>
-        </motion.div>
+        <nav
+          aria-label="Global"
+          className="mx-auto flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
+        >
+          <motion.div variants={navItemVariants} className="flex lg:flex-1">
+            <NavLink to="/" className="-m-1.5 p-1.5">
+              <span className="sr-only">Innovstem</span>
+              <motion.img
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+                alt=""
+                src={logo}
+                className="h-10 w-auto"
+              />
+            </NavLink>
+          </motion.div>
 
-        <div className="flex lg:hidden">
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
-          </motion.button>
-        </div>
-
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12 z-40">
-          {["services", "courses", "webinars", "blogs", "about"].map((item) => (
-            <motion.div
-              key={item}
-              variants={navItemVariants}
-              whileHover={{ y: -2 }}
+          <div className="flex lg:hidden">
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             >
-              <NavLink
-                to={item}
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon aria-hidden="true" className="size-6" />
+            </motion.button>
+          </div>
+
+          <PopoverGroup className="hidden lg:flex lg:gap-x-12 z-40">
+            {["services", "courses", "webinars", "blogs", "about"].map(
+              (item) => (
+                <motion.div
+                  key={item}
+                  variants={navItemVariants}
+                  whileHover={{ y: -2 }}
+                >
+                  <NavLink
+                    to={item}
+                    className="text-base/6 font-medium text-secondary/90 hover:text-primary relative"
+                  >
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                    <motion.span
+                      initial={{ width: 0 }}
+                      whileHover={{ width: "100%" }}
+                      className="absolute bottom-0 left-0 h-0.5 bg-primary"
+                    />
+                  </NavLink>
+                </motion.div>
+              )
+            )}
+
+            <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
+              <Link
+                to="https://innovstem.edumilestones.com/"
+                target="_blank"
                 className="text-base/6 font-medium text-secondary/90 hover:text-primary relative"
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
+                Career Guidance
                 <motion.span
                   initial={{ width: 0 }}
                   whileHover={{ width: "100%" }}
                   className="absolute bottom-0 left-0 h-0.5 bg-primary"
                 />
-              </NavLink>
+              </Link>
             </motion.div>
-          ))}
 
-          <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
-            <Link
-              to="https://innovstem.edumilestones.com/"
-              target="_blank"
-              className="text-base/6 font-medium text-secondary/90 hover:text-primary relative"
-            >
-              Career Guidance
-              <motion.span
-                initial={{ width: 0 }}
-                whileHover={{ width: "100%" }}
-                className="absolute bottom-0 left-0 h-0.5 bg-primary"
-              />
-            </Link>
-          </motion.div>
-
-          {/* <Popover className="relative">
+            {/* <Popover className="relative">
             {({ open }) => (
               <>
                 <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
@@ -223,71 +226,76 @@ const Header = () => {
               </>
             )}
           </Popover> */}
-        </PopoverGroup>
+          </PopoverGroup>
 
-        <motion.div
-          variants={navItemVariants}
-          className="hidden lg:flex lg:flex-1 lg:justify-end"
-        >
-          <motion.div whileHover={{ x: 3 }}>
-            <NavLink
-              to="#"
-              className="text-base/6 font-medium text-cream bg-secondary border-2 border-secondary p-2 px-3"
-            >
-              Log in
-            </NavLink>
-          </motion.div>
-        </motion.div>
-      </nav>
-
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <Dialog
-            static
-            open={mobileMenuOpen}
-            onClose={setMobileMenuOpen}
-            className="lg:hidden"
+          <motion.div
+            variants={navItemVariants}
+            className="hidden lg:flex lg:flex-1 lg:justify-end"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-20 bg-gray-50/90"
-            />
-            <DialogPanel
-              as={motion.div}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={mobileMenuVariants}
-              className="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto bg-gray-100/5 backdrop-blur-3xl px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
-            >
-              <div className="flex items-center justify-between">
-                <NavLink to="/" className="-m-1.5 p-1.5">
-                  <span className="sr-only">Innovstem</span>
-                  <motion.img
-                    whileHover={{ scale: 1.05 }}
-                    alt="Innovstem"
-                    src={logo}
-                    className="h-8 w-auto"
-                  />
-                </NavLink>
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  type="button"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="-m-2.5 rounded-md p-2.5 text-gray-700"
-                >
-                  <span className="sr-only">Close menu</span>
-                  <XMarkIcon aria-hidden="true" className="size-6" />
-                </motion.button>
-              </div>
+            <motion.div whileHover={{ x: 3 }}>
+              <NavLink
+                to="#"
+                className="text-base/6 font-medium text-cream bg-secondary border-2 border-secondary p-2 px-3"
+              >
+                Log in
+              </NavLink>
+            </motion.div>
+          </motion.div>
+        </nav>
 
-              <motion.div className="mt-6 flow-root">
-                <div className="-my-6 divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">
-                    {["services", "courses", "webinars", "blogs", "about"].map(
-                      (item) => (
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <Dialog
+              static
+              open={mobileMenuOpen}
+              onClose={setMobileMenuOpen}
+              className="lg:hidden"
+            >
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-20 bg-gray-50/90"
+              />
+              <DialogPanel
+                as={motion.div}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={mobileMenuVariants}
+                className="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto bg-gray-100/5 backdrop-blur-3xl px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+              >
+                <div className="flex items-center justify-between">
+                  <NavLink to="/" className="-m-1.5 p-1.5">
+                    <span className="sr-only">Innovstem</span>
+                    <motion.img
+                      whileHover={{ scale: 1.05 }}
+                      alt="Innovstem"
+                      src={logo}
+                      className="h-8 w-auto"
+                    />
+                  </NavLink>
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    type="button"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                  >
+                    <span className="sr-only">Close menu</span>
+                    <XMarkIcon aria-hidden="true" className="size-6" />
+                  </motion.button>
+                </div>
+
+                <motion.div className="mt-6 flow-root">
+                  <div className="-my-6 divide-y divide-gray-500/10">
+                    <div className="space-y-2 py-6">
+                      {[
+                        "services",
+                        "courses",
+                        "webinars",
+                        "blogs",
+                        "about",
+                      ].map((item) => (
                         <motion.div
                           key={item}
                           whileHover={{ x: 5 }}
@@ -301,23 +309,22 @@ const Header = () => {
                             {item.charAt(0).toUpperCase() + item.slice(1)}
                           </NavLink>
                         </motion.div>
-                      )
-                    )}
+                      ))}
 
-                    <motion.div
-                      whileHover={{ x: 5 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <NavLink
-                        to="https://innovstem.edumilestones.com/"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                      <motion.div
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.98 }}
                       >
-                        Career Guidance
-                      </NavLink>
-                    </motion.div>
+                        <NavLink
+                          to="https://innovstem.edumilestones.com/"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                        >
+                          Career Guidance
+                        </NavLink>
+                      </motion.div>
 
-                    {/* <Disclosure>
+                      {/* <Disclosure>
                       {({ open }) => (
                         <>
                           <motion.div
@@ -368,29 +375,30 @@ const Header = () => {
                         </>
                       )}
                     </Disclosure> */}
-                  </div>
+                    </div>
 
-                  <div className="py-6">
-                    <motion.div
-                      whileHover={{ x: 5 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <NavLink
-                        to="#"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                    <div className="py-6">
+                      <motion.div
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.98 }}
                       >
-                        Log in
-                      </NavLink>
-                    </motion.div>
+                        <NavLink
+                          to="#"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                        >
+                          Log in
+                        </NavLink>
+                      </motion.div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            </DialogPanel>
-          </Dialog>
-        )}
-      </AnimatePresence>
-    </motion.header>
+                </motion.div>
+              </DialogPanel>
+            </Dialog>
+          )}
+        </AnimatePresence>
+      </motion.header>
+    </div>
   );
 };
 
