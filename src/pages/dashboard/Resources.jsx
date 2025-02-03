@@ -1,61 +1,60 @@
 import React, { useState, useEffect } from "react";
-import { CourseCard } from "../components";
-import { CourseHero, CoursesHero } from "../sections";
+import { BlogCard, TitleBanner } from "../../components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 
-const Courses = () => {
-  const [courses, setCourses] = useState([]);
+const Resources = () => {
+  const [resources, setResources] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalResults, setTotalResults] = useState(0);
 
-  // Fetch courses from API
-  const fetchCourses = async (page = 1, search = "") => {
+  // Fetch resources from API
+  const fetchResources = async (page = 1, search = "") => {
     try {
       setIsLoading(true);
       const response = await axios.get(
         search
-          ? `https://admin-dev.innovstem.com/api/courses/search?query=${search}&page=${page}`
-          : `https://admin-dev.innovstem.com/api/courses?page=${page}`
+          ? `https://admin-dev.innovstem.com/api/resources/search?query=${search}&page=${page}`
+          : `https://admin-dev.innovstem.com/api/resources?page=${page}`
       );
 
       const responseData = response.data.data;
-      setCourses(responseData.data);
+      setResources(responseData.data);
       setCurrentPage(responseData.current_page);
       setTotalPages(responseData.last_page);
       setTotalResults(responseData.total);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching courses:", error);
+      console.error("Error fetching resources:", error);
       setIsLoading(false);
-      setCourses([]);
+      setResources([]);
     }
   };
 
-  // Initial course fetch
+  // Initial resources fetch
   useEffect(() => {
-    fetchCourses();
+    fetchResources();
   }, []);
 
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchCourses(1, searchTerm);
+    fetchResources(1, searchTerm);
   };
 
   // Pagination handlers
   const nextPage = () => {
     if (currentPage < totalPages) {
-      fetchCourses(currentPage + 1, searchTerm);
+      fetchResources(currentPage + 1, searchTerm);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      fetchCourses(currentPage - 1, searchTerm);
+      fetchResources(currentPage - 1, searchTerm);
     }
   };
 
@@ -78,15 +77,13 @@ const Courses = () => {
   };
 
   return (
-    <>
-      {/* <CourseHero title={"Courses"} /> */}
-      <CoursesHero />
-      <div className="bg-gray-50 py-1 sm:py-1">
-        <div className="container">
-          {/* Search form remains the same */}
+    <div className="bg-gray-100 min-h-screen">
+      <div className="py-5">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 pt-8 bg-white rounded-2xl">
+          {/* Search form */}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-            <p className="text-left font-publicsans font-semibold text-2xl text-secondary mb-4 sm:mb-0 pl-5">
-              All Courses
+            <p className="text-left font-publicsans text-2xl text-secondary mb-4 sm:mb-0 pl-5">
+              All Resources
             </p>
             <form
               onSubmit={handleSearch}
@@ -97,8 +94,8 @@ const Courses = () => {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="bg-white border border-gray-300 text-secondary text-sm rounded-3xl focus:bg-primary/5 focus:border-primary outline-none block w-full p-2.5 px-4"
-                  placeholder="Search course name..."
+                  className="bg-white border-b border-gray-300 text-secondary text-sm rounded-none focus:bg-primary/5 focus:border-primary outline-none block w-full p-2.5"
+                  placeholder="Search resources..."
                 />
               </div>
               <button
@@ -127,21 +124,22 @@ const Courses = () => {
 
           {/* Loading State */}
           {isLoading && (
-            <div className="text-center py-10">Loading courses...</div>
+            <div className="text-center py-10">Loading resources...</div>
           )}
 
-          {/* Courses Grid */}
-          {!isLoading && courses.length > 0 && (
-            <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
-              {courses.map((item) => (
-                <div key={item.id}>
-                  <CourseCard
+          {/* Resources Grid */}
+          {!isLoading && resources.length > 0 && (
+            <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
+              {resources.map((resource) => (
+                <div key={resource.id}>
+                  <BlogCard
                     item={{
-                      id: item.id,
-                      name: item.title,
-                      avail: item.class_level_name,
-                      category: [item.category_name],
-                      description: item.content_short_description,
+                      key: resource.id,
+                      category: resource.category_name,
+                      readTime: resource.created_at,
+                      title: resource.title,
+                      description: resource.resource_description,
+                      slug: resource.resource_slug,
                     }}
                   />
                 </div>
@@ -150,9 +148,9 @@ const Courses = () => {
           )}
 
           {/* No Results */}
-          {!isLoading && courses.length === 0 && (
+          {!isLoading && resources.length === 0 && (
             <div className="text-center py-10 text-gray-500">
-              No courses found
+              No resources found
             </div>
           )}
 
@@ -272,8 +270,8 @@ const Courses = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Courses;
+export default Resources;

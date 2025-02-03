@@ -237,9 +237,9 @@ const Header = () => {
             variants={navItemVariants}
             className="hidden lg:flex lg:flex-1 lg:justify-end"
           >
-            <motion.div whileHover={{ x: 3 }}>
+            <motion.div whileHover={{ y: -2 }}>
               <NavLink
-                to="#"
+                to="dashboard"
                 className="text-base/6 font-medium text-cream bg-secondary border-2 border-secondary p-2 px-3"
               >
                 Log in

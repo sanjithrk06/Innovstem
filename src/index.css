@@ -13,15 +13,15 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #f0f0f0;
+    padding: 2px;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/40 rounded-full border-2 border-primary/40;
+    @apply bg-cream rounded-full border-2 border-primary/40;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary;
+    @apply bg-secondary;
   }
 }
 

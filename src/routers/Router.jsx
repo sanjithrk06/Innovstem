@@ -15,7 +15,9 @@ import {
   Services,
   StudentDashboard,
   Webinars,
+  Dashboard,
 } from "../pages";
+import DashboardLayout from "../layouts/Dashboard.jsx";
 
 const ProtectedRoute = ({ role, children }) => {
   const { user, isAuthenticated, isCheckingAuth } = useAuthStore();
@@ -49,6 +51,20 @@ const router = createBrowserRouter([
         <StudentDashboard />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "resources",
+        element: <Resources />,
+      },
+    ],
   },
   {
     path: "/",
@@ -92,6 +108,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/login",
     element: <Login />,
