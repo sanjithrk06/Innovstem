@@ -5,13 +5,17 @@ export default {
     extend: {
       fontFamily: {
         outfit: ["Outfit", "serif"],
-        hedvig: ["Hedvig Letters Serif"],
+        hedvig: ["Hedvig Letters Serif"], // Hedvig Letters Serif
         publicsans: ["Public Sans"],
       },
       colors: {
-        whiteDim: "hsl(0, 0%, 96%)",
-        secondary: "#002359",
-        primary: "#FF5E15",
+        whiteDim: "hsl(0, 0%, 97%)",
+        secondary: "#002479", // 002359
+        primary: "#FF5F00",
+        header: "#FF5F00",
+        cream: "#eae2b7", // cream
+        title: "#024CAA", // blue
+        c3: "#f77f00", // orange
       },
     },
   },

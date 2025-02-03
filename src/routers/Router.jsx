@@ -3,8 +3,11 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
 import MainLayout from "../layouts/MainLayout.jsx";
 import {
+  About,
   AdminDashboard,
+  BlogPage,
   Blogs,
+  CoursePage,
   Courses,
   Home,
   Login,
@@ -64,6 +67,10 @@ const router = createBrowserRouter([
         element: <Courses />,
       },
       {
+        path: "coursepage",
+        element: <CoursePage />,
+      },
+      {
         path: "blogs",
         element: <Blogs />,
       },
@@ -74,6 +81,14 @@ const router = createBrowserRouter([
       {
         path: "webinars",
         element: <Webinars />,
+      },
+      {
+        path: "blogpage",
+        element: <BlogPage />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
     ],
   },

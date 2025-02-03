@@ -1,9 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import React from "react";
 import { formatDistance, parseISO } from "date-fns";
-import { Link } from "react-router-dom";
 
-const BlogCard = ({ item }) => {
+const BlogCardVertical = ({ item }) => {
   const formattedReadTime = formatDistance(
     parseISO(item.readTime),
     new Date(),
@@ -11,7 +10,7 @@ const BlogCard = ({ item }) => {
   );
 
   return (
-    <div className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col lg:flex-row gap-4 h-full duration-300 hover:bg-whiteDim hover:shadow rounded-2xl">
+    <div className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col gap-4 h-full duration-300 hover:bg-gray-100/70 hover:shadow rounded-2xl">
       <div className="lg:w-2/6 overflow-hidden rounded-xl drop-shadow">
         <img
           src="https://pagedone.io/asset/uploads/1696244059.png"
@@ -34,15 +33,12 @@ const BlogCard = ({ item }) => {
         <div className="text-sm/5 font-normal line-clamp-2 text-gray-600 text-justify">
           {item.description}
         </div>
-        <Link
-          to={"/blogpage"}
-          className="flex flex-row items-center gap-1 text-sm font-semibold text-secondary/80 hover:text-primary hover:cursor-pointer"
-        >
+        <button className="flex flex-row items-center gap-1 text-sm font-semibold text-secondary/80 hover:text-primary hover:cursor-pointer">
           Learn More <ArrowRight className="w-3 h-3" />
-        </Link>
+        </button>
       </div>
     </div>
   );
 };
 
-export default BlogCard;
+export default BlogCardVertical;
