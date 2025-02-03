@@ -45,6 +45,22 @@
   .nav-content {
     @apply font-outfit font-normal text-base text-slate-500 leading-relaxed;
   }
+
+  .content h3 {
+    @apply text-xl font-medium text-secondary/80 mb-4;
+  }
+
+  .content p {
+    @apply text-base text-slate-600 mb-4;
+  }
+
+  .content li {
+    @apply text-base text-slate-600 mb-1 list-disc ml-4;
+  }
+
+  .content li strong {
+    @apply text-slate-700 italic;
+  }
 }
 
 /* Ensure this targets Swiper components */

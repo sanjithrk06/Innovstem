@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   BadgeInfo,
   Check,
@@ -13,39 +14,88 @@ import { Link } from "react-router-dom";
 import { CourseCard } from "../components";
 
 const CoursePage = () => {
+  const [courseDetails, setCourseDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const learningPoints = [
-    "Understanding modern web development frameworks and libraries",
-    "Building responsive and accessible user interfaces",
-    "Working with state management and data flow",
-    "Implementing modern design patterns and best practices",
-    "Creating optimized and performant web applications",
+  // Default values for course details
+  const defaultCourseDetails = {
+    title: "Introduction to Coding",
+    content_short_description: "Learn the basics of programming",
+    content_long_description:
+      "A comprehensive introduction to programming fundamentals.",
+    course_content: "<p>Basic course content</p>",
+    category_name: "STEM Skills",
+    class_level_name: "Class 6 - 8",
+    view_count: 0,
+    enrolment_count: 0,
+  };
+
+  // Default learning points
+  const defaultLearningPoints = [
+    "Understanding programming fundamentals",
+    "Basic coding concepts",
+    "Introduction to problem-solving",
+    "Basic algorithm design",
+    "Foundational coding skills",
   ];
 
-  const quizzes = [
+  // Default quizzes
+  const defaultQuizzes = [
     {
-      title: "Introduction to Web Development",
+      title: "Introduction to Programming",
       questions: 10,
       timeLimit: "20 mins",
       difficulty: "Beginner",
     },
-    {
-      title: "Advanced Frontend Concepts",
-      questions: 15,
-      timeLimit: "30 mins",
-      difficulty: "Intermediate",
-    },
-    {
-      title: "Modern Web Architecture",
-      questions: 12,
-      timeLimit: "25 mins",
-      difficulty: "Advanced",
-    },
   ];
 
+  useEffect(() => {
+    const fetchCourseDetails = async () => {
+      try {
+        const response = await axios.get(
+          "https://admin-dev.innovstem.com/api/courses/d/introduction-to-coding"
+        );
+        setCourseDetails(response.data.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching course details:", err);
+        setError(err);
+        setCourseDetails(defaultCourseDetails);
+        setLoading(false);
+      }
+    };
+
+    fetchCourseDetails();
+  }, []);
+
+  const learningPoints =
+    courseDetails?.learning_materials
+      .split("@$")
+      .map((item) => item.trim())
+      .filter(Boolean) || defaultLearningPoints;
+
+  const quizzes = defaultQuizzes;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        Error loading course details. Please try again later.
+      </div>
+    );
+  }
+
   return (
-    <div className=" bg-gray-50 py-1">
+    <div className="bg-gray-50 py-1">
       <div className="container mx-auto px-4 text-left my-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Content Area */}
@@ -57,43 +107,44 @@ const CoursePage = () => {
                     to={"/"}
                     className="inline-flex gap-2 items-center text-sm font-semibold text-slate-700"
                   >
-                    <Home className=" w-4 h-4 text-slate-600" />
+                    <Home className="w-4 h-4 text-slate-600" />
                     Home
                   </Link>
                 </li>
                 <li className="inline-flex items-center gap-2">
-                  <ChevronRight className=" w-4 h-4 text-slate-700" />
+                  <ChevronRight className="w-4 h-4 text-slate-700" />
                   <Link
                     to={"/courses"}
                     className="inline-flex gap-2 items-center text-sm font-semibold text-slate-700"
                   >
-                    <LibraryBig className=" w-4 h-4 text-slate-600" />
+                    <LibraryBig className="w-4 h-4 text-slate-600" />
                     Courses
                   </Link>
                 </li>
               </ol>
             </nav>
-            {/* Blog Title */}
+
             <div className="flex flex-col gap-4 pb-0">
               <h1 className="text-4xl font-bold text-secondary font-outfit">
-                Understanding Modern Web Development
+                {courseDetails?.title || defaultCourseDetails.title}
               </h1>
               <p className="text-base text-slate-600 font-normal font-publicsans text-justify">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab
-                voluptatum pariatur quod minima libero laudantium vitae quia
-                rerum culpa quidem.
+                {courseDetails?.content_short_description ||
+                  defaultCourseDetails.content_short_description}
               </p>
 
-              {/* Metadata and Social Section */}
               <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0 text-gray-600 font-outfit">
                 <div className="flex flex-row gap-2 items-center">
                   <div className="text-base/5 font-medium text-primary/80 bg-primary/5 rounded-xl px-3 py-1">
-                    <span>STEM Skills</span>
+                    <span>
+                      {courseDetails?.category_name ||
+                        defaultCourseDetails.category_name}
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 md:ml-auto">
                   <p className="text-sm font-medium text-slate-600 pr-2">
-                    Ratings :
+                    Ratings:
                   </p>
                   <Star className="w-4 h-4 text-orange-500" />
                   <p className="text-base font-medium">
@@ -105,26 +156,37 @@ const CoursePage = () => {
               <div className="flex flex-row md:items-center gap-2 md:gap-2 text-gray-600 font-outfit">
                 <div className="text-sm font-normal text-slate-600 flex flex-row items-center gap-2">
                   <BadgeInfo className="w-5 h-5 text-primary/40" />
-                  <span>Last Updated 1/2025</span>
+                  <span>
+                    Last Updated{" "}
+                    {courseDetails?.updated_at
+                      ? new Date(courseDetails.updated_at).toLocaleDateString()
+                      : "1/2025"}
+                  </span>
                 </div>
                 <div className="h-3 w-0.5 bg-primary/50"></div>
                 <div className="text-sm font-normal text-slate-600 flex flex-row items-center gap-2">
                   <GraduationCap className="w-5 h-5 text-primary/40" />
                   <span>
-                    <b>142</b> Learners
+                    <b>
+                      {courseDetails?.enrolment_count ||
+                        defaultCourseDetails.enrolment_count}
+                    </b>{" "}
+                    Learners
                   </span>
                 </div>
                 <div className="h-3 w-0.5 bg-primary/50"></div>
                 <div className="text-sm font-normal text-slate-600 flex flex-row items-center gap-2">
                   <Globe className="w-4 h-4 text-primary/40" />
-                  <span>English</span>
+                  <span>
+                    {courseDetails?.class_level_name ||
+                      defaultCourseDetails.class_level_name}
+                  </span>
                 </div>
               </div>
             </div>
 
             <hr className="border-secondary/10" />
 
-            {/* Tabbed About Section */}
             <div className="font-publicsans">
               <div className="flex space-x-4 mb-6">
                 <button
@@ -151,40 +213,36 @@ const CoursePage = () => {
 
               <div className="border rounded-2xl shadow p-8">
                 {activeTab === "overview" ? (
-                  <div className="space-y-8">
-                    <div>
-                      <h3 className="text-xl font-bold text-secondary/80 mb-4">
-                        About Course
-                      </h3>
-                      <p className="text-base text-slate-600 mb-4">
-                        Unlock the power of Figma, the leading collaborative
-                        design tool, with our comprehensive online course.
-                        Whether you're a novice or looking to enhance your
-                        skills, this course will guide you through Figma's
-                        robust features and workflows.
-                      </p>
-                      <p className="text-base text-slate-600">
-                        Perfect for UI/UX designers, product managers, and
-                        anyone interested in modern design tools. Join us to
-                        elevate your design skills and boost your productivity
-                        with Figma!
-                      </p>
-                    </div>
+                  <>
+                    {/* {courseDetails.course_content} */}
+                    <div className="space-y-8">
+                      <div>
+                        <div
+                          className="text-base text-slate-600 mb-4 content"
+                          dangerouslySetInnerHTML={{
+                            __html: courseDetails?.course_content,
+                          }}
+                        />
+                      </div>
 
-                    <div>
-                      <h3 className="text-xl font-bold text-secondary/80 mb-4">
-                        What You'll Learn
-                      </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-3">
-                        {learningPoints.map((point, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                            <p className="text-slate-600">{point}</p>
-                          </div>
-                        ))}
+                      <div>
+                        <h3 className="text-xl font-bold text-secondary/80 mb-4">
+                          What You'll Learn
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-3">
+                          {learningPoints.map((point, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2"
+                            >
+                              <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                              <p className="text-slate-600">{point}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </>
                 ) : (
                   <div className="space-y-4">
                     <h3 className="text-xl font-bold text-secondary/80">
@@ -302,17 +360,14 @@ const CoursePage = () => {
           </aside>
         </div>
 
-        {/* Suggested Courses */}
-        <div className=" container px-2 pt-16">
-          <div className="">
-            {/* Search form remains the same */}
+        {/* Suggested Courses Section */}
+        <div className="container px-2 pt-16">
+          <div>
             <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
               <p className="text-left font-publicsans text-3xl font-semibold text-secondary mb-4 sm:mb-0 pl-5">
                 Suggested Courses
               </p>
             </div>
-
-            {/* Courses Grid */}
 
             <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
               {courses.map((item) => (
@@ -338,6 +393,7 @@ const CoursePage = () => {
 
 export default CoursePage;
 
+// Courses data remains the same as in original component
 const courses = [
   {
     id: 1,
