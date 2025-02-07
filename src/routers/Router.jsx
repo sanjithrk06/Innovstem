@@ -80,11 +80,16 @@ const router = createBrowserRouter([
       },
       {
         path: "courses",
-        element: <Courses />,
-      },
-      {
-        path: "coursepage",
-        element: <CoursePage />,
+        children: [
+          {
+            index: true,
+            element: <Courses />,
+          },
+          {
+            path: ":slug",
+            element: <CoursePage />,
+          },
+        ],
       },
       {
         path: "blogs",
