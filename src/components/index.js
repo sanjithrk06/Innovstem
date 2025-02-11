@@ -6,6 +6,7 @@ export { default as Banner } from "./layout/Banner.jsx";
 // Courses Components
 export { CategoryList } from "./courses/CategoryList.jsx";
 export { CourseGrid } from "./courses/CourseGrid.jsx";
+export { CategoryGrid } from "./courses/CategoryGrid.jsx";
 export { SearchBar } from "./courses/SearchBar.jsx";
 
 // UI Components

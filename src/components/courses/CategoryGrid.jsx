@@ -1,9 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import CourseCard from "../ui/CourseCard";
-export const CourseGrid = ({ courses, isLoading }) => {
+import CourseViewCard from "../ui/CourseViewCard";
+
+export const CategoryGrid = ({ courses, isLoading }) => {
   if (isLoading) {
     return <div className="text-center py-10">Loading courses...</div>;
   }
+
   if (courses.length === 0) {
     return (
       <motion.div
@@ -15,6 +18,8 @@ export const CourseGrid = ({ courses, isLoading }) => {
       </motion.div>
     );
   }
+
+  console.log(courses);
 
   return (
     <motion.div
@@ -28,16 +33,17 @@ export const CourseGrid = ({ courses, isLoading }) => {
             key={item.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, delay: index * 0.3, ease: "easeOut" }}
+            className="cursor-pointer"
           >
-            <CourseCard
+            <CourseViewCard
               item={{
                 id: item.id,
-                name: item.title,
-                avail: item.class_level_name,
-                category: [item.category_name],
-                description: item.content_short_description,
-                link: item.course_slug,
+                name: item.name,
+                image: item.image_url,
+                description: item.short_description,
+                link: item.slug,
               }}
             />
           </motion.div>

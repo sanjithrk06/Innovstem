@@ -14,6 +14,9 @@ export { default as Content } from "./Services/Content.jsx";
 export { default as CourseHero } from "./Courses/Hero.jsx";
 export { default as CoursesHero } from "./Courses/CoursesHero.jsx";
 
+// Category Page
+export { default as CategoryHero } from "./Category/Hero.jsx";
+
 // About Page
 export { default as AboutHero } from "./About/Hero.jsx";
 export { default as AboutWhy } from "./About/Why.jsx";

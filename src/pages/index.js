@@ -3,11 +3,13 @@ export { default as AdminDashboard } from "./AdminDashboard.jsx";
 
 // Auth Pages
 export { default as Login } from "./auth/Login.jsx";
+export { default as Register } from "./auth/Register.jsx";
 
 // Public Pages
 export { default as Home } from "./Home.jsx";
 export { default as Services } from "./Services.jsx";
 export { default as Courses } from "./Courses.jsx";
+export { default as CategoryPage } from "./CategoryPage.jsx";
 export { default as CoursePage } from "./CoursePage.jsx";
 export { default as Blogs } from "./Blogs.jsx";
 export { default as BlogPage } from "./BlogPage.jsx";

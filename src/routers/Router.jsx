@@ -16,6 +16,8 @@ import {
   StudentDashboard,
   Webinars,
   Dashboard,
+  CategoryPage,
+  Register,
 } from "../pages";
 import DashboardLayout from "../layouts/Dashboard.jsx";
 
@@ -67,6 +69,19 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/auth",
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+  {
     path: "/",
     element: <MainLayout />,
     children: [
@@ -86,7 +101,11 @@ const router = createBrowserRouter([
             element: <Courses />,
           },
           {
-            path: ":slug",
+            path: "category",
+            element: <CategoryPage />,
+          },
+          {
+            path: "course/:slug",
             element: <CoursePage />,
           },
         ],
@@ -112,11 +131,6 @@ const router = createBrowserRouter([
         element: <About />,
       },
     ],
-  },
-
-  {
-    path: "/login",
-    element: <Login />,
   },
 ]);
 
