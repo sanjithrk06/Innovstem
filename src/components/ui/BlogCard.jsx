@@ -11,7 +11,7 @@ const BlogCard = ({ item }) => {
   );
 
   return (
-    <div className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col lg:flex-row gap-4 h-full duration-300 hover:bg-whiteDim hover:shadow rounded-2xl">
+    <div key={item.key} className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col lg:flex-row gap-4 h-full duration-300 hover:bg-whiteDim hover:shadow rounded-2xl">
       <div className="lg:w-2/6 overflow-hidden rounded-xl drop-shadow">
         <img
           src="https://pagedone.io/asset/uploads/1696244059.png"

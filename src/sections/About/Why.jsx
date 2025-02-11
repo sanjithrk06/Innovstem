@@ -8,14 +8,14 @@ const Why = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="bg-gray-100 py-10"
+      className="bg-gray-50 py-10"
     >
       <div className=" container gap-20 items-center flex lg:flex-row flex-col-reverse">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 gap-4 lg:w-2/5"
+          className="grid grid-cols-1 gap-4 md:w-4/5 lg:w-2/5 mx-3 md:mx-6"
         >
           <div className="relative group">
             <img
@@ -44,19 +44,23 @@ const Why = () => {
             <span className="font-outfit uppercase text-xl tracking-widest text-primary font-medium block mb-2 mx-auto lg:mx-0">
               About Us
             </span>
-            <h2 className="font-outfit text-5xl font-semibold text-secondary leading-[3.25rem] lg:mb-6 mx-auto max-w-max lg:max-w-md lg:mx-0">
+            <h2 className="font-outfit text-5xl font-semibold text-secondary leading-[3.25rem] lg:mb-6 mx-auto max-w-md lg:max-w-md lg:mx-0">
               Innovation Meets Education!
             </h2>
           </div>
-          <p className="font-publicsans text-lg font-normal text-slate-500 mb-4 text-justify">
+          <p className="font-publicsans indent-10 text-lg font-normal text-slate-500 mb-4 mx-3 md:mx-6 text-justify">
             Welcome to InnovSTEM, where innovation and education come together
             to shape the future! We are a forward-thinking organization
-            committed to transforming how young minds learn, grow, and prepare
-            for tomorrow. By focusing on skills development, personalized career
-            guidance, and holistic training, we empower students from classes 6
-            to 12 to excel academically, professionally, and personally.
+            committed to Transforming how young minds learn, grow, and prepare
+            for tomorrow . By focusing on{" "}
+            <b className=" text-secondary/80">
+              Skills development, Personalized Career Guidance, and Holistic
+              Training
+            </b>
+            , we empower students from classes 6 to 12 to excel academically,
+            professionally, and personally.
           </p>
-          <p className="font-publicsans text-lg font-normal text-slate-500 mb-4 text-justify">
+          <p className="font-publicsans indent-10 text-lg font-normal text-slate-500 mb-4 mx-3 md:mx-6 text-justify">
             Our goal is to help students discover their unique talents, prepare
             for future careers, and thrive in all aspects of life. Together, we
             are shaping a generation ready to succeed and contribute

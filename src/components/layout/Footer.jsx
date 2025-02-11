@@ -47,7 +47,7 @@ const Footer = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="bg-gradient-to-t from-cream/40 via-cream/20 from-60% to-cream/10 shadow-lg shadow-secondary/10 p-10"
+      className="bg-gradient-to-t from-cream/40 via-cream/30 from-70% to-cream/20 shadow-lg shadow-secondary/10 p-10"
     >
       <motion.div
         variants={containerVariants}

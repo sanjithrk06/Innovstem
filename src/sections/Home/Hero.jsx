@@ -77,14 +77,14 @@ const Hero = () => {
 
   return (
     <div
-      className="relative h-auto w-full bg-cream/20 overflow-hidden py-10"
+      className="relative h-[85vh] w-full bg-cream/20 overflow-hidden py-10"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 mb-5 max-md:mb-12">
-        <div className="flex flex-col md:flex-row-reverse items-center gap-8">
+        <div className="flex flex-col lg:flex-row-reverse items-center gap-8">
           {/* Image Section on Top in Mobile and Right in Desktop */}
-          <div className="relative w-full md:w-1/2 h-[300px] md:h-[500px] rounded-2xl overflow-hidden">
+          <div className="relative w-full lg:w-1/2 h-[300px] md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -108,7 +108,7 @@ const Hero = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={`content-${currentIndex}`}
-              className="w-full md:w-1/2 flex flex-col justify-center max-md:text-center"
+              className="w-full lg:w-1/2  flex flex-col justify-center max-lg:text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
@@ -122,7 +122,7 @@ const Hero = () => {
                 {slides[currentIndex].description}
               </p>
 
-              <p className="text-lg text-blue-900 font-medium font-outfit max-md:mx-auto inline-flex flex-row items-center justify-start cursor-pointer gap-2">
+              <p className="text-lg text-blue-900 font-medium font-outfit max-lg:mx-auto inline-flex flex-row items-center justify-start cursor-pointer gap-2">
                 Know More <ArrowRight className="w-5 h-5" />
               </p>
             </motion.div>

@@ -98,18 +98,8 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={headerVariants}
-      className="bg-white sticky top-0 z-20"
-    >
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={headerVariants}
-        className="bg-cream/20 font-outfit shadow-lg shadow-cream/5"
-      >
+    <div className="bg-white sticky top-0 h-[12vh] z-20">
+      <header className="bg-cream/20 font-outfit h-full shadow-lg shadow-cream/5">
         <nav
           aria-label="Global"
           className="mx-auto flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
@@ -402,8 +392,8 @@ const Header = () => {
             </Dialog>
           )}
         </AnimatePresence>
-      </motion.header>
-    </motion.div>
+      </header>
+    </div>
   );
 };
 

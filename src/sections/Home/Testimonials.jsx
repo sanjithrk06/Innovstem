@@ -57,7 +57,7 @@ const Testimonials = () => {
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className="bg-gray-100/80 py-1"
+      className="bg-gray-50 py-1"
     >
       <section className="container text-left mb-8 md:mb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -69,11 +69,11 @@ const Testimonials = () => {
               <span className="font-outfit uppercase text-base md:text-lg tracking-widest text-primary font-medium block mb-2 mx-auto lg:mx-0">
                 Testimonials
               </span>
-              <h2 className="font-outfit text-3xl md:text-4xl lg:text-5xl font-semibold text-secondary leading-tight md:leading-[3.25rem] lg:mb-6 mx-auto max-w-max lg:max-w-md lg:mx-0">
+              <h2 className="font-outfit text-4xl md:text-4xl lg:text-5xl font-semibold text-secondary leading-tight md:leading-[3.25rem] lg:mb-6 mx-auto max-w-max lg:max-w-md lg:mx-0">
                 What People Say About Us!
               </h2>
             </div>
-            <div className="relative w-full text-center lg:text-left lg:w-2/4">
+            <div className="relative w-full text-center lg:text-left max-lg:hidden lg:w-2/4">
               <p className="font-publicsans text-base md:text-lg font-normal text-slate-500 mb-3 md:mb-5">
                 From interactive courses to personalized learning paths, we
                 offer everything you need to grow, create, and thrive in the
@@ -101,6 +101,7 @@ const Testimonials = () => {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
               }}
+              speed={1300}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: true,

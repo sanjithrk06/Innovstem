@@ -24,7 +24,7 @@ const CourseViewCard = ({ item }) => {
           {item.name}
         </h1>
 
-        <p className="text-gray-500 font-publicsans text-left line-clamp-2 duration-500">
+        <p className="text-slate-500 font-publicsans text-left line-clamp-2 duration-500">
           {item.description || "No description available"}
         </p>
 

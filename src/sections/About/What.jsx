@@ -5,6 +5,7 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
+import { ChevronsRight } from "lucide-react";
 
 const accordionData = [
   {
@@ -14,23 +15,27 @@ const accordionData = [
     icon: <FaChalkboardTeacher />,
   },
   {
-    title: "Career Guidance",
-    content: "Content for Career Guidance.",
+    title: "Career Guidance and Counseling",
+    content:
+      "With personalized career guidance sessions, we help students understand their strengths, identify their aspirations, and navigate their career paths confidently. Our certified experts offer insights into traditional and emerging fields, ensuring every student has a roadmap to success.",
     icon: <FaChalkboardTeacher />,
   },
   {
-    title: "Personality Development",
-    content: "Content for Personality Development.",
+    title: "Defense Training Programs",
+    content:
+      "For students aspiring to join the armed forces, we provide specialized training for officer selection categories. Our programs instill discipline, resilience, and leadership skills, preparing students to excel in competitive exams and physical tests.",
     icon: <FaChalkboardTeacher />,
   },
   {
-    title: "Soft Skills Training",
-    content: "Content for Soft Skills Training.",
+    title: "Entrepreneurship and Financial Literacy",
+    content:
+      "We encourage students to think like innovators and problem-solvers. By teaching entrepreneurship fundamentals and financial literacy, we empower them to turn ideas into impactful ventures.",
     icon: <FaChalkboardTeacher />,
   },
   {
-    title: "Leadership Programs",
-    content: "Content for Leadership Programs.",
+    title: "Holistic Development",
+    content:
+      "Our initiatives go beyond academics, focusing on life skills, communication, and leadership to create well-rounded individuals ready to take on the challenges of the future.",
     icon: <FaChalkboardTeacher />,
   },
 ];
@@ -47,7 +52,7 @@ const What = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="bg-gray-50 py-10"
+      className="bg-white py-6"
     >
       <div className="container">
         <motion.div
@@ -81,16 +86,16 @@ const What = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="border border-slate-100 rounded-none shadow-xl bg-white"
+                  className="border border-slate-100 rounded-lg shadow-xl bg-white"
                 >
                   <button
-                    className="flex justify-between items-center w-full p-4 text-secondary/80 font-publicsans uppercase font-semibold text-lg rounded-t-xl"
+                    className="flex justify-between items-center w-full p-4 text-secondary/80 font-publicsans uppercase font-semibold text-lg rounded-t-xl text-left duration-300"
                     onClick={() => toggleAccordion(index)}
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center font-publicsans gap-4">
                       <div className="bg-cream/30 rounded-xl text-primary shadow p-2">
-                        <div className="w-8 h-8 flex justify-center items-center">
-                          {item.icon}
+                        <div className="flex justify-center items-center">
+                          <ChevronsRight className=" w-7 h-7" />
                         </div>
                       </div>
                       {item.title}
