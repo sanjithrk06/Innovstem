@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useStore } from "../../store/store";
+// import { useTopCourses } from "../../hooks";
 import { CourseViewCard } from "../../components";
 
 // Swiper Components
@@ -9,19 +9,14 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useTopCourses } from "../../hooks/hooks";
 
 const Courses = () => {
-  const { topCourses, fetchTopCourses, isLoading, error } = useStore();
-
-  useEffect(() => {
-    if (topCourses.length === 0) {
-      fetchTopCourses();
-    }
-  }, []);
+  const { data: topCourses, isLoading, error } = useTopCourses();
 
   return (
     <div className="relative bg-cream/20 rounded-3xl mx-4 overflow-hidden">
-      <div className="absolute max-lg:-left-52 -bottom-40 lg:-left-12 w-[450px] h-[400px] bg-primary/10 rounded-full  border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
+      <div className="absolute max-lg:-left-52 -bottom-40 lg:-left-12 w-[450px] h-[400px] bg-primary/10 rounded-full border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
       <div className="backdrop-blur-2xl h-full">
         <section className="relative container px-4 bg-transparent my-0 py-16">
           <div className="flex justify-center flex-wrap md:flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between gap-8">
@@ -42,7 +37,7 @@ const Courses = () => {
                 </p>
                 <Link
                   to="/courses"
-                  className="font-publicsans text-base max-lg:mx-auto inline-flex font-medium text-secondary hover:underline hover:underline-offset-4 lg:mt-2 "
+                  className="font-publicsans text-base max-lg:mx-auto inline-flex font-medium text-secondary hover:underline hover:underline-offset-4 lg:mt-2"
                 >
                   Know More
                 </Link>
@@ -82,15 +77,14 @@ const Courses = () => {
                   {Array.isArray(topCourses) && topCourses.length > 0 ? (
                     topCourses.map((item, index) => (
                       <SwiperSlide key={index} className="mb-8">
-                        <Link to={"courses/category"}>
+                        <Link to={`/courses/${item.slug}`}>
                           <CourseViewCard
                             item={{
-                              name: item.title,
-                              description: item.content_short_description,
-                              slug: item.course_slug,
+                              name: item.name,
+                              description: item.short_description,
+                              link: item.slug,
                               time: item.created_at,
-                              count: item.enrolment_count,
-                              categoryName: item.category_name,
+                              image: item.image_url,
                             }}
                           />
                         </Link>

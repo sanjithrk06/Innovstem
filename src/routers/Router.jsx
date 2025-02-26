@@ -39,22 +39,6 @@ const ProtectedRoute = ({ role, children }) => {
 
 const router = createBrowserRouter([
   {
-    path: "/admin-dashboard",
-    element: (
-      <ProtectedRoute role={["admin"]}>
-        <AdminDashboard />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/student-dashboard",
-    element: (
-      <ProtectedRoute role={["student", "admin"]}>
-        <StudentDashboard />
-      </ProtectedRoute>
-    ),
-  },
-  {
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
@@ -101,7 +85,7 @@ const router = createBrowserRouter([
             element: <Courses />,
           },
           {
-            path: "category",
+            path: ":slug",
             element: <CategoryPage />,
           },
           {
@@ -112,7 +96,16 @@ const router = createBrowserRouter([
       },
       {
         path: "blogs",
-        element: <Blogs />,
+        children: [
+          {
+            index: true,
+            element: <Blogs />,
+          },
+          {
+            path: ":blogSlug",
+            element: <BlogPage />,
+          },
+        ],
       },
       {
         path: "resources",
@@ -122,10 +115,7 @@ const router = createBrowserRouter([
         path: "webinars",
         element: <Webinars />,
       },
-      {
-        path: "blogpage",
-        element: <BlogPage />,
-      },
+
       {
         path: "about",
         element: <About />,

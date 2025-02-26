@@ -1,18 +1,14 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { TitleBanner, CategoryGrid } from "../components";
-import { useStore } from "../store/store";
+import { useCategories } from "./../hooks/hooks";
 
 const Courses = () => {
-  const { categories, fetchCategories, isLoading } = useStore();
+  const { data: categories, isLoading } = useCategories();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
-    if (!categories.length) {
-      fetchCategories();
-    }
-  }, []);
+    window.scroll(0, 0);
+  }, [categories]);
 
   return (
     <motion.div

@@ -77,7 +77,7 @@ const CourseCard = ({ item }) => {
           </div>
 
           <Link
-            to={`${item.link}`}
+            to={`/courses/course/${item.link}`}
             className="bg-primary/10 text-primary/80 p-3 shadow-md rounded-2xl"
           >
             <UserRoundPlus className="w-6 h-6" />

@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from "framer-motion";
-import CourseCard from "../ui/CourseCard";
 import CourseViewCard from "../ui/CourseViewCard";
 import { Link } from "react-router-dom";
 
@@ -20,8 +19,6 @@ export const CategoryGrid = ({ courses, isLoading }) => {
     );
   }
 
-  console.log(courses);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -38,7 +35,7 @@ export const CategoryGrid = ({ courses, isLoading }) => {
             transition={{ duration: 0.4, delay: index * 0.3, ease: "easeOut" }}
             className="cursor-pointer"
           >
-            <Link to={"category"}>
+            <Link to={`${item.slug}`}>
               <CourseViewCard
                 item={{
                   id: item.id,

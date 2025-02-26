@@ -21,5 +21,6 @@ export { default as CategoryHero } from "./Category/Hero.jsx";
 export { default as AboutHero } from "./About/Hero.jsx";
 export { default as AboutWhy } from "./About/Why.jsx";
 export { default as AboutWhat } from "./About/What.jsx";
+export { default as AboutBelieve } from "./About/Believe.jsx";
 export { default as VisionMission } from "./About/VisionMission.jsx";
 export { default as AboutConnection } from "./About/Connection.jsx";

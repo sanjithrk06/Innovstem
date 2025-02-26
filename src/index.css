@@ -61,6 +61,14 @@
   .content li strong {
     @apply text-slate-700 italic;
   }
+
+  .blogs p {
+    @apply font-publicsans text-lg/8 text-slate-600 text-justify;
+  }
+
+  .blogs h3 {
+    @apply text-secondary/90 pt-6 pb-2;
+  }
 }
 
 /* Ensure this targets Swiper components */

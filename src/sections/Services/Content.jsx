@@ -1,22 +1,40 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CircleCheckBig } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const fadeInVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
 };
 
+const servicesItem = [
+  {
+    name: "Career Guidance and Counseling",
+    link: "career-guidance",
+  },
+  {
+    name: "STEM and Skills Training",
+    link: "stem-skills",
+  },
+  {
+    name: "Defense Training Programs",
+    link: "defense-training",
+  },
+  {
+    name: "Entrepreneurship and Financial Literacy",
+    link: "entrepreneurship",
+  },
+  {
+    name: "Holistic Development",
+    link: "#",
+  },
+];
+
 const Content = () => {
   return (
     <>
-      {[
-        "Career Guidance and Counseling",
-        "STEM and Skills Training",
-        "Defense Training Programs",
-        "Entrepreneurship and Financial Literacy",
-        "Holistic Development",
-      ].map((title, index) => (
+      {servicesItem.map((item, index) => (
         <motion.section
           key={index}
           className={
@@ -51,7 +69,7 @@ const Content = () => {
                   index % 2 === 1 ? "lg:text-right" : "lg:text-left"
                 } font-medium text-secondary`}
               >
-                {title}
+                {item.name}
               </h2>
               <p className="font-publicsans text-lg font-normal text-slate-500 mb-4 text-justify">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -77,14 +95,15 @@ const Content = () => {
                   </li>
                 ))}
               </ul>
-              <button
+              <Link
                 className={`font-medium font-publicsans text-secondary/80 flex flex-row gap-2 justify-start ${
                   index % 2 === 1 ? "ml-auto" : ""
                 } items-center hover:text-primary`}
+                to={`/courses/${item.link}`}
               >
                 Know More
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           </div>
         </motion.section>

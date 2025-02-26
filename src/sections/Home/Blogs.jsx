@@ -1,35 +1,44 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { BlogList } from "../../components/index.js";
-import { useStore } from "../../store/store";
+import { useTopBlogs } from "../../hooks/hooks.js";
 
 // Animation variants for elements
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut", delay: 0.4 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", delay: 0.4 },
+  },
 };
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.6 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut", delay: 0.6 },
+  },
 };
 
 const Blogs = () => {
-  const { topBlogs, fetchTopBlogs, isLoading, error } = useStore();
-
-  useEffect(() => {
-    if (!topBlogs.length) fetchTopBlogs();
-  }, []);
+  const { data: topBlogs, isLoading, error } = useTopBlogs(); // Use React Query Hook
 
   // Ensure at least one blog for feature and two more for listing
-  const featureBlog = topBlogs[0] || null;
-  const blogs = topBlogs.slice(1, 3) || [];
+  const featureBlog = topBlogs?.[0] || null;
+  const blogs = topBlogs?.slice(1, 3) || [];
 
   return (
     <div className="bg-white py-1">
       <section className="container">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div initial="hidden" animate="visible" variants={itemVariants} className="mb-10">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={itemVariants}
+            className="mb-10"
+          >
             <span className="font-outfit text-base tracking-widest text-primary uppercase font-medium block mb-2 mx-auto lg:mx-0">
               Blogs & Resources
             </span>
@@ -52,7 +61,11 @@ const Blogs = () => {
             <p className="text-red-500">{error}</p>
           ) : (
             featureBlog && (
-              <motion.div initial="hidden" animate="visible" variants={cardVariants}>
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={cardVariants}
+              >
                 <BlogList featureBlog={featureBlog} blogs={blogs} />
               </motion.div>
             )

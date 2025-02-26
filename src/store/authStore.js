@@ -1,6 +1,7 @@
 // State management tool (Zustand)
 import { create } from "zustand";
 import axios from "axios";
+import api from "../config/axios";
 
 // Define API URL from environment variables
 const API_URL = "http://admin-dev.innovstem.com/api";
@@ -12,14 +13,14 @@ export const useAuthStore = create((set) => ({
   error: null,
   isLoading: false,
   isCheckingAuth: false,
-  message: null, // Added to store additional feedback messages
+  message: null,
 
   // Sign Up
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });
 
     try {
-      const response = await axios.post(`${API_URL}/signup`, {
+      const response = await api.post(`signup`, {
         email,
         password,
         name,
@@ -45,7 +46,7 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await api.post(`login`, {
         email,
         password,
       });
@@ -57,6 +58,7 @@ export const useAuthStore = create((set) => ({
         message: "Login successful!",
       });
     } catch (error) {
+      console.log(error.response.data.message);
       set({
         error: error.response?.data?.message || "Error logging in",
         isLoading: false,

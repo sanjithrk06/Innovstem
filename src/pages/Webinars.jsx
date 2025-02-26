@@ -1,92 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { BlogCard, TitleBanner, WebinarCard } from "../components";
-import { CourseHero } from "../sections";
+import React, { useEffect, useState } from "react";
+import { TitleBanner, WebinarCard } from "../components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import axios from "axios";
+import { useWebinars } from "../hooks/hooks";
 
 const Webinars = () => {
-  const [webinars, setWebinars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [totalResults, setTotalResults] = useState(0);
 
-  // Fetch webinars from API
-  const fetchWebinars = async (page = 1, search = "") => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(
-        search
-          ? `https://admin-dev.innovstem.com/api/webinars/search?query=${search}&page=${page}`
-          : `https://admin-dev.innovstem.com/api/webinars?page=${page}`
-      );
+  // Fetch webinars using React Query
+  const { data, isLoading } = useWebinars(currentPage, searchTerm);
 
-      const responseData = response.data.data;
-      setWebinars(responseData.data);
-      setCurrentPage(responseData.current_page);
-      setTotalPages(responseData.last_page);
-      setTotalResults(responseData.total);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching webinars:", error);
-      setIsLoading(false);
-      setWebinars([]);
-    }
-  };
-
-  // Initial webinars fetch
   useEffect(() => {
-    fetchWebinars();
-  }, []);
+    window.scroll(0, 0);
+  }, [data]);
 
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchWebinars(1, searchTerm);
+    setCurrentPage(1);
   };
 
   // Pagination handlers
   const nextPage = () => {
-    if (currentPage < totalPages) {
-      fetchWebinars(currentPage + 1, searchTerm);
+    if (currentPage < data?.last_page) {
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      fetchWebinars(currentPage - 1, searchTerm);
+      setCurrentPage((prev) => prev - 1);
     }
   };
 
-  // Generate page numbers
+  // Generate page numbers for pagination
   const getPageNumbers = () => {
-    const pageNumbers = [];
+    if (!data) return [];
     const maxPagesToShow = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    let endPage = Math.min(data.last_page, startPage + maxPagesToShow - 1);
 
     if (endPage - startPage + 1 < maxPagesToShow) {
       startPage = Math.max(1, endPage - maxPagesToShow + 1);
     }
 
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers;
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
   };
 
   return (
     <>
-      {/* <CourseHero title={"Webinars"} /> */}
       <TitleBanner
         title={"Webinars"}
         subtitle={"Explore New Learning Horizons"}
       />
       <div className="bg-gray-50 py-1 sm:py-1">
         <div className="container">
-          {/* Search form */}
+          {/* Search Form */}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
             <p className="text-left font-publicsans text-2xl text-secondary mb-4 sm:mb-0 pl-5">
               All Results
@@ -110,7 +82,6 @@ const Webinars = () => {
               >
                 <svg
                   className="w-4 h-4"
-                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 20 20"
@@ -134,144 +105,65 @@ const Webinars = () => {
           )}
 
           {/* Webinars Grid */}
-          {!isLoading && webinars.length > 0 && (
-            <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
-              {webinars.map((webinar) => (
-                <div key={webinar.id}>
-                  <WebinarCard
-                    item={{
-                      key: webinar.id,
-                      category: webinar.category_name,
-                      readTime: webinar.created_at,
-                      title: webinar.title,
-                      description: webinar.webinar_description,
-                      slug: webinar.webinar_slug,
-                    }}
-                  />
-                </div>
+          {!isLoading && data?.data?.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+              {data.data.map((webinar) => (
+                <WebinarCard
+                  key={webinar.id}
+                  item={{
+                    category: webinar.category_name,
+                    readTime: webinar.created_at,
+                    title: webinar.title,
+                    description: webinar.webinar_description,
+                    slug: webinar.webinar_slug,
+                  }}
+                />
               ))}
             </div>
           )}
 
           {/* No Results */}
-          {!isLoading && webinars.length === 0 && (
+          {!isLoading && data?.data?.length === 0 && (
             <div className="text-center py-10 text-gray-500">
               No webinars found
             </div>
           )}
 
           {/* Pagination */}
-          {!isLoading && totalPages > 1 && (
-            <div className="flex items-center justify-between  bg-gray-50 px-4 py-3 sm:px-6 my-8 font-publicsans">
-              {/* Mobile Pagination */}
-              <div className="flex flex-1 justify-center sm:hidden">
-                <div>
-                  <nav
-                    aria-label="Pagination"
-                    className="isolate inline-flex -space-x-px rounded-full shadow-xs"
-                  >
-                    {/* Previous Button */}
-                    <button
-                      onClick={prevPage}
-                      disabled={currentPage === 1}
-                      className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
-                    >
-                      <span className="sr-only">Previous</span>
-                      <ChevronLeftIcon aria-hidden="true" className="size-5" />
-                    </button>
+          {!isLoading && data?.last_page > 1 && (
+            <div className="flex items-center justify-center gap-4 my-8 font-publicsans">
+              {/* Previous Button */}
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className="px-3 py-2 text-gray-400 hover:bg-gray-100 disabled:opacity-50"
+              >
+                <ChevronLeftIcon className="w-5 h-5" />
+              </button>
 
-                    {/* Page Numbers */}
-                    {getPageNumbers().map((number) => (
-                      <button
-                        key={number}
-                        onClick={() => fetchCourses(number, searchTerm)}
-                        aria-current={
-                          currentPage === number ? "page" : undefined
-                        }
-                        className={`relative inline-flex rounded-full items-center px-4 py-2 text-sm font-semibold ${
-                          currentPage === number
-                            ? "bg-primary text-white z-10"
-                            : "text-gray-900 hover:bg-gray-100"
-                        }`}
-                      >
-                        {number}
-                      </button>
-                    ))}
+              {/* Page Numbers */}
+              {getPageNumbers().map((number) => (
+                <button
+                  key={number}
+                  onClick={() => setCurrentPage(number)}
+                  className={`px-4 py-2 text-sm font-semibold rounded-full ${
+                    currentPage === number
+                      ? "bg-primary text-white"
+                      : "text-gray-900 hover:bg-gray-100"
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
 
-                    {/* Next Button */}
-                    <button
-                      onClick={nextPage}
-                      disabled={currentPage === totalPages}
-                      className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
-                    >
-                      <span className="sr-only">Next</span>
-                      <ChevronRightIcon aria-hidden="true" className="size-5" />
-                    </button>
-                  </nav>
-                </div>
-              </div>
-
-              {/* Desktop Pagination */}
-              <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-sm text-gray-700">
-                    Showing{" "}
-                    <span className="font-medium">
-                      {(currentPage - 1) * 9 + 1}
-                    </span>{" "}
-                    to{" "}
-                    <span className="font-medium">
-                      {Math.min(currentPage * 9, totalResults)}
-                    </span>{" "}
-                    of <span className="font-medium">{totalResults}</span>{" "}
-                    results
-                  </p>
-                </div>
-                <div>
-                  <nav
-                    aria-label="Pagination"
-                    className="isolate inline-flex -space-x-px rounded-full shadow-xs"
-                  >
-                    {/* Previous Button */}
-                    <button
-                      onClick={prevPage}
-                      disabled={currentPage === 1}
-                      className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
-                    >
-                      <span className="sr-only">Previous</span>
-                      <ChevronLeftIcon aria-hidden="true" className="size-5" />
-                    </button>
-
-                    {/* Page Numbers */}
-                    {getPageNumbers().map((number) => (
-                      <button
-                        key={number}
-                        onClick={() => fetchCourses(number, searchTerm)}
-                        aria-current={
-                          currentPage === number ? "page" : undefined
-                        }
-                        className={`relative inline-flex rounded-full items-center px-4 py-2 text-sm font-semibold ${
-                          currentPage === number
-                            ? "bg-primary text-white z-10"
-                            : "text-gray-900 hover:bg-gray-100"
-                        }`}
-                      >
-                        {number}
-                      </button>
-                    ))}
-
-                    {/* Next Button */}
-                    <button
-                      onClick={nextPage}
-                      disabled={currentPage === totalPages}
-                      className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
-                    >
-                      <span className="sr-only">Next</span>
-                      <ChevronRightIcon aria-hidden="true" className="size-5" />
-                    </button>
-                  </nav>
-                </div>
-              </div>
+              {/* Next Button */}
+              <button
+                onClick={nextPage}
+                disabled={currentPage === data.last_page}
+                className="px-3 py-2 text-gray-400 hover:bg-gray-100 disabled:opacity-50"
+              >
+                <ChevronRightIcon className="w-5 h-5" />
+              </button>
             </div>
           )}
         </div>

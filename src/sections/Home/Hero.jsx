@@ -77,11 +77,11 @@ const Hero = () => {
 
   return (
     <div
-      className="relative h-[85vh] w-full bg-cream/20 overflow-hidden py-10"
+      className="relative md:h-[85vh] w-full bg-cream/20 overflow-hidden py-10"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 mb-5 max-md:mb-12">
+      <div className="max-w-7xl p-1 mx-auto px-4 md:px-8 mb-5 max-md:mb-12">
         <div className="flex flex-col lg:flex-row-reverse items-center gap-8">
           {/* Image Section on Top in Mobile and Right in Desktop */}
           <div className="relative w-full lg:w-1/2 h-[300px] md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
@@ -131,7 +131,7 @@ const Hero = () => {
       </div>
 
       {/* Navigation Controls */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 z-10">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 z-10">
         <button
           className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
           onClick={prevSlide}

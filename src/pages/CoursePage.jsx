@@ -12,20 +12,18 @@ import {
   Star,
 } from "lucide-react";
 import { CourseCard } from "../components";
-import api from "../config/axios";
+import { useCourseDetails, useRecommendedCourses } from "../hooks/hooks";
 
 const CoursePage = () => {
   const { slug } = useParams();
-  const [courseDetails, setCourseDetails] = useState(null);
-  const [recommendations, setRecommendations] = useState({
-    recommended_blogs: [],
-    recommended_courses: [],
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Default learning points
+  // Default learning points and quizzes
   const defaultLearningPoints = [
     "Understanding programming fundamentals",
     "Basic coding concepts",
@@ -34,7 +32,6 @@ const CoursePage = () => {
     "Foundational coding skills",
   ];
 
-  // Default quizzes
   const defaultQuizzes = [
     {
       title: "Introduction to Programming",
@@ -43,6 +40,19 @@ const CoursePage = () => {
       difficulty: "Beginner",
     },
   ];
+
+  // Fetch course details
+  const {
+    data: courseDetails,
+    isLoading: courseLoading,
+    error: courseError,
+  } = useCourseDetails(slug);
+
+  // Fetch recommendations based on course category
+  const {
+    data: recommendations = { recommended_blogs: [], recommended_courses: [] },
+    isLoading: recommendationsLoading,
+  } = useRecommendedCourses(courseDetails?.category_id);
 
   // Animation variants
   const fadeInUp = {
@@ -68,49 +78,13 @@ const CoursePage = () => {
     },
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        // Fetch course details
-        const courseResponse = await api.get(`/courses/d/${slug}`);
-        const courseData = courseResponse.data.data;
-        setCourseDetails(courseData);
-
-        // Fetch recommended courses using the category ID from course details
-        if (courseData?.category_id) {
-          const recommendResponse = await api.get(
-            `/recommend?category_id=${courseData.category_id}`
-          );
-          setRecommendations(
-            recommendResponse.data.data || {
-              recommended_blogs: [],
-              recommended_courses: [],
-            }
-          );
-        }
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (slug) {
-      fetchData();
-    }
-  }, [slug]);
-
   const learningPoints =
     courseDetails?.learning_materials
       ?.split("@$")
       .map((item) => item.trim())
       .filter(Boolean) || defaultLearningPoints;
 
-  if (loading) {
+  if (courseLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-primary"></div>
@@ -118,7 +92,7 @@ const CoursePage = () => {
     );
   }
 
-  if (error) {
+  if (courseError) {
     return (
       <div className="flex justify-center items-center h-screen text-red-500">
         Error loading course details. Please try again later.
@@ -137,6 +111,7 @@ const CoursePage = () => {
             animate="visible"
             variants={staggerChildren}
           >
+            {/* Breadcrumb Navigation */}
             <motion.nav
               className="flex"
               aria-label="Breadcrumb"
@@ -165,6 +140,7 @@ const CoursePage = () => {
               </ol>
             </motion.nav>
 
+            {/* Course Details */}
             <motion.div
               className="flex flex-col gap-4 pb-0"
               variants={fadeInUp}
@@ -183,6 +159,7 @@ const CoursePage = () => {
                 {courseDetails?.content_short_description}
               </motion.p>
 
+              {/* Course Meta Information */}
               <motion.div
                 className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0 text-gray-600 font-outfit"
                 variants={fadeInUp}
@@ -203,6 +180,7 @@ const CoursePage = () => {
                 </div>
               </motion.div>
 
+              {/* Course Statistics */}
               <motion.div
                 className="flex flex-row flex-wrap items-center gap-2 md:gap-2 text-gray-600 font-outfit"
                 variants={fadeInUp}
@@ -210,10 +188,18 @@ const CoursePage = () => {
                 <div className="text-sm font-normal text-slate-600 flex flex-row items-center gap-2">
                   <BadgeInfo className="w-5 h-5 text-primary/40" />
                   <span>
-                    Last Updated{" "}
+                    Updated{" "}
                     {courseDetails?.updated_at
-                      ? new Date(courseDetails.updated_at).toLocaleDateString()
-                      : new Date().toLocaleDateString()}
+                      ? `${new Date(
+                          courseDetails.updated_at
+                        ).toLocaleDateString("en-US", {
+                          month: "short",
+                          year: "numeric",
+                        })}`
+                      : new Date().toLocaleDateString("en-US", {
+                          month: "short",
+                          year: "numeric",
+                        })}
                   </span>
                 </div>
                 <div className="h-3 w-0.5 bg-primary/50"></div>
@@ -233,6 +219,7 @@ const CoursePage = () => {
 
             <motion.hr className="border-secondary/10" variants={fadeInUp} />
 
+            {/* Tabs and Content */}
             <motion.div className="font-publicsans" variants={fadeInUp}>
               <div className="flex space-x-4 mb-6">
                 <button
@@ -257,6 +244,7 @@ const CoursePage = () => {
                 </button>
               </div>
 
+              {/* Tab Content */}
               <motion.div
                 className="border rounded-2xl shadow p-8"
                 variants={fadeInUp}
@@ -340,6 +328,7 @@ const CoursePage = () => {
             variants={fadeInUp}
           >
             <div className="sticky top-8 space-y-10">
+              {/* Course Enrollment Card */}
               <div className="">
                 <div className="relative bg-cream/40 rounded-3xl mx-4 overflow-hidden">
                   <div className="absolute max-lg:-left-52 -bottom-56 lg:-left-1/2 w-[450px] h-[400px] bg-cream/80 rounded-full border-[120px] lg:border-[120px] border-primary/30 drop-shadow-md"></div>
@@ -353,7 +342,7 @@ const CoursePage = () => {
                           className="w-full rounded-lg"
                         />
                         <Link
-                          to="/enroll"
+                          to="#"
                           className="font-outfit font-medium text-cream text-center w-full rounded-xl bg-secondary/80 text-lg cursor-pointer py-2"
                         >
                           Enroll Now
@@ -370,31 +359,33 @@ const CoursePage = () => {
                   Suggested Blogs
                 </h2>
                 <motion.div
-                  className="flex flex-col gap-2 py-2"
+                  className="flex flex-col gap-0 py-2"
                   variants={staggerChildren}
                 >
                   {recommendations.recommended_blogs
                     .slice(0, 3)
                     .map((blog, index) => (
-                      <motion.div
-                        key={index}
-                        className="flex gap-4 cursor-pointer hover:bg-gray-50/50 p-4 rounded-lg"
-                        variants={fadeInUp}
-                      >
-                        <img
-                          src="https://pagedone.io/asset/uploads/1696244059.png"
-                          alt={`Suggested blog ${index + 1}`}
-                          className="w-20 h-20 object-cover rounded-lg"
-                        />
-                        <div>
-                          <h3 className="font-medium text-gray-900 line-clamp-1">
-                            {blog.title}
-                          </h3>
-                          <p className="text-sm text-gray-600 line-clamp-2">
-                            {blog.description}
-                          </p>
-                        </div>
-                      </motion.div>
+                      <Link to={`/blogs/${blog.slug}`}>
+                        <motion.div
+                          key={index}
+                          className="flex gap-4 cursor-pointer hover:bg-gray-50 p-4 rounded-lg"
+                          variants={fadeInUp}
+                        >
+                          <img
+                            src="https://pagedone.io/asset/uploads/1696244059.png"
+                            alt={`Suggested blog ${index + 1}`}
+                            className="w-20 h-20 object-cover rounded-lg"
+                          />
+                          <div>
+                            <h3 className="font-medium text-gray-900 line-clamp-1">
+                              {blog.title}
+                            </h3>
+                            <p className="text-sm text-gray-600 line-clamp-2">
+                              {blog.description}
+                            </p>
+                          </div>
+                        </motion.div>
+                      </Link>
                     ))}
                 </motion.div>
               </motion.div>
@@ -424,9 +415,8 @@ const CoursePage = () => {
               className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left"
               variants={staggerChildren}
             >
-              {recommendations.recommended_courses
-                .slice(0, 3)
-                .map((item, index) => (
+              {!recommendationsLoading &&
+                recommendations.recommended_courses.slice(0, 3).map((item) => (
                   <motion.div
                     key={item.id}
                     variants={fadeInUp}
@@ -438,6 +428,7 @@ const CoursePage = () => {
                         id: item.id,
                         name: item.title,
                         avail: item.class_level_name,
+                        link: item.slug,
                         category: [item.category_name],
                         description: item.content_short_description,
                       }}

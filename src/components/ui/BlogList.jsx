@@ -15,6 +15,7 @@ const BlogList = ({ featureBlog, blogs }) => {
             readTime: featureBlog.created_at,
             title: featureBlog.title,
             description: featureBlog.description,
+            slug: featureBlog.slug,
           }}
         />
       </div>
@@ -30,6 +31,7 @@ const BlogList = ({ featureBlog, blogs }) => {
               readTime: blog.created_at,
               title: blog.title,
               description: blog.description,
+              slug: blog.slug,
             }}
           />
         ))}

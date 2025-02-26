@@ -66,7 +66,7 @@ const What = () => {
               What We Do
             </span>
             <h2 className="font-outfit text-5xl font-semibold text-secondary leading-[3.25rem] lg:mb-6 mx-auto max-w-max lg:max-w-md lg:mx-0">
-              Our Toolkit for Your Growth!
+              Innovation Meets Education!
             </h2>
           </div>
           <div className="relative w-full text-center lg:text-left lg:w-2/4">
@@ -86,7 +86,7 @@ const What = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="border border-slate-100 rounded-lg shadow-xl bg-white"
+                  className="border border-slate-100 rounded-2xl shadow-xl bg-white"
                 >
                   <button
                     className="flex justify-between items-center w-full p-4 text-secondary/80 font-publicsans uppercase font-semibold text-lg rounded-t-xl text-left duration-300"
