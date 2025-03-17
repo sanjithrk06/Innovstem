@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AboutBelieve,
   AboutConnection,
   AboutWhat,
   AboutWhy,
@@ -9,10 +10,9 @@ import {
 const About = () => {
   return (
     <>
-      {/* <AboutHero /> */}
       <AboutWhy />
       <VisionMission />
-      {/* <AboutWhat /> */}
+      <AboutBelieve />
       <AboutConnection />
     </>
   );

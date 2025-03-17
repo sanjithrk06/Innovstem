@@ -3,9 +3,9 @@ import React from "react";
 const TitleBanner = ({ title, subtitle, description }) => {
   return (
     <>
-      <div className="relative bg-cream/40 rounded-3xl mt-5 mx-4 overflow-hidden">
-        <div className="absolute max-lg:-left-52 -bottom-56 lg:-left-12 w-[450px] h-[400px] bg-cream/80 rounded-full  border-[120px] lg:border-[120px] border-primary/30 drop-shadow-md"></div>
-        <div className="absolute max-lg:-left-52 -top-40 lg:-right-32 w-[450px] h-[400px] bg-cream/70 rounded-full  border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
+      <div className="relative bg-cream/30 rounded-3xl mt-5 mx-4 overflow-hidden">
+        <div className="absolute max-lg:-left-52 -bottom-56 lg:-left-12 w-[450px] h-[400px] bg-cream/60 rounded-full  border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
+        <div className="absolute max-lg:-left-52 -top-40 lg:-right-32 w-[450px] h-[400px] bg-cream/60 rounded-full  border-[120px] lg:border-[120px] border-primary/10 drop-shadow-md"></div>
         {/* Background Ring */}
         <div className=" backdrop-blur-2xl h-full">
           <section className="relative container px-4 bg-transparent my-0 py-16">

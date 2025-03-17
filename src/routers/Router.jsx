@@ -15,7 +15,11 @@ import {
   Services,
   StudentDashboard,
   Webinars,
+  Dashboard,
+  CategoryPage,
+  Register,
 } from "../pages";
+import DashboardLayout from "../layouts/Dashboard.jsx";
 
 const ProtectedRoute = ({ role, children }) => {
   const { user, isAuthenticated, isCheckingAuth } = useAuthStore();
@@ -35,20 +39,31 @@ const ProtectedRoute = ({ role, children }) => {
 
 const router = createBrowserRouter([
   {
-    path: "/admin-dashboard",
-    element: (
-      <ProtectedRoute role={["admin"]}>
-        <AdminDashboard />
-      </ProtectedRoute>
-    ),
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "resources",
+        element: <Resources />,
+      },
+    ],
   },
   {
-    path: "/student-dashboard",
-    element: (
-      <ProtectedRoute role={["student", "admin"]}>
-        <StudentDashboard />
-      </ProtectedRoute>
-    ),
+    path: "/auth",
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
   },
   {
     path: "/",
@@ -64,15 +79,33 @@ const router = createBrowserRouter([
       },
       {
         path: "courses",
-        element: <Courses />,
-      },
-      {
-        path: "coursepage",
-        element: <CoursePage />,
+        children: [
+          {
+            index: true,
+            element: <Courses />,
+          },
+          {
+            path: ":slug",
+            element: <CategoryPage />,
+          },
+          {
+            path: "course/:slug",
+            element: <CoursePage />,
+          },
+        ],
       },
       {
         path: "blogs",
-        element: <Blogs />,
+        children: [
+          {
+            index: true,
+            element: <Blogs />,
+          },
+          {
+            path: ":blogSlug",
+            element: <BlogPage />,
+          },
+        ],
       },
       {
         path: "resources",
@@ -82,19 +115,12 @@ const router = createBrowserRouter([
         path: "webinars",
         element: <Webinars />,
       },
-      {
-        path: "blogpage",
-        element: <BlogPage />,
-      },
+
       {
         path: "about",
         element: <About />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
   },
 ]);
 

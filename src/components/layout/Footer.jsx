@@ -47,7 +47,7 @@ const Footer = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="bg-gradient-to-t from-cream/30 via-cream/20 to-cream/5 shadow-lg shadow-secondary/10 p-10"
+      className="bg-gradient-to-t from-cream/40 via-cream/30 from-70% to-cream/20 shadow-lg shadow-secondary/10 p-10"
     >
       <motion.div
         variants={containerVariants}
@@ -85,19 +85,14 @@ const Footer = () => {
         {/* Navigation Section */}
         <motion.div
           variants={sectionVariants}
-          className="lg:w-4/12 sm:w-8/12 border-y-2 py-6 sm:py-2 sm:border-y-0 sm:border-r-2 lg:border-x-2 px-4 flex flex-col items-center justify-start gap-4"
+          className="lg:w-4/12 sm:w-8/12 border-y-2 py-6 sm:py-2 sm:border-y-0 sm:border-r-2 lg:border-x-2 border-secondary/50 px-4 flex flex-col items-center justify-start gap-4"
         >
           <motion.h2 variants={listItemVariants} className="nav-title py-2">
             Navigation
           </motion.h2>
           <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start sm:text-start gap-2 sm:gap-6">
             <motion.ul className="flex flex-col flex-wrap gap-2 lg:pl-4 font-normal">
-              {[
-                "About Us",
-                "Services",
-                "Courses & Webinars",
-                "Resources & Blogs",
-              ].map((item) => (
+              {["About", "Services", "Webinars", "Blogs"].map((item) => (
                 <motion.li
                   key={item}
                   variants={listItemVariants}
@@ -113,7 +108,12 @@ const Footer = () => {
               ))}
             </motion.ul>
             <motion.ul className="flex flex-col flex-wrap gap-2 lg:pl-4 font-normal">
-              {["Industrial Connection", "Go to Dashboard"].map((item) => (
+              {[
+                "Career Guidance",
+                "STEM Skills",
+                "Defence Training",
+                "Entrepreneurship",
+              ].map((item) => (
                 <motion.li
                   key={item}
                   variants={listItemVariants}
@@ -127,13 +127,6 @@ const Footer = () => {
                   </a>
                 </motion.li>
               ))}
-              {/* <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-primary/10 my-3 text-primary text-base font-noto font-medium cursor-pointer py-2 px-5 w-auto rounded-xl duration-300 z-10 flex flex-row group ease-in"
-              >
-                Go to Dashboard
-              </motion.button> */}
             </motion.ul>
           </div>
         </motion.div>

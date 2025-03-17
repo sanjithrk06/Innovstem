@@ -2,6 +2,7 @@ import React from "react";
 import { Eye, UserRoundPlus } from "lucide-react";
 import { TbCategory } from "react-icons/tb";
 import { PiStudentDuotone } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 const CourseCard = ({ item }) => {
   return (
@@ -75,12 +76,12 @@ const CourseCard = ({ item }) => {
             </div>
           </div>
 
-          <a
-            href="#"
+          <Link
+            to={`/courses/course/${item.link}`}
             className="bg-primary/10 text-primary/80 p-3 shadow-md rounded-2xl"
           >
             <UserRoundPlus className="w-6 h-6" />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

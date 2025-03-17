@@ -9,8 +9,8 @@ import { motion } from "framer-motion";
 
 const Courses = () => {
   return (
-    <div className="relative bg-primary/5 rounded-3xl mt-5 mx-4 overflow-hidden">
-      <div className="absolute max-lg:-left-52 -bottom-40 lg:-left-12 w-[450px] h-[400px] bg-primary/10 rounded-full  border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
+    <div className="relative bg-cream/30 rounded-3xl mt-5 mx-4 overflow-hidden">
+      <div className="absolute max-lg:-left-52 -bottom-40 lg:-left-12 w-[450px] h-[400px] bg-cream/40 rounded-full  border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
       <div className="backdrop-blur-2xl h-full">
         <motion.section
           initial={{ opacity: 0, y: 50 }}

@@ -11,7 +11,10 @@ const BlogCard = ({ item }) => {
   );
 
   return (
-    <div className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col lg:flex-row gap-4 h-full duration-300 hover:bg-whiteDim hover:shadow rounded-2xl">
+    <div
+      key={item.key}
+      className="py-6 px-2 lg:px-6 bg-transparent text-left flex flex-col lg:flex-row gap-4 h-full duration-300 hover:bg-whiteDim hover:shadow rounded-2xl"
+    >
       <div className="lg:w-2/6 overflow-hidden rounded-xl drop-shadow">
         <img
           src="https://pagedone.io/asset/uploads/1696244059.png"
@@ -35,7 +38,7 @@ const BlogCard = ({ item }) => {
           {item.description}
         </div>
         <Link
-          to={"/blogpage"}
+          to={`/blogs/${item.slug}`}
           className="flex flex-row items-center gap-1 text-sm font-semibold text-secondary/80 hover:text-primary hover:cursor-pointer"
         >
           Learn More <ArrowRight className="w-3 h-3" />

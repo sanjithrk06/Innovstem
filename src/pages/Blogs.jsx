@@ -1,60 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BlogCard, TitleBanner } from "../components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import axios from "axios";
+import { useBlogs } from "../hooks/hooks";
 
 const Blogs = () => {
-  const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [totalResults, setTotalResults] = useState(0);
 
-  // Fetch blogs from API
-  const fetchBlogs = async (page = 1, search = "") => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(
-        search
-          ? `https://admin-dev.innovstem.com/api/blogs/search?query=${search}&page=${page}`
-          : `https://admin-dev.innovstem.com/api/blogs?page=${page}`
-      );
-
-      const responseData = response.data.data;
-      setBlogs(responseData.data);
-      setCurrentPage(responseData.current_page);
-      setTotalPages(responseData.last_page);
-      setTotalResults(responseData.total);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-      setIsLoading(false);
-      setBlogs([]);
-    }
-  };
-
-  // Initial blog fetch
   useEffect(() => {
-    fetchBlogs();
+    window.scroll(0, 0);
   }, []);
+
+  // Use the custom hook for fetching blogs
+  const {
+    data: blogsData,
+    isLoading,
+    isError,
+  } = useBlogs(currentPage, searchTerm);
+
+  // Derived state from blogsData
+  const blogs = blogsData?.data || [];
+  const totalPages = blogsData?.last_page || 0;
+  const totalResults = blogsData?.total || 0;
 
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchBlogs(1, searchTerm);
+    setCurrentPage(1); // Reset to first page when searching
   };
 
   // Pagination handlers
   const nextPage = () => {
     if (currentPage < totalPages) {
-      fetchBlogs(currentPage + 1, searchTerm);
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      fetchBlogs(currentPage - 1, searchTerm);
+      setCurrentPage((prev) => prev - 1);
     }
   };
 
@@ -78,10 +62,10 @@ const Blogs = () => {
 
   return (
     <>
-      <TitleBanner title={"Blogs"} subtitle={"Explore New Learning Horizons"} />
+      <TitleBanner title="Blogs" subtitle="Explore New Learning Horizons" />
       <div className="bg-gray-50 py-1 sm:py-1">
         <div className="container">
-          {/* Search form remains the same */}
+          {/* Search form */}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
             <p className="text-left font-publicsans text-2xl text-secondary mb-4 sm:mb-0 pl-5">
               All Results
@@ -128,6 +112,13 @@ const Blogs = () => {
             <div className="text-center py-10">Loading blogs...</div>
           )}
 
+          {/* Error State */}
+          {isError && (
+            <div className="text-center py-10 text-red-500">
+              Error loading blogs. Please try again later.
+            </div>
+          )}
+
           {/* Blogs Grid */}
           {!isLoading && blogs.length > 0 && (
             <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
@@ -140,6 +131,7 @@ const Blogs = () => {
                       readTime: blog.created_at,
                       title: blog.title,
                       description: blog.description,
+                      slug: blog.slug,
                     }}
                   />
                 </div>
@@ -156,53 +148,46 @@ const Blogs = () => {
 
           {/* Pagination */}
           {!isLoading && totalPages > 1 && (
-            <div className="flex items-center justify-between  bg-gray-50 px-4 py-3 sm:px-6 my-8 font-publicsans">
+            <div className="flex items-center justify-between bg-gray-50 px-4 py-3 sm:px-6 my-8 font-publicsans">
               {/* Mobile Pagination */}
               <div className="flex flex-1 justify-center sm:hidden">
-                <div>
-                  <nav
-                    aria-label="Pagination"
-                    className="isolate inline-flex -space-x-px rounded-full shadow-xs"
+                <nav
+                  aria-label="Pagination"
+                  className="isolate inline-flex -space-x-px rounded-full shadow-xs"
+                >
+                  <button
+                    onClick={prevPage}
+                    disabled={currentPage === 1}
+                    className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
                   >
-                    {/* Previous Button */}
-                    <button
-                      onClick={prevPage}
-                      disabled={currentPage === 1}
-                      className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
-                    >
-                      <span className="sr-only">Previous</span>
-                      <ChevronLeftIcon aria-hidden="true" className="size-5" />
-                    </button>
+                    <span className="sr-only">Previous</span>
+                    <ChevronLeftIcon aria-hidden="true" className="size-5" />
+                  </button>
 
-                    {/* Page Numbers */}
-                    {getPageNumbers().map((number) => (
-                      <button
-                        key={number}
-                        onClick={() => fetchCourses(number, searchTerm)}
-                        aria-current={
-                          currentPage === number ? "page" : undefined
-                        }
-                        className={`relative inline-flex rounded-full items-center px-4 py-2 text-sm font-semibold ${
-                          currentPage === number
-                            ? "bg-primary text-white z-10"
-                            : "text-gray-900 hover:bg-gray-100"
-                        }`}
-                      >
-                        {number}
-                      </button>
-                    ))}
-
-                    {/* Next Button */}
+                  {getPageNumbers().map((number) => (
                     <button
-                      onClick={nextPage}
-                      disabled={currentPage === totalPages}
-                      className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
+                      key={number}
+                      onClick={() => setCurrentPage(number)}
+                      aria-current={currentPage === number ? "page" : undefined}
+                      className={`relative inline-flex rounded-full items-center px-4 py-2 text-sm font-semibold ${
+                        currentPage === number
+                          ? "bg-primary text-white z-10"
+                          : "text-gray-900 hover:bg-gray-100"
+                      }`}
                     >
-                      <span className="sr-only">Next</span>
-                      <ChevronRightIcon aria-hidden="true" className="size-5" />
+                      {number}
                     </button>
-                  </nav>
-                </div>
+                  ))}
+
+                  <button
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                    className="relative inline-flex items-center rounded-full px-2 py-2 text-gray-400 hover:bg-gray-100 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
+                  >
+                    <span className="sr-only">Next</span>
+                    <ChevronRightIcon aria-hidden="true" className="size-5" />
+                  </button>
+                </nav>
               </div>
 
               {/* Desktop Pagination */}
@@ -226,7 +211,6 @@ const Blogs = () => {
                     aria-label="Pagination"
                     className="isolate inline-flex -space-x-px rounded-full shadow-xs"
                   >
-                    {/* Previous Button */}
                     <button
                       onClick={prevPage}
                       disabled={currentPage === 1}
@@ -236,11 +220,10 @@ const Blogs = () => {
                       <ChevronLeftIcon aria-hidden="true" className="size-5" />
                     </button>
 
-                    {/* Page Numbers */}
                     {getPageNumbers().map((number) => (
                       <button
                         key={number}
-                        onClick={() => fetchCourses(number, searchTerm)}
+                        onClick={() => setCurrentPage(number)}
                         aria-current={
                           currentPage === number ? "page" : undefined
                         }
@@ -254,7 +237,6 @@ const Blogs = () => {
                       </button>
                     ))}
 
-                    {/* Next Button */}
                     <button
                       onClick={nextPage}
                       disabled={currentPage === totalPages}

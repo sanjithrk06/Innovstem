@@ -8,11 +8,15 @@ const BlogList = ({ featureBlog, blogs }) => {
       {/* Feature Blog */}
       <div className="col-span-1">
         <FeatureCard
-          image={featureBlog.image}
-          category={featureBlog.category}
-          readTime={featureBlog.readTime}
-          title={featureBlog.title}
-          description={featureBlog.description}
+          key={`content-${featureBlog.title}`}
+          item={{
+            image: featureBlog.image,
+            category: featureBlog.category_name,
+            readTime: featureBlog.created_at,
+            title: featureBlog.title,
+            description: featureBlog.description,
+            slug: featureBlog.slug,
+          }}
         />
       </div>
 
@@ -20,13 +24,14 @@ const BlogList = ({ featureBlog, blogs }) => {
       <div className="flex flex-col gap-4 col-span-2">
         {blogs.map((blog, index) => (
           <BlogCard
+            key={index}
             item={{
-              key: index,
               image: blog.image,
-              category: blog.category,
-              readTime: blog.readTime,
+              category: blog.category_name,
+              readTime: blog.created_at,
               title: blog.title,
               description: blog.description,
+              slug: blog.slug,
             }}
           />
         ))}

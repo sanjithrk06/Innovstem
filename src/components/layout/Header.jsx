@@ -94,17 +94,35 @@ const dropdownVariants = {
   },
 };
 
+const servicesNav = [
+  {
+    name: "All Services",
+    href: "services",
+  },
+  {
+    name: "STEM Skills",
+    href: "courses/stem-skills",
+  },
+  {
+    name: "Defense Training",
+    href: "courses/defense-training",
+  },
+  {
+    name: "Entrepreneurship",
+    href: "courses/entrepreneurship",
+  },
+  {
+    name: "Holistic Development",
+    href: "courses/holistic",
+  },
+];
+
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white">
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={headerVariants}
-        className="bg-cream/20 sticky top-0 z-20 font-outfit shadow-lg shadow-cream/5"
-      >
+    <div className="bg-white sticky top-0 h-[12vh] z-20">
+      <header className="bg-cream/20 font-outfit h-full shadow-lg shadow-cream/5">
         <nav
           aria-label="Global"
           className="mx-auto flex max-w-screen-2xl items-center justify-between p-6 lg:px-16"
@@ -135,27 +153,112 @@ const Header = () => {
           </div>
 
           <PopoverGroup className="hidden lg:flex lg:gap-x-12 z-40">
-            {["services", "courses", "webinars", "blogs", "about"].map(
-              (item) => (
-                <motion.div
-                  key={item}
-                  variants={navItemVariants}
-                  whileHover={{ y: -2 }}
+            <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `text-base/6 font-medium relative ${
+                    isActive
+                      ? "text-primary"
+                      : "text-secondary/90 hover:text-primary"
+                  }`
+                }
+              >
+                Home
+                <motion.span
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  className="absolute bottom-0 left-0 h-0.5 bg-primary"
+                />
+              </NavLink>
+            </motion.div>
+
+            <Popover className="relative">
+              {({ open }) => (
+                <>
+                  <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
+                    <PopoverButton className="flex items-center gap-x-1 text-base/6 font-medium outline-none text-secondary/90 group hover:text-primary">
+                      Services
+                      <motion.div
+                        animate={{ rotate: open ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ChevronDownIcon
+                          aria-hidden="true"
+                          className="size-5 flex-none text-secondary group-hover:text-primary"
+                        />
+                      </motion.div>
+                    </PopoverButton>
+                  </motion.div>
+
+                  <AnimatePresence>
+                    {open && (
+                      <PopoverPanel
+                        static
+                        as={motion.div}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={dropdownVariants}
+                        className="absolute top-full -left-4 -z-10 mt-3 p-2 overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5"
+                      >
+                        <div className="p-0">
+                          {servicesNav.map((item) => (
+                            <motion.div
+                              key={item.name}
+                              whileHover={{ x: 0 }}
+                              className="group relative text-nowrap items-center gap-x-6 rounded-2xl px-6 py-2 text-base/6 hover:bg-cream/40"
+                            >
+                              <div className="flex-auto">
+                                <NavLink
+                                  to={item.href}
+                                  className={({ isActive }) =>
+                                    `text-base/6 font-medium relative ${
+                                      isActive
+                                        ? "text-primary"
+                                        : "text-secondary/90 "
+                                    }`
+                                  }
+                                >
+                                  {item.name}
+                                  <span className="absolute inset-0" />
+                                </NavLink>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </PopoverPanel>
+                    )}
+                  </AnimatePresence>
+                </>
+              )}
+            </Popover>
+
+            {["webinars", "blogs", "about"].map((item) => (
+              <motion.div
+                key={item}
+                variants={navItemVariants}
+                whileHover={{ y: -2 }}
+              >
+                <NavLink
+                  to={item}
+                  className={({ isActive }) =>
+                    `text-base/6 font-medium relative ${
+                      isActive
+                        ? "text-primary"
+                        : "text-secondary/90 hover:text-primary"
+                    }`
+                  }
                 >
-                  <NavLink
-                    to={item}
-                    className="text-base/6 font-medium text-secondary/90 hover:text-primary relative"
-                  >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                    <motion.span
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "100%" }}
-                      className="absolute bottom-0 left-0 h-0.5 bg-primary"
-                    />
-                  </NavLink>
-                </motion.div>
-              )
-            )}
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                  <motion.span
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                    className="absolute bottom-0 left-0 h-0.5 bg-primary"
+                  />
+                </NavLink>
+              </motion.div>
+            ))}
 
             <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
               <Link
@@ -171,70 +274,15 @@ const Header = () => {
                 />
               </Link>
             </motion.div>
-
-            {/* <Popover className="relative">
-            {({ open }) => (
-              <>
-                <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
-                  <PopoverButton className="flex items-center gap-x-1 text-base/6 font-medium outline-none text-secondary/90 group hover:text-primary">
-                    Resources
-                    <motion.div
-                      animate={{ rotate: open ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ChevronDownIcon
-                        aria-hidden="true"
-                        className="size-5 flex-none text-secondary group-hover:text-primary"
-                      />
-                    </motion.div>
-                  </PopoverButton>
-                </motion.div>
-
-                <AnimatePresence>
-                  {open && (
-                    <PopoverPanel
-                      static
-                      as={motion.div}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      variants={dropdownVariants}
-                      className="absolute top-full -left-8 -z-10 mt-3 w-screen max-w-64 overflow-hidden rounded-2xl bg-white ring-1 shadow-lg ring-gray-900/5"
-                    >
-                      <div className="p-4">
-                        {products.map((item) => (
-                          <motion.div
-                            key={item.name}
-                            whileHover={{ x: 5 }}
-                            className="group relative flex items-center gap-x-6 rounded-lg p-4 text-base/6 hover:bg-gray-50"
-                          >
-                            <div className="flex-auto">
-                              <NavLink
-                                to={item.href}
-                                className="block font-semibold text-secondary/90 hover:text-primary"
-                              >
-                                {item.name}
-                                <span className="absolute inset-0" />
-                              </NavLink>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </PopoverPanel>
-                  )}
-                </AnimatePresence>
-              </>
-            )}
-          </Popover> */}
           </PopoverGroup>
 
           <motion.div
             variants={navItemVariants}
             className="hidden lg:flex lg:flex-1 lg:justify-end"
           >
-            <motion.div whileHover={{ x: 3 }}>
+            <motion.div whileHover={{ y: -2 }}>
               <NavLink
-                to="#"
+                to="auth/login"
                 className="text-base/6 font-medium text-cream bg-secondary border-2 border-secondary p-2 px-3"
               >
                 Log in
@@ -289,13 +337,72 @@ const Header = () => {
                 <motion.div className="mt-6 flow-root">
                   <div className="-my-6 divide-y divide-gray-500/10">
                     <div className="space-y-2 py-6">
-                      {[
-                        "services",
-                        "courses",
-                        "webinars",
-                        "blogs",
-                        "about",
-                      ].map((item) => (
+                      <motion.div
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <NavLink
+                          to="/"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                        >
+                          Home
+                        </NavLink>
+                      </motion.div>
+
+                      <Disclosure>
+                        {({ open }) => (
+                          <>
+                            <motion.div
+                              whileHover={{ x: 5 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <DisclosureButton className="group flex w-full items-center justify-between rounded-lg -mx-3 py-2 pr-3.5 pl-3 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50">
+                                Services
+                                <motion.div
+                                  animate={{ rotate: open ? 180 : 0 }}
+                                  transition={{ duration: 0.2 }}
+                                >
+                                  <ChevronDownIcon
+                                    aria-hidden="true"
+                                    className="size-5 flex-none"
+                                  />
+                                </motion.div>
+                              </DisclosureButton>
+                            </motion.div>
+                            <AnimatePresence>
+                              {open && (
+                                <DisclosurePanel
+                                  static
+                                  as={motion.div}
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: "auto", opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  className="mt-2 space-y-2"
+                                >
+                                  {servicesNav.map((item) => (
+                                    <motion.div
+                                      key={item.name}
+                                      whileHover={{ x: 10 }}
+                                      whileTap={{ scale: 0.98 }}
+                                    >
+                                      <DisclosureButton
+                                        as="a"
+                                        href={item.href}
+                                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                                      >
+                                        {item.name}
+                                      </DisclosureButton>
+                                    </motion.div>
+                                  ))}
+                                </DisclosurePanel>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        )}
+                      </Disclosure>
+
+                      {["webinars", "blogs", "about"].map((item) => (
                         <motion.div
                           key={item}
                           whileHover={{ x: 5 }}
@@ -323,58 +430,6 @@ const Header = () => {
                           Career Guidance
                         </NavLink>
                       </motion.div>
-
-                      {/* <Disclosure>
-                      {({ open }) => (
-                        <>
-                          <motion.div
-                            whileHover={{ x: 5 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            <DisclosureButton className="group flex w-full items-center justify-between rounded-lg -mx-3 py-2 pr-3.5 pl-3 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50">
-                              Resources
-                              <motion.div
-                                animate={{ rotate: open ? 180 : 0 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <ChevronDownIcon
-                                  aria-hidden="true"
-                                  className="size-5 flex-none"
-                                />
-                              </motion.div>
-                            </DisclosureButton>
-                          </motion.div>
-                          <AnimatePresence>
-                            {open && (
-                              <DisclosurePanel
-                                static
-                                as={motion.div}
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="mt-2 space-y-2"
-                              >
-                                {products.map((item) => (
-                                  <motion.div
-                                    key={item.name}
-                                    whileHover={{ x: 10 }}
-                                    whileTap={{ scale: 0.98 }}
-                                  >
-                                    <DisclosureButton
-                                      as="a"
-                                      href={item.href}
-                                      className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
-                                    >
-                                      {item.name}
-                                    </DisclosureButton>
-                                  </motion.div>
-                                ))}
-                              </DisclosurePanel>
-                            )}
-                          </AnimatePresence>
-                        </>
-                      )}
-                    </Disclosure> */}
                     </div>
 
                     <div className="py-6">
@@ -397,7 +452,7 @@ const Header = () => {
             </Dialog>
           )}
         </AnimatePresence>
-      </motion.header>
+      </header>
     </div>
   );
 };
