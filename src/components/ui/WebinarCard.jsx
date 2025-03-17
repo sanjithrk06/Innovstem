@@ -1,10 +1,11 @@
 import React from "react";
 import { UserRoundPlus } from "lucide-react";
 import { formatDistance, parseISO } from "date-fns";
+import { Link } from "react-router-dom";
 
 const WebinarCard = ({ item }) => {
   return (
-    <div className="bg-white shadow hover:shadow-xl duration-300 border border-gray-50 m-2 p-4 rounded-2xl">
+    <div className="bg-white shadow hover:shadow-xl duration-300 border border-gray-50 m-2 p-4 rounded-2xl flex flex-col justify-evenly">
       <div className="relative flex items-center mb-4 h-32">
         {/* Category label */}
         <div className="absolute bottom-2 right-2 bg-primary/70 text-white text-xs px-2 py-1 rounded-2xl">
@@ -19,7 +20,7 @@ const WebinarCard = ({ item }) => {
         />
       </div>
 
-      <div className="font-publicsans p-1">
+      <div className="font-publicsans p-1 flex flex-col justify-between">
         <h1 className="font-outfit text-xl text-left text-gray-900 font-medium leading-8 line-clamp-2 mb-2">
           {item.title}
         </h1>
@@ -29,13 +30,13 @@ const WebinarCard = ({ item }) => {
         </p>
 
         <div className="w-full mt-4">
-          <a
-            href="#"
-            className="bg-primary/10 text-primary/80 p-3 shadow-md rounded-xl flex flex-row gap-2 justify-center items-center"
+          <Link
+            to={`/webinars/${item.slug}`}
+            className="bg-primary/5 text-primary/80 drop-shadow-sm p-3 rounded-xl flex flex-row gap-2 justify-center items-center"
           >
             <UserRoundPlus className="w-5 h-5" />
             Enroll Now
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -25,10 +25,10 @@ const servicesItem = [
     name: "Entrepreneurship and Financial Literacy",
     link: "entrepreneurship",
   },
-  {
-    name: "Holistic Development",
-    link: "#",
-  },
+  // {
+  //   name: "Holistic Development",
+  //   link: "holistic",
+  // },
 ];
 
 const Content = () => {

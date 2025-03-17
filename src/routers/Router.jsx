@@ -18,6 +18,7 @@ import {
   Dashboard,
   CategoryPage,
   Register,
+  WebinarPage,
 } from "../pages";
 import DashboardLayout from "../layouts/Dashboard.jsx";
 
@@ -113,7 +114,16 @@ const router = createBrowserRouter([
       },
       {
         path: "webinars",
-        element: <Webinars />,
+        children: [
+          {
+            index: true,
+            element: <Webinars />,
+          },
+          {
+            path: ":slug",
+            element: <WebinarPage />,
+          },
+        ],
       },
 
       {
