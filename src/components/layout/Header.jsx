@@ -101,19 +101,19 @@ const servicesNav = [
   },
   {
     name: "STEM Skills",
-    href: "#",
+    href: "courses/stem-skills",
   },
   {
-    name: "Defence Traning",
-    href: "#",
+    name: "Defense Training",
+    href: "courses/defense-training",
   },
   {
     name: "Entrepreneurship",
-    href: "#",
+    href: "courses/entrepreneurship",
   },
   {
     name: "Holistic Development",
-    href: "#",
+    href: "courses/holistic",
   },
 ];
 
@@ -200,14 +200,14 @@ const Header = () => {
                         animate="visible"
                         exit="exit"
                         variants={dropdownVariants}
-                        className="absolute top-full -left-4 -z-10 mt-3 overflow-hidden rounded-none border-t-4 border-secondary/90 bg-white ring-1 shadow-lg ring-gray-900/5"
+                        className="absolute top-full -left-4 -z-10 mt-3 p-2 overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5"
                       >
                         <div className="p-0">
                           {servicesNav.map((item) => (
                             <motion.div
                               key={item.name}
                               whileHover={{ x: 0 }}
-                              className="group relative text-nowrap items-center gap-x-6 rounded-none px-6 py-4 text-base/6 hover:bg-secondary/90"
+                              className="group relative text-nowrap items-center gap-x-6 rounded-2xl px-6 py-2 text-base/6 hover:bg-cream/40"
                             >
                               <div className="flex-auto">
                                 <NavLink
@@ -216,7 +216,7 @@ const Header = () => {
                                     `text-base/6 font-medium relative ${
                                       isActive
                                         ? "text-primary"
-                                        : "text-secondary/90 group-hover:text-cream"
+                                        : "text-secondary/90 "
                                     }`
                                   }
                                 >

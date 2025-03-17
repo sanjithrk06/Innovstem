@@ -87,11 +87,10 @@ const What = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="border border-slate-100 rounded-2xl shadow-xl bg-white"
+                  onMouseEnter={() => setOpenIndex(index)}
+                  onMouseLeave={() => setOpenIndex(null)}
                 >
-                  <button
-                    className="flex justify-between items-center w-full p-4 text-secondary/80 font-publicsans uppercase font-semibold text-lg rounded-t-xl text-left duration-300"
-                    onClick={() => toggleAccordion(index)}
-                  >
+                  <button className="flex justify-between items-center w-full p-4 text-secondary/80 font-publicsans uppercase font-semibold text-lg rounded-t-xl text-left duration-300">
                     <div className="flex items-center font-publicsans gap-4">
                       <div className="bg-cream/30 rounded-xl text-primary shadow p-2">
                         <div className="flex justify-center items-center">
