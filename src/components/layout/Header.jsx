@@ -100,6 +100,10 @@ const servicesNav = [
     href: "services",
   },
   {
+    name: "Career Guidance",
+    href: "courses/career-guidance",
+  },
+  {
     name: "STEM Skills",
     href: "courses/stem-skills",
   },
@@ -110,10 +114,6 @@ const servicesNav = [
   {
     name: "Entrepreneurship",
     href: "courses/entrepreneurship",
-  },
-  {
-    name: "Holistic Development",
-    href: "courses/holistic",
   },
 ];
 
@@ -216,7 +216,7 @@ const Header = () => {
                                     `text-base/6 font-medium relative ${
                                       isActive
                                         ? "text-primary"
-                                        : "text-secondary/90 "
+                                        : "text-secondary/80"
                                     }`
                                   }
                                 >

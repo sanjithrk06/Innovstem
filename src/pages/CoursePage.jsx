@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { CourseCard } from "../components";
 import { useCourseDetails, useRecommendedCourses } from "../hooks/hooks";
+import CourseQuiz from "./CourseQuiz";
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -22,6 +23,7 @@ const CoursePage = () => {
   }, [slug]);
 
   const [activeTab, setActiveTab] = useState("overview");
+  const [activeQuiz, setActiveQuiz] = useState(null);
 
   // Default learning points and quizzes
   const defaultLearningPoints = [
@@ -296,24 +298,35 @@ const CoursePage = () => {
                     <h3 className="text-xl font-bold text-secondary/80">
                       Course Quizzes
                     </h3>
-                    <div className="space-y-4">
-                      {defaultQuizzes.map((quiz, index) => (
-                        <motion.div
-                          key={index}
-                          className="bg-gray-50 p-4 rounded-lg"
-                          variants={fadeInUp}
-                        >
-                          <h4 className="font-medium text-secondary">
-                            {quiz.title}
-                          </h4>
-                          <div className="mt-2 flex flex-wrap gap-4 text-sm text-gray-600">
-                            <span>{quiz.questions} Questions</span>
-                            <span>{quiz.timeLimit}</span>
-                            <span>{quiz.difficulty} Level</span>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
+
+                    {!activeQuiz ? (
+                      // Show quiz list when no quiz is selected
+                      <div className="space-y-4">
+                        {defaultQuizzes.map((quiz, index) => (
+                          <motion.div
+                            key={index}
+                            className="bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                            variants={fadeInUp}
+                            onClick={() => setActiveQuiz(quiz)}
+                          >
+                            <h4 className="font-medium text-secondary">
+                              {quiz.title}
+                            </h4>
+                            <div className="mt-2 flex flex-wrap gap-4 text-sm text-gray-600">
+                              <span>{quiz.questions} Questions</span>
+                              <span>{quiz.timeLimit}</span>
+                              <span>{quiz.difficulty} Level</span>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    ) : (
+                      // Show the selected quiz when one is active
+                      <CourseQuiz
+                        quiz={activeQuiz}
+                        onBack={() => setActiveQuiz(null)}
+                      />
+                    )}
                   </motion.div>
                 )}
               </motion.div>

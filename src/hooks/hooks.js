@@ -156,3 +156,57 @@ export const useWebinars = (page = 1, search = "") => {
     staleTime: 1000 * 60 * 5,
   });
 };
+
+export const useWebinarDetails = (slug) => {
+  return useQuery({
+    queryKey: ["webinarDetails", slug],
+    queryFn: async () => {
+      if (!slug) throw new Error("Invalid webinar slug");
+      const response = await api.get(`/webinars/d/${slug}`);
+      return response.data.data;
+    },
+    enabled: !!slug, // Only run query if slug is available
+  });
+};
+
+export const useRecommendedWebinars = (categoryId) => {
+  return useQuery({
+    queryKey: ["recommendedWebinars", categoryId],
+    queryFn: async () => {
+      if (!categoryId)
+        return { recommended_blogs: [], recommended_webinars: [] };
+      const response = await api.get(
+        `/recommend-webinars?category_id=${categoryId}`
+      );
+      return (
+        response.data.data || {
+          recommended_blogs: [],
+          recommended_webinars: [],
+        }
+      );
+    },
+    enabled: !!categoryId, // Only fetch recommendations if categoryId is available
+  });
+};
+
+// Helper function to format date and time
+export const formatDateTime = (dateTimeString) => {
+  if (!dateTimeString) return { date: "TBD", time: "TBD" };
+
+  const dateTime = new Date(dateTimeString);
+
+  const date = dateTime.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  const time = dateTime.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  return { date, time };
+};
