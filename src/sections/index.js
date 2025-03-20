@@ -5,6 +5,8 @@ export { default as HCourses } from "./Home/Courses.jsx";
 export { default as Services } from "./Home/Services.jsx";
 export { default as Testimonials } from "./Home/Testimonials.jsx";
 export { default as Connections } from "./Home/Connections.jsx";
+export { default as OurTeams } from "./Home/OurTeams.jsx";
+export { default as Showcase } from "./Home/Showcase.jsx";
 
 // Service Page
 export { default as ServiceHero } from "./Services/Hero.jsx";

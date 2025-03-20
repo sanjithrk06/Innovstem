@@ -30,7 +30,7 @@ const VisionMission = () => {
             >
               <motion.div
                 variants={cardVariants}
-                className="group flex flex-col justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
+                className="group flex flex-col w-1/2 justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
               >
                 <motion.div
                   variants={iconVariants}
@@ -43,18 +43,17 @@ const VisionMission = () => {
                   Our Vision
                 </h2>
                 <p className="font-publicsans text-lg font-normal text-slate-500 mb-4 text-justify">
-                  To empower students with personalized career guidance that
-                  illuminates their unique paths, fostering clarity, confidence,
-                  and ambition. By integrating innovative STEM training and
-                  comprehensive defense preparation, we envision nurturing a
-                  generation of resilient leaders equipped with advanced skills
-                  and a spirit of service.
+                  Our vision is to create a future where every student is
+                  equipped with essential skills, knowledge, and confidence to
+                  excel in their careers and contribute meaningfully to society.
+                  We strive to foster a dynamic learning environment that
+                  nurtures critical thinking, creativity, and adaptability.
                 </p>
               </motion.div>
 
               <motion.div
                 variants={cardVariants}
-                className="group flex flex-col justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
+                className="group flex flex-col w-1/2 justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
               >
                 <motion.div
                   variants={iconVariants}
@@ -67,13 +66,11 @@ const VisionMission = () => {
                   Our Mission
                 </h2>
                 <p className="font-publicsans text-lg font-normal text-slate-500 mb-4 text-justify">
-                  At InnovSTEM, our mission is to guide students toward
-                  discovering their true potential through expert career
-                  counseling, cutting-edge STEM education, and holistic defense
-                  training. We aim to equip young minds with the skills,
-                  confidence, and discipline needed to excel in their chosen
-                  paths, fostering innovation, leadership, and a commitment to
-                  societal progress.
+                  To transform the learning experience of school students by
+                  integrating skill-based education with academic growth.
+                  Through strategic collaborations with schools, we aim to
+                  bridge the gap between education and real-world opportunities,
+                  empowering students to reach their full potential
                 </p>
               </motion.div>
             </motion.div>

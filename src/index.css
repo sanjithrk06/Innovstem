@@ -27,7 +27,7 @@
 
 @layer components {
   .container {
-    @apply px-8 my-16 text-center max-w-7xl mx-auto;
+    @apply px-8 my-24 text-center max-w-7xl mx-auto;
   }
 
   .btn-primary {
