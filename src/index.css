@@ -27,7 +27,7 @@
 
 @layer components {
   .container {
-    @apply px-8 my-16 text-center max-w-7xl mx-auto;
+    @apply px-8 my-24 text-center max-w-7xl mx-auto;
   }
 
   .btn-primary {
@@ -43,7 +43,7 @@
   }
 
   .nav-content {
-    @apply font-outfit font-normal text-base text-slate-500 leading-relaxed;
+    @apply text-base text-secondary/80 hover:text-hover transition-colors duration-200 font-publicsans;
   }
 
   .content h3 {
