@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { CategoryHero } from "../sections";
-import { CourseGrid, SearchBar } from "../components";
+import { CourseGrid, Loader, SearchBar } from "../components";
 import { useParams } from "react-router-dom";
 import { useCategoryBySlug } from "../hooks/hooks";
 
@@ -41,11 +41,12 @@ const CategoryPage = () => {
   const onPageChange = (page) => setCurrentPage(page);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-primary"></div>
-      </div>
-    );
+    // return (
+    //   <div className="flex justify-center items-center h-screen">
+    //     <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-primary"></div>
+    //   </div>
+    // );
+    return <Loader />;
   }
 
   return (

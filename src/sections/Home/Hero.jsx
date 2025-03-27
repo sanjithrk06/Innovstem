@@ -72,7 +72,7 @@ const Hero = () => {
   }, [nextSlide]);
 
   return (
-    <div className="relative md:h-[85vh] w-full bg-cream/20 overflow-hidden py-10">
+    <div className="relative  w-full bg-cream/20 overflow-hidden py-10">
       <div className="max-w-7xl p-1 mx-auto px-4 md:px-8 mb-5 max-md:mb-12">
         <div className="flex flex-col lg:flex-row-reverse items-center gap-8">
           {/* Image Section */}
@@ -98,11 +98,11 @@ const Hero = () => {
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.5 }}
               >
-                <h2 className="text-4xl md:text-6xl font-bold font-outfit mb-6 text-secondary">
+                <h2 className="text-4xl lg:text-6xl font-bold font-outfit mb-6 text-secondary">
                   {slides[currentIndex].title}
                 </h2>
 
-                <p className="text-lg md:text-xl mb-8 max-md:mb-4 text-slate-500 font-publicsans">
+                <p className="text-lg lg:text-xl mb-8 max-lg:mb-4 text-slate-500 font-publicsans">
                   {slides[currentIndex].description}
                 </p>
 
@@ -111,7 +111,7 @@ const Hero = () => {
                 </p> */}
 
                 {/* Navigation Controls */}
-                <div className="flex items-center justify-center gap-4">
+                <div className="flex max-lg:mx-auto items-center justify-center gap-4">
                   <button
                     className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
                     onClick={prevSlide}

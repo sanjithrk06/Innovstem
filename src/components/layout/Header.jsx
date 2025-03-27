@@ -174,64 +174,92 @@ const Header = () => {
             </motion.div>
 
             <Popover className="relative">
-              {({ open }) => (
-                <>
-                  <motion.div variants={navItemVariants} whileHover={{ y: -2 }}>
-                    <PopoverButton className="flex items-center gap-x-1 text-base/6 font-medium outline-none text-secondary/90 group hover:text-primary">
-                      Services
-                      <motion.div
-                        animate={{ rotate: open ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ChevronDownIcon
-                          aria-hidden="true"
-                          className="size-5 flex-none text-secondary group-hover:text-primary"
-                        />
-                      </motion.div>
-                    </PopoverButton>
-                  </motion.div>
+              {({ close }) => {
+                const [isOpen, setIsOpen] = useState(false);
 
-                  <AnimatePresence>
-                    {open && (
-                      <PopoverPanel
-                        static
-                        as={motion.div}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        variants={dropdownVariants}
-                        className="absolute top-full -left-4 -z-10 mt-3 p-2 overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5"
+                // Open dropdown on hover
+                const handleMouseEnter = () => {
+                  setIsOpen(true);
+                };
+
+                // Close dropdown when mouse leaves
+                const handleMouseLeave = () => {
+                  setIsOpen(false);
+                };
+
+                return (
+                  <>
+                    <motion.div
+                      variants={navItemVariants}
+                      whileHover={{ y: -2 }}
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <PopoverButton
+                        className="flex items-center gap-x-1 text-base/6 font-medium outline-none text-secondary/90 group hover:text-primary"
+                        onClick={() => setIsOpen(!isOpen)} // Toggle on click
                       >
-                        <div className="p-0">
-                          {servicesNav.map((item) => (
-                            <motion.div
-                              key={item.name}
-                              whileHover={{ x: 0 }}
-                              className="group relative text-nowrap items-center gap-x-6 rounded-2xl px-6 py-2 text-base/6 hover:bg-cream/40"
-                            >
-                              <div className="flex-auto">
-                                <NavLink
-                                  to={item.href}
-                                  className={({ isActive }) =>
-                                    `text-base/6 font-medium relative ${
-                                      isActive
-                                        ? "text-primary"
-                                        : "text-secondary/80"
-                                    }`
-                                  }
-                                >
-                                  {item.name}
-                                  <span className="absolute inset-0" />
-                                </NavLink>
-                              </div>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </PopoverPanel>
-                    )}
-                  </AnimatePresence>
-                </>
-              )}
+                        Services
+                        <motion.div
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="size-5 flex-none text-secondary group-hover:text-primary"
+                          />
+                        </motion.div>
+                      </PopoverButton>
+                    </motion.div>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <PopoverPanel
+                          static
+                          as={motion.div}
+                          initial="hidden"
+                          animate="visible"
+                          exit="exit"
+                          variants={dropdownVariants}
+                          className="absolute top-full -left-4 -z-10 mt-3 p-2 overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5"
+                          onMouseEnter={handleMouseEnter} // Keep open when hovering over the panel
+                          onMouseLeave={handleMouseLeave} // Close when leaving the panel
+                        >
+                          <div className="p-0">
+                            {servicesNav.map((item) => (
+                              <motion.div
+                                key={item.name}
+                                whileHover={{ x: 0 }}
+                                className="group relative text-nowrap items-center gap-x-6 rounded-2xl px-6 py-2 text-base/6 hover:bg-cream/40"
+                              >
+                                <div className="flex-auto">
+                                  <NavLink
+                                    to={item.href}
+                                    onClick={() => {
+                                      close();
+                                      setIsOpen(false); // Close dropdown on link click
+                                    }}
+                                    className={({ isActive }) =>
+                                      `text-base/6 font-medium relative ${
+                                        isActive
+                                          ? "text-primary"
+                                          : "text-secondary/80"
+                                      }`
+                                    }
+                                  >
+                                    {item.name}
+                                    <span className="absolute inset-0" />
+                                  </NavLink>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </PopoverPanel>
+                      )}
+                    </AnimatePresence>
+                  </>
+                );
+              }}
             </Popover>
 
             {["webinars", "blogs", "about"].map((item) => (
@@ -351,7 +379,7 @@ const Header = () => {
                       </motion.div>
 
                       <Disclosure>
-                        {({ open }) => (
+                        {({ open, close }) => (
                           <>
                             <motion.div
                               whileHover={{ x: 5 }}
@@ -389,6 +417,7 @@ const Header = () => {
                                       <DisclosureButton
                                         as="a"
                                         href={item.href}
+                                        onClick={() => close()}
                                         className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
                                       >
                                         {item.name}

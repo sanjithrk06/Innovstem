@@ -45,11 +45,13 @@ const Showcase = () => {
             </h2>
           </div>
           <p className="font-publicsans indent-10 text-lg font-normal text-slate-500 mb-4 mx-3 text-justify">
-            We are proud to announce that InnovSTEM has been recognized as a{" "}
+            We are proud to announce that{" "}
+            <b className="text-secondary/80">Founder of InnovSTEM</b> has been
+            recognized as a{" "}
             <b className="text-secondary/80">Certified Career Analyst</b> by
-            leading global organizations. On March 1, 2025, our founder, Mr.
-            Ankit Agrawal, received this prestigious certification, accredited
-            by <b className="text-secondary/80">BCPA (India)</b>,{" "}
+            leading global organizations on March 1, 2025. This prestigious
+            certification, accredited by{" "}
+            <b className="text-secondary/80">BCPA (India)</b>,{" "}
             <b className="text-secondary/80">ACCPH (UK)</b>, and{" "}
             <b className="text-secondary/80">Edumilestones</b>.
           </p>
@@ -67,18 +69,18 @@ const Showcase = () => {
           variants={imageVariants}
           className="relative group lg:w-1/2 mx-3"
         >
-          <div className="relative z-10 rounded-3xl overflow-hidden shadow-lg border-4 border-orange-600/20">
+          <div className="relative z-10 rounded-3xl overflow-hidden shadow-lg border-4 border-cream/20">
             <img
               className="w-full transition-transform duration-300 group-hover:scale-105"
               src={certificateImage}
               alt="Certified Career Analyst Certificate"
             />
             {/* Decorative Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-navy-800/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-cream/20 to-cream/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
           </div>
           {/* Background Decorative Circle */}
-          <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-600/10 rounded-full"></div>
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-navy-800/10 rounded-full"></div>
+          <div className="absolute -top-10 -left-10 w-40 h-40 bg-cream/40 rounded-full"></div>
+          <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-cream/40 rounded-full"></div>
         </motion.div>
       </div>
     </motion.section>

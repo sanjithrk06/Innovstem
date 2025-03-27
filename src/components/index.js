@@ -19,4 +19,5 @@ export { default as BlogList } from "./ui/BlogList.jsx";
 export { default as FeatureCard } from "./ui/FeatureCard.jsx";
 export { default as TitleBanner } from "./ui/TitleBanner.jsx";
 export { default as Button } from "./ui/Button.jsx";
+export { default as Loader } from "./ui/Loader.jsx";
 export { Pagination } from "./ui/Pagination.jsx";

@@ -6,20 +6,21 @@ const teamMembers = [
   {
     name: "Sajesh Raju",
     vision:
-      "InnovSTEM is a vision turned reality, empowering students with future-ready skills. ",
+      "InnovSTEM is a vision turned reality, empowering students with future-ready skills. We are committed to bridging the gap between education and industry needs. Together, we are shaping the leaders of tomorrow.",
     image:
       "https://innovstem.edumilestones.com/create_channel/createpage/uploads/Sajesh%20passport.jpg",
   },
   {
     name: "Sriram",
     vision:
-      "InnovSTEM is redefining learning with innovative training methods.",
+      "InnovSTEM is redefining learning with innovative training methods. Our mission is to equip students with skills that make them confident and career-ready. Proud to be part of this transformative journey.",
     image:
       "https://innovstem.edumilestones.com/create_channel/createpage/uploads/Sajesh%20passport.jpg",
   },
   {
     name: "Jayaprakash",
-    vision: "InnovSTEM is a movement towards a brighter future for students. ",
+    vision:
+      "InnovSTEM is a movement towards a brighter future for students. We focus on holistic skill development, ensuring they excel in academics and beyond. Education with a purpose—this is our promise.",
     image:
       "https://innovstem.edumilestones.com/create_channel/createpage/uploads/Sajesh%20passport.jpg",
   },
@@ -80,7 +81,7 @@ const iconVariants = {
 export default function OurTeam() {
   return (
     <div>
-      <div className="relative bg-cream/40 rounded-3xl mt-5 mx-4 overflow-hidden">
+      <div className="relative bg-cream/30 rounded-3xl mt-5 mx-4 overflow-hidden">
         {/* Decorative background elements */}
         <div className="absolute max-lg:-left-52 -bottom-56 lg:-left-12 w-[450px] h-[400px] bg-cream/80 rounded-full border-[120px] lg:border-[120px] border-primary/30 drop-shadow-md"></div>
         <div className="absolute max-lg:-left-52 -top-40 lg:-right-32 w-[450px] h-[400px] bg-cream/70 rounded-full border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
@@ -107,7 +108,7 @@ export default function OurTeam() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-4xl md:text-5xl font-bold font-outfit text-secondary max-w-md mx-auto mb-6"
               >
-                Meet Our Visionary Leaders
+                Meet Our Leaders
               </motion.h2>
 
               <motion.div
@@ -135,9 +136,9 @@ export default function OurTeam() {
                   key={index}
                   variants={cardVariants}
                   whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                  className="group relative flex flex-col justify-center items-center gap-4 bg-white/70 backdrop-blur-xl rounded-2xl p-8 shadow-lg border border-indigo-100/50 overflow-hidden"
+                  className="group relative flex flex-col justify-center items-center gap-0 bg-white/60 backdrop-blur-xl rounded-2xl p-4 px-8 shadow-lg border border-indigo-100/50 overflow-hidden"
                 >
-                  <motion.div className="relative z-10 mb-2">
+                  <motion.div className="relative z-10 mb-4">
                     <div className="rounded-full overflow-hidden h-40 w-40 border-4 border-white shadow-xl">
                       <img
                         src={
@@ -148,19 +149,23 @@ export default function OurTeam() {
                         className="h-full w-full rounded-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     </div>
-                    <motion.div
+                    {/* <motion.div
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.5 + index * 0.2, duration: 0.5 }}
                       className="absolute -bottom-2 -right-2 bg-indigo-600 text-white p-2 rounded-full shadow-lg"
                     >
                       <ExternalLink className="h-4 w-4" />
-                    </motion.div>
+                    </motion.div> */}
                   </motion.div>
 
-                  <h3 className="font-outfit font-semibold text-secondary text-3xl text-center">
+                  <h3 className="font-outfit font-semibold text-secondary text-2xl text-center pb-1">
                     {member.name}
                   </h3>
+
+                  <p className="font-outfit font-thin text-primary text-xl text-center">
+                    Founder
+                  </p>
 
                   <motion.div
                     className="w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent my-4"
@@ -171,7 +176,7 @@ export default function OurTeam() {
 
                   <div className="flex items-start mb-4 w-full">
                     <Lightbulb className="h-5 w-5 text-amber-500 mt-1 mr-3 flex-shrink-0" />
-                    <p className="font-publicsans text-base text-slate-600 italic">
+                    <p className="font-publicsans text-sm text-slate-600 italic">
                       "{member.vision}"
                     </p>
                   </div>
