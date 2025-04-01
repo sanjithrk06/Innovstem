@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { BlogList } from "../../components/index.js";
 import { useTopBlogs } from "../../hooks/hooks.js";
+import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 
 // Animation variants for elements
 const itemVariants = {
@@ -45,14 +47,16 @@ const Blogs = () => {
             <h2 className="font-outfit text-5xl font-medium text-secondary leading-[3.25rem] lg:mb-6 mx-auto max-w-max lg:max-w-xl">
               Explore New Learning Horizons
             </h2>
-            <motion.a
-              href="#"
-              className="inline-flex flex-row items-center justify-center gap-1 uppercase font-publicsans text-sm font-medium text-primary hover:underline hover:underline-offset-4 duration-300 group mx-auto"
-              whileHover={{ scale: 1.05 }}
+            <motion.div
+              className=" text-primary font-medium hover:text-primary/80 transition-colors font-publicsans"
+              whileHover={{ x: 5 }}
               whileTap={{ scale: 0.95 }}
             >
-              View All Blogs
-            </motion.a>
+              <Link to={"/blogs"} className="inline-flex items-center gap-1">
+                Explore Blogs!
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </motion.div>
           </motion.div>
 
           {isLoading ? (

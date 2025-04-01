@@ -12,7 +12,8 @@ import {
   LibraryBig,
   Users,
 } from "lucide-react";
-import { useWebinarDetails, useRecommendedWebinars } from "../hooks/hooks";
+import { useRecommendedWebinars, useWebinarDetails } from "../hooks/hooks";
+import { WebinarCard } from "../components";
 
 const WebinarPage = () => {
   const { slug } = useParams();
@@ -29,10 +30,10 @@ const WebinarPage = () => {
   } = useWebinarDetails(slug);
 
   // Fetch recommendations based on webinar category
-  //   const {
-  //     data: recommendations = { recommended_blogs: [], recommended_webinars: [] },
-  //     isLoading: recommendationsLoading,
-  //   } = useRecommendedWebinars(webinarDetails?.category_id);
+  const {
+    data: recommendations = { recommended_blogs: [], recommended_webinars: [] },
+    isLoading: recommendationsLoading,
+  } = useRecommendedWebinars(webinarDetails?.category_id);
 
   // Animation variants
   const fadeInUp = {
@@ -40,10 +41,7 @@ const WebinarPage = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
+      transition: { duration: 0.5, ease: "easeOut" },
     },
   };
 
@@ -51,36 +49,34 @@ const WebinarPage = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
     },
   };
 
   // Format date and time
   const formatDateTime = (dateTimeString) => {
     if (!dateTimeString) return { date: "TBD", time: "TBD" };
-
     const dateTime = new Date(dateTimeString);
-
     const date = dateTime.toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
     });
-
     const time = dateTime.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
     });
-
     return { date, time };
   };
 
   const { date, time } = formatDateTime(webinarDetails?.webinar_date_time);
+
+  useEffect(() => {
+    console.log("Recommendations Data:", recommendations);
+    console.log("Recommendations Loading:", recommendationsLoading);
+  }, [recommendations, recommendationsLoading]);
 
   if (webinarLoading) {
     return (
@@ -97,6 +93,8 @@ const WebinarPage = () => {
       </div>
     );
   }
+
+  console.log(recommendations);
 
   return (
     <div className="bg-gray-50 py-1">
@@ -149,15 +147,12 @@ const WebinarPage = () => {
               >
                 {webinarDetails?.title}
               </motion.h1>
-
               <motion.p
                 className="text-base text-slate-600 font-normal font-publicsans text-justify"
                 variants={fadeInUp}
               >
                 {webinarDetails?.webinar_description}
               </motion.p>
-
-              {/* Webinar Meta Information */}
               <motion.div
                 className="flex flex-col md:flex-row md:items-center gap-2 md:gap-0 text-gray-600 font-outfit"
                 variants={fadeInUp}
@@ -178,8 +173,6 @@ const WebinarPage = () => {
                   </p>
                 </div>
               </motion.div>
-
-              {/* Webinar Statistics */}
               <motion.div
                 className="flex flex-row flex-wrap items-center gap-2 md:gap-2 text-gray-600 font-outfit"
                 variants={fadeInUp}
@@ -249,7 +242,6 @@ const WebinarPage = () => {
                       }}
                     />
                   </motion.div>
-
                   {webinarDetails?.quiz && (
                     <motion.div variants={fadeInUp}>
                       <h3 className="text-xl font-bold text-secondary/80 mb-4">
@@ -276,7 +268,7 @@ const WebinarPage = () => {
           >
             <div className="sticky top-8 space-y-10">
               {/* Webinar Registration Card */}
-              <div className="">
+              <div>
                 <div className="relative bg-cream/40 rounded-3xl mx-4 overflow-hidden">
                   <div className="absolute max-lg:-left-52 -bottom-56 lg:-left-1/2 w-[450px] h-[400px] bg-cream/80 rounded-full border-[120px] lg:border-[120px] border-primary/30 drop-shadow-md"></div>
                   <div className="absolute max-lg:-left-52 -top-40 lg:-right-32 w-[450px] h-[400px] bg-cream/70 rounded-full border-[120px] lg:border-[120px] border-primary/20 drop-shadow-md"></div>
@@ -284,10 +276,7 @@ const WebinarPage = () => {
                     <section className="relative container p-6 bg-transparent my-0">
                       <div className="flex flex-col justify-between items-start gap-4">
                         <img
-                          src={
-                            webinarDetails?.webinar_thumbnail ||
-                            "https://pagedone.io/asset/uploads/1696244059.png"
-                          }
+                          src={`https://admin-dev.innovstem.com/storage/${webinarDetails?.webinar_thumbnail}`}
                           alt="Webinar thumbnail"
                           className="w-full rounded-lg"
                         />
@@ -318,9 +307,113 @@ const WebinarPage = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Suggested Blogs */}
+              <motion.div
+                className="bg-cream/20 p-6 max-lg:hidden"
+                variants={fadeInUp}
+              >
+                <h2 className="font-outfit text-left text-lg font-medium text-secondary">
+                  Suggested Blogs
+                </h2>
+                <motion.div
+                  className="flex flex-col gap-0 py-2"
+                  variants={staggerChildren}
+                >
+                  {recommendations.recommended_blogs.slice(0, 3).map((blog) => (
+                    <Link key={`blog-${blog.id}`} to={`/blogs/${blog.slug}`}>
+                      <motion.div
+                        className="flex gap-4 cursor-pointer hover:bg-gray-50 p-2 py-4 rounded-lg"
+                        variants={fadeInUp}
+                      >
+                        <img
+                          src={`https://admin-dev.innovstem.com/storage/${blog.thumbnail}`}
+                          alt={`Suggested blog ${blog.title}`}
+                          className="w-20 h-20 object-cover rounded-lg"
+                        />
+                        <div>
+                          <h3 className="font-publicsans font-semibold text-lg text-secondary line-clamp-1">
+                            {blog.title}
+                          </h3>
+                          <p className="font-publicsans text-sm text-gray-600 line-clamp-2">
+                            {blog.description}
+                          </p>
+                        </div>
+                      </motion.div>
+                    </Link>
+                  ))}
+                </motion.div>
+              </motion.div>
             </div>
           </motion.aside>
         </div>
+
+        {/* Suggested Webinars Section */}
+        <motion.div
+          className="container px-2 pt-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerChildren}
+        >
+          <motion.div variants={fadeInUp}>
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+              <motion.p
+                className="text-left font-publicsans text-3xl font-semibold text-secondary mb-4 sm:mb-0 pl-5"
+                variants={fadeInUp}
+              >
+                Suggested Webinars
+              </motion.p>
+            </div>
+
+            {/* Loading State */}
+            {recommendationsLoading && (
+              <div className="text-center text-gray-600">
+                Loading suggested webinars...
+              </div>
+            )}
+
+            {/* No Data State */}
+            {!recommendationsLoading &&
+              recommendations.recommended_webinars.length === 0 && (
+                <div className="text-center text-gray-600">
+                  No suggested webinars available.
+                </div>
+              )}
+
+            {/* Render Webinars */}
+            {!recommendationsLoading &&
+              recommendations.recommended_webinars.length > 0 && (
+                <motion.div
+                  className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left"
+                  variants={staggerChildren}
+                >
+                  {recommendations.recommended_webinars
+                    .slice(0, 3)
+                    .map((item) => (
+                      <motion.div
+                        key={`webinar-${item.id}`}
+                        variants={fadeInUp}
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <WebinarCard
+                          key={item.id}
+                          item={{
+                            category: item.category_name,
+                            readTime: item.created_at,
+                            title: item.title,
+                            image: item.thumbnail,
+                            description: item.description,
+                            slug: item.slug,
+                          }}
+                        />
+                      </motion.div>
+                    ))}
+                </motion.div>
+              )}
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

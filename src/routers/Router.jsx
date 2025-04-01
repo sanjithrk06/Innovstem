@@ -21,6 +21,7 @@ import {
   CategoryPage,
   Register,
   WebinarPage,
+  ErrorPage,
 } from "../pages";
 
 // Constants for roles
@@ -48,6 +49,7 @@ const PATHS = {
   ABOUT: "/about",
   ADMIN_DASHBOARD: "/dashboard/admin",
   STUDENT_DASHBOARD: "/dashboard/student",
+  ERROR_PAGE: "/error",
 };
 
 // Protected Route Component
@@ -85,8 +87,7 @@ const withLoader = (WrappedComponent, pageName) => {
       const fetchData = async () => {
         setIsLoading(true);
         try {
-          // Simulate a 2-second delay for data fetching
-          await new Promise((resolve) => setTimeout(resolve, 2000));
+          await new Promise((resolve) => setTimeout(resolve, 1500));
           const result = {
             page: pageName,
             data: `Loaded data for ${pageName}`,
@@ -125,11 +126,6 @@ const AboutWithLoader = withLoader(About, "About");
 const LoginWithLoader = withLoader(Login, "Login");
 const RegisterWithLoader = withLoader(Register, "Register");
 const DashboardWithLoader = withLoader(Dashboard, "Dashboard");
-const AdminDashboardWithLoader = withLoader(AdminDashboard, "AdminDashboard");
-const StudentDashboardWithLoader = withLoader(
-  StudentDashboard,
-  "StudentDashboard"
-);
 
 // Router Configuration
 const router = createBrowserRouter([
@@ -219,7 +215,7 @@ const router = createBrowserRouter([
   {
     path: PATHS.DASHBOARD,
     element: (
-      <ProtectedRoute role={[ROLES.ADMIN, ROLES.STUDENT, ROLES.USER]}>
+      <ProtectedRoute role={[ROLES.USER]}>
         <DashboardLayout />
       </ProtectedRoute>
     ),
@@ -232,23 +228,12 @@ const router = createBrowserRouter([
         path: "resources",
         element: <ResourcesWithLoader />,
       },
-      {
-        path: "admin",
-        element: (
-          <ProtectedRoute role={[ROLES.ADMIN]}>
-            <AdminDashboardWithLoader />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "student",
-        element: (
-          <ProtectedRoute role={[ROLES.STUDENT]}>
-            <StudentDashboardWithLoader />
-          </ProtectedRoute>
-        ),
-      },
     ],
+  },
+
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

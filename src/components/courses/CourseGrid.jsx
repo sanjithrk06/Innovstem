@@ -34,6 +34,7 @@ export const CourseGrid = ({ courses, isLoading }) => {
               item={{
                 id: item.id,
                 name: item.title,
+                image: item.course_thumbnail,
                 avail: item.class_level_name,
                 category: [item.category_name],
                 description: item.content_short_description,

@@ -10,6 +10,8 @@ const BlogCard = ({ item }) => {
     { addSuffix: true }
   );
 
+  console.log(item);
+
   return (
     <div
       key={item.key}
@@ -17,7 +19,7 @@ const BlogCard = ({ item }) => {
     >
       <div className="lg:w-2/6 overflow-hidden rounded-xl drop-shadow">
         <img
-          src="https://pagedone.io/asset/uploads/1696244059.png"
+          src={`https://admin-dev.innovstem.com/storage/${item.image}`}
           alt={item.title}
           className="w-full h-40 object-cover"
         />

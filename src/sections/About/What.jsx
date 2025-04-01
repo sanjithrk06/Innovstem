@@ -6,6 +6,7 @@ import {
   FaChevronUp,
 } from "react-icons/fa";
 import { ChevronsRight } from "lucide-react";
+import { images } from "../../assets/images";
 
 const accordionData = [
   {
@@ -128,7 +129,7 @@ const What = () => {
             <div className="relative group">
               <img
                 className="w-full transition-transform duration-300 relative z-10 "
-                src={`https://vidyanchalschool.com/wp-content/uploads/2023/03/Career-Guidance-for-School-Students.webp`}
+                src={images.Habout}
                 alt="office content"
               />
               <div className="absolute inset-0 -z-0 duration-300">

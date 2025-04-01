@@ -60,6 +60,8 @@ const Blogs = () => {
     return pageNumbers;
   };
 
+  console.log("blogs:", blogs);
+
   return (
     <>
       <TitleBanner title="Blogs" subtitle="Explore New Learning Horizons" />
@@ -130,6 +132,7 @@ const Blogs = () => {
                       category: blog.category_name,
                       readTime: blog.created_at,
                       title: blog.title,
+                      image: blog.thumbnail,
                       description: blog.description,
                       slug: blog.slug,
                     }}

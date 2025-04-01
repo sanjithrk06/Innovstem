@@ -14,7 +14,7 @@ const WebinarCard = ({ item }) => {
 
         {/* Image */}
         <img
-          src="https://pagedone.io/asset/uploads/1696244059.png"
+          src={`https://admin-dev.innovstem.com/storage/${item.image}`}
           alt={`${item.name} course`}
           className="rounded-2xl w-full h-full object-cover"
         />

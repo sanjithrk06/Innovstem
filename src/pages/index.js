@@ -16,6 +16,7 @@ export { default as BlogPage } from "./BlogPage.jsx";
 export { default as Webinars } from "./Webinars.jsx";
 export { default as WebinarPage } from "./WebinarPage.jsx";
 export { default as About } from "./About.jsx";
+export { default as ErrorPage } from "./ErrorPage.jsx";
 
 // Dashboard Pages
 export { default as Dashboard } from "./dashboard/Dashboard.jsx";

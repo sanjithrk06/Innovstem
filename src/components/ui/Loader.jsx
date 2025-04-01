@@ -3,7 +3,7 @@ import React from "react";
 const Loader = () => {
   return (
     <div className=" fixed inset-0 z-50 bg-white">
-      <div className="fixed inset-0 flex items-center justify-center z-50 bg-cream/40">
+      <div className="fixed inset-0 flex items-center justify-center z-50 bg-cream/20">
         <div className="relative">
           {/* SVG Loader */}
           <svg
@@ -107,9 +107,9 @@ const Loader = () => {
           </svg>
 
           {/* Optional Loading Text */}
-          <p className="mt-4 text-lg font-medium text-[#5A7D9A] text-center">
+          {/* <p className="mt-4 text-lg font-medium text-[#5A7D9A] text-center">
             Loading Knowledge...
-          </p>
+          </p> */}
         </div>
 
         {/* Inline CSS for animations */}

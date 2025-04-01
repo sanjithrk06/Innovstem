@@ -3,6 +3,7 @@ import BlogCard from "./BlogCard";
 import FeatureCard from "./FeatureCard";
 
 const BlogList = ({ featureBlog, blogs }) => {
+  console.log(featureBlog, "Blogs", blogs);
   return (
     <div className="container mx-auto px-0 grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
       {/* Feature Blog */}
@@ -10,7 +11,7 @@ const BlogList = ({ featureBlog, blogs }) => {
         <FeatureCard
           key={`content-${featureBlog.title}`}
           item={{
-            image: featureBlog.image,
+            image: featureBlog.thumbnail,
             category: featureBlog.category_name,
             readTime: featureBlog.created_at,
             title: featureBlog.title,
@@ -26,7 +27,7 @@ const BlogList = ({ featureBlog, blogs }) => {
           <BlogCard
             key={index}
             item={{
-              image: blog.image,
+              image: blog.thumbnail,
               category: blog.category_name,
               readTime: blog.created_at,
               title: blog.title,

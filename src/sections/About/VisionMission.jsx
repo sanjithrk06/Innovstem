@@ -30,7 +30,7 @@ const VisionMission = () => {
             >
               <motion.div
                 variants={cardVariants}
-                className="group flex flex-col w-1/2 justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
+                className="group flex flex-col lg:w-1/2 justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
               >
                 <motion.div
                   variants={iconVariants}
@@ -53,7 +53,7 @@ const VisionMission = () => {
 
               <motion.div
                 variants={cardVariants}
-                className="group flex flex-col w-1/2 justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
+                className="group flex flex-col lg:w-1/2 justify-center items-center gap-4 bg-gray-200/40 border-2 border-gray-300 backdrop-blur-3xl rounded-xl p-10"
               >
                 <motion.div
                   variants={iconVariants}

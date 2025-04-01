@@ -73,15 +73,9 @@ const Hero = () => {
                 variants={textVariants}
                 className="text-lg md:text-xl mb-4 max-md:mb-4 text-slate-500 font-publicsans"
               >
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Placeat recusandae dolor assumenda nisi nihil, voluptas animi
-                corrupti adipisci qui quos.
+                Discover your dream career with InnovSTEM’s personalized
+                guidance and unlock your potential with hands-on STEM training
               </motion.p>
-              <motion.div variants={textVariants}>
-                <p className="text-lg text-blue-900 font-medium font-outfit max-lg:mx-auto inline-flex flex-row items-center justify-start cursor-pointer gap-2">
-                  Know More <ArrowRight className="w-5 h-5" />
-                </p>{" "}
-              </motion.div>
             </motion.div>
 
             {/* Right Image Content */}

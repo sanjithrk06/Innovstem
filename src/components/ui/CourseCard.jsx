@@ -9,7 +9,7 @@ const CourseCard = ({ item }) => {
     <div className="bg-white shadow hover:shadow-xl duration-300 border border-gray-50 m-2 p-4 rounded-2xl">
       <div className="flex items-center mb-4 h-28">
         <img
-          src="https://pagedone.io/asset/uploads/1696244059.png"
+          src={`https://admin-dev.innovstem.com/storage/${item.image}`}
           alt={`${item.name} course`}
           className="rounded-2xl w-full h-full object-cover"
         />

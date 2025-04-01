@@ -1,6 +1,7 @@
 import { CircleCheckBig } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { images } from "../../assets/images";
 
 // Animation variants for the container
 const containerVariants = {
@@ -65,6 +66,10 @@ const listItemVariants = {
 };
 
 const Connection = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   return (
     <motion.div
       initial="hidden"
@@ -141,7 +146,7 @@ const Connection = () => {
         <div className="relative group">
           <img
             className="w-full transition-transform duration-300 relative z-10"
-            src={`https://vidyanchalschool.com/wp-content/uploads/2023/03/Career-Guidance-for-School-Students.webp`}
+            src={images.Aschool}
             alt="office content"
           />
 

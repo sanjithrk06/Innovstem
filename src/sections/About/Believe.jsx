@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import React from "react";
+import { images } from "../../assets/images";
 
 const Believe = () => {
   return (
@@ -20,7 +21,7 @@ const Believe = () => {
           <div className="relative group">
             <img
               className="w-full transition-transform duration-300 relative z-10 rounded-3xl"
-              src={`https://vidyanchalschool.com/wp-content/uploads/2023/03/Career-Guidance-for-School-Students.webp`}
+              src={images.Avalue}
               alt="office content"
             />
           </div>

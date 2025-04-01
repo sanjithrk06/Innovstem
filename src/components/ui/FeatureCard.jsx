@@ -13,7 +13,7 @@ const FeatureCard = ({ item }) => {
     <div className="py-5 px-2 lg:px-6 w-full bg-transparent text-left flex flex-col gap-4 h-full duration-300 hover:bg-gray-100/70 hover:shadow rounded-2xl">
       <div className="overflow-hidden rounded-xl drop-shadow">
         <img
-          src="https://pagedone.io/asset/uploads/1696244059.png"
+          src={`https://admin-dev.innovstem.com/storage/${item.image}`}
           alt={item.title}
           className="w-full h-40 object-cover"
         />

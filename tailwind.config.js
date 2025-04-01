@@ -10,13 +10,13 @@ export default {
       },
       colors: {
         whiteDim: "hsl(0, 0%, 97%)",
-        secondary: "#002479", // 002359
+        secondary: "#002479",
         primary: "#FF5F00",
         hover: "#F5A623",
         header: "#FF5F00",
-        cream: "#eae2b7", // cream
-        title: "#024CAA", // blue
-        c3: "#f77f00", // orange
+        cream: "#eae2b7",
+        title: "#024CAA",
+        c3: "#f77f00", 
       },
     },
   },
