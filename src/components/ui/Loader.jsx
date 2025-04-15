@@ -99,21 +99,15 @@ const Loader = () => {
                 className="pencil__point"
               >
                 <polygon points="15 0,30 30,0 30" fill="#D67236" />{" "}
-                {/* Burnt sienna for the pencil tip */}
                 <polygon points="15 0,6 30,0 30" fill="#D67236" />
                 <polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)" />
               </g>
             </g>
           </svg>
 
-          {/* Optional Loading Text */}
-          {/* <p className="mt-4 text-lg font-medium text-[#5A7D9A] text-center">
-            Loading Knowledge...
-          </p> */}
         </div>
 
-        {/* Inline CSS for animations */}
-        <style jsx>{`
+        <style>{`
           .pencil {
             display: block;
           }

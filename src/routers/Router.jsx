@@ -21,6 +21,7 @@ import {
   WebinarPage,
   ErrorPage,
 } from "../pages";
+import CareersPage from "../pages/CareersPage.jsx";
 
 // Constants for roles
 const ROLES = {
@@ -39,6 +40,7 @@ const PATHS = {
   COURSES: "/courses",
   COURSES_CATEGORY: "/courses/:slug",
   COURSES_PAGE: "/courses/course/:slug",
+  CAREERS_PAGE: "/careers",
   BLOGS: "/blogs",
   BLOG_PAGE: "/blogs/:blogSlug",
   RESOURCES: "/resources",
@@ -115,6 +117,7 @@ const ServicesWithLoader = withLoader(Services, "Services");
 const CoursesWithLoader = withLoader(Courses, "Courses");
 const CategoryPageWithLoader = withLoader(CategoryPage, "CategoryPage");
 const CoursePageWithLoader = withLoader(CoursePage, "CoursePage");
+const CareersPageWithLoader = withLoader(CareersPage, "CareersPage");
 const BlogsWithLoader = withLoader(Blogs, "Blogs");
 const BlogPageWithLoader = withLoader(BlogPage, "BlogPage");
 const ResourcesWithLoader = withLoader(Resources, "Resources");
@@ -190,6 +193,10 @@ const router = createBrowserRouter([
       {
         path: PATHS.ABOUT,
         element: <AboutWithLoader />,
+      },
+      {
+        path: PATHS.CAREERS_PAGE,
+        element: <CareersPageWithLoader />,
       },
     ],
   },

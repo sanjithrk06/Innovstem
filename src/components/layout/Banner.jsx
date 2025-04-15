@@ -25,7 +25,7 @@ const Banner = () => {
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: newsWidth / 100, // Adjust speed (pixels per second)
+              duration: newsWidth / 50,
               ease: "linear",
             },
           },
@@ -41,7 +41,7 @@ const Banner = () => {
         <div className=""></div>
         <div
           ref={containerRef}
-          className="flex-1 overflow-hidden relative max-w-lg"
+          className="flex-1 overflow-hidden relative max-w-4xl"
         >
           <motion.div
             ref={newsRef}

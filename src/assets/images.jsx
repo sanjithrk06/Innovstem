@@ -5,6 +5,7 @@ import Scareer from "./images/career_guidance.jpg";
 import Sstem from "./images/stem_skills.jpg";
 import Sdefense from "./images/defense.jpg";
 import Sentrepreneurship from "./images/entreprenur.jpg";
+import career from "./images/career.jpg";
 
 const images = {
   Habout: HaboutImage,
@@ -14,6 +15,7 @@ const images = {
   Sdefense: Sdefense,
   Sentrepreneurship: Sentrepreneurship,
   Sstem: Sstem,
+  Career: career,
 };
 
 export { images };

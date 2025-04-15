@@ -201,3 +201,123 @@ export const formatDateTime = (dateTimeString) => {
 
   return { date, time };
 };
+
+// Handle API errors
+const handleApiError = (error) => {
+  if (error.response) {
+    // The request was made and the server responded with an error status
+    console.error("API Error Response:", error.response.data);
+    throw error;
+  } else if (error.request) {
+    // The request was made but no response was received
+    console.error("API Error Request:", error.request);
+    throw new Error(
+      "No response received from server. Please check your internet connection."
+    );
+  } else {
+    // Something happened in setting up the request
+    console.error("API Error:", error.message);
+    throw new Error("Error setting up request. Please try again.");
+  }
+};
+
+// Get all careers
+export const useCareers = (page = 1, search = "") => {
+  return useQuery({
+    queryKey: ["careers", { page, search }],
+    queryFn: async () => {
+      try {
+        const url = search
+          ? `/careers/search?query=${search}&page=${page}`
+          : `/careers?page=${page}`;
+
+        const response = await api.get(url);
+
+        if (response.data.status === "success") {
+          return response.data.data;
+        } else {
+          throw new Error(response.data.message || "Failed to fetch careers");
+        }
+      } catch (error) {
+        return handleApiError(error);
+      }
+    },
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+// Get career details by ID
+export const useCareerDetails = (careerId) => {
+  return useQuery({
+    queryKey: ["careerDetails", careerId],
+    queryFn: async () => {
+      try {
+        if (!careerId) throw new Error("Invalid career ID");
+
+        const response = await api.get(`/careers/${careerId}`);
+
+        if (response.data.status === "success") {
+          return response.data.data;
+        } else {
+          throw new Error(
+            response.data.message || "Failed to fetch career details"
+          );
+        }
+      } catch (error) {
+        return handleApiError(error);
+      }
+    },
+    enabled: !!careerId,
+  });
+};
+
+// Submit an application for a career
+export const useSubmitApplication = () => {
+  const mutationFn = async ({ careerId, formData }) => {
+    try {
+      const response = await api.post(`/careers/${careerId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.status === "success") {
+        return response.data.data;
+      } else {
+        throw new Error(
+          response.data.message || "Failed to submit application"
+        );
+      }
+    } catch (error) {
+      throw handleApiError(error);
+    }
+  };
+
+  return useMutation({ mutationFn });
+};
+
+// Get application status
+export const useApplicationStatus = (applicationId) => {
+  return useQuery({
+    queryKey: ["applicationStatus", applicationId],
+    queryFn: async () => {
+      try {
+        if (!applicationId) throw new Error("Invalid application ID");
+
+        const response = await api.get(`/careers/application/${applicationId}`);
+
+        if (response.data.status === "success") {
+          return response.data.data;
+        } else {
+          throw new Error(
+            response.data.message || "Failed to get application status"
+          );
+        }
+      } catch (error) {
+        return handleApiError(error);
+      }
+    },
+    enabled: !!applicationId,
+  });
+};
