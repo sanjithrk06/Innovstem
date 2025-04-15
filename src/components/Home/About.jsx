@@ -41,7 +41,7 @@ const accordionData = [
   },
 ];
 
-const What = () => {
+const About = () => {
   const [openIndex, setOpenIndex] = useState();
 
   const toggleAccordion = (index) => {
@@ -144,4 +144,4 @@ const What = () => {
   );
 };
 
-export default What;
+export default About;

@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 
-export const CategoryList = ({
-  categories,
-  activeCategory,
-  onCategoryChange,
-}) => {
+const CategoryList = ({ categories, activeCategory, onCategoryChange }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -41,3 +37,5 @@ export const CategoryList = ({
     </motion.div>
   );
 };
+
+export default CategoryList;

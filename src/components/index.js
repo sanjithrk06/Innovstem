@@ -1,23 +1,50 @@
 // Layout Components
-export { default as Header } from "./layout/Header.jsx";
-export { default as Footer } from "./layout/Footer.jsx";
-export { default as Banner } from "./layout/Banner.jsx";
+export { default as Header } from "./Layout/Header.jsx";
+export { default as Footer } from "./Layout/Footer.jsx";
+export { default as Banner } from "./Layout/Banner.jsx";
+
+// Home Page
+export { default as HomeHero } from "./Home/Hero.jsx";
+export { default as HomeAbout } from "./Home/About.jsx";
+export { default as HomeBlogs } from "./Home/Blogs.jsx";
+export { default as HomeCourses } from "./Home/Courses.jsx";
+export { default as Showcase } from "./Home/Showcase.jsx";
+export { default as OurTeams } from "./Home/OurTeams.jsx";
+export { default as Testimonials } from "./Home/Testimonials.jsx";
+
+// Service Page
+export { default as ServiceHero } from "./Services/Hero.jsx";
+export { default as ServiceContent } from "./Services/Content.jsx";
 
 // Courses Components
-export { CategoryList } from "./courses/CategoryList.jsx";
-export { CourseGrid } from "./courses/CourseGrid.jsx";
-export { CategoryGrid } from "./courses/CategoryGrid.jsx";
-export { SearchBar } from "./courses/SearchBar.jsx";
+export { default as CourseGrid } from "./Course/CourseGrid.jsx";
+export { default as CategoryGrid } from "./Course/CategoryGrid.jsx";
+export { default as CategoryList } from "./Course/CategoryList.jsx";
+export { default as SearchBar } from "./Course/SearchBar.jsx";
+export { default as CourseCard } from "./Course/CourseCard.jsx";
+export { default as CourseViewCard } from "./Course/CourseViewCard.jsx";
+
+// Category Page
+export { default as CategoryHero } from "./Category/Hero.jsx";
+
+// About Page
+export { default as AboutHero } from "./About/Hero.jsx";
+export { default as AboutWhy } from "./About/Why.jsx";
+export { default as AboutWhat } from "./Home/About.jsx";
+export { default as AboutBelieve } from "./About/Believe.jsx";
+export { default as VisionMission } from "./About/VisionMission.jsx";
+export { default as AboutConnection } from "./About/Connection.jsx";
+
+// Blog Page
+export { default as BlogList } from "./Blogs/BlogList.jsx";
+export { default as BlogCard } from "./Blogs/BlogCard.jsx";
+export { default as BlogFeatureCard } from "./Blogs/FeatureCard.jsx";
+export { default as BlogCardVertical } from "./Blogs/BlogCardVertical.jsx";
+
+// Webinar Page
+export { default as WebinarCard } from "./Webinars/WebinarCard.jsx";
 
 // UI Components
-export { default as CourseCard } from "./ui/CourseCard.jsx";
-export { default as CourseViewCard } from "./ui/CourseViewCard.jsx";
-export { default as BlogCard } from "./ui/BlogCard.jsx";
-export { default as WebinarCard } from "./ui/WebinarCard.jsx";
-export { default as BlogCardVertical } from "./ui/BlogCardVertical.jsx";
-export { default as BlogList } from "./ui/BlogList.jsx";
-export { default as FeatureCard } from "./ui/FeatureCard.jsx";
+export { default as Loader } from "./ui/Loader.jsx";
 export { default as TitleBanner } from "./ui/TitleBanner.jsx";
 export { default as Button } from "./ui/Button.jsx";
-export { default as Loader } from "./ui/Loader.jsx";
-export { Pagination } from "./ui/Pagination.jsx";

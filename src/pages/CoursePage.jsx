@@ -9,7 +9,6 @@ import {
   GraduationCap,
   Home,
   LibraryBig,
-  Star,
   Users,
 } from "lucide-react";
 import { CourseCard } from "../components";

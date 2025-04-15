@@ -1,8 +1,4 @@
 import React from "react";
-import { Ellipsis, Eye, UserRoundPlus } from "lucide-react";
-import { TbCategory } from "react-icons/tb";
-import { PiStudentDuotone } from "react-icons/pi";
-import { Link } from "react-router-dom";
 
 const CourseViewCard = ({ item }) => {
   return (
@@ -27,23 +23,6 @@ const CourseViewCard = ({ item }) => {
         <p className="text-slate-500 font-publicsans text-left line-clamp-2 duration-500">
           {item.description || "No description available"}
         </p>
-
-        {/* <div className="flex flex-row justify-between items-end m-2 mb-2">
-          <div className="flex flex-col gap-3 justify-start items-start">
-            <div className=" flex flex-row items-center gap-2">
-              <p className="text-xs text-slate-400 font-medium">
-                Last Uploaded Recently
-              </p>
-            </div>
-          </div>
-
-          <Link
-            to={"/coursepage"}
-            className="bg-primary/10 text-primary p-1 px-2 shadow-md rounded-lg"
-          >
-            <Ellipsis className=" w-5 h-5" />
-          </Link>
-        </div> */}
       </div>
     </div>
   );

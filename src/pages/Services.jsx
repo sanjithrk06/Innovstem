@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Content, ServiceHero } from "../sections";
+import { ServiceContent, ServiceHero } from "../components";
 
 const Services = () => {
   useEffect(() => {
@@ -9,7 +9,7 @@ const Services = () => {
   return (
     <>
       <ServiceHero />
-      <Content />
+      <ServiceContent />
     </>
   );
 };

@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
-import { Blogs, HomeHero, OurTeams, Showcase, Testimonials } from "../sections";
-import Courses from "../sections/Home/Courses";
-import Why from "../sections/About/Why";
-import What from "../sections/About/What";
+import {
+  HomeAbout,
+  HomeBlogs,
+  HomeCourses,
+  HomeHero,
+  OurTeams,
+  Showcase,
+  Testimonials,
+} from "../components";
 
 const Home = () => {
   useEffect(() => {
@@ -12,10 +17,9 @@ const Home = () => {
   return (
     <>
       <HomeHero />
-      {/* <Why /> */}
-      <What />
-      <Courses />
-      <Blogs />
+      <HomeAbout />
+      <HomeCourses />
+      <HomeBlogs />
       <Showcase />
       <OurTeams />
       <Testimonials />

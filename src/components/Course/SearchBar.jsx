@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export const SearchBar = ({ searchTerm, onSearchChange, onSubmit }) => {
+const SearchBar = ({ searchTerm, onSearchChange, onSubmit }) => {
   return (
     <motion.form
       initial={{ opacity: 0, y: 20 }}
@@ -44,3 +44,5 @@ export const SearchBar = ({ searchTerm, onSearchChange, onSubmit }) => {
     </motion.form>
   );
 };
+
+export default SearchBar;

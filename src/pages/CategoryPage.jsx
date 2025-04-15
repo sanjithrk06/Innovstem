@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { CategoryHero } from "../sections";
+import { CategoryHero } from "../components";
 import { CourseGrid, Loader, SearchBar } from "../components";
 import { useParams } from "react-router-dom";
 import { useCategoryBySlug } from "../hooks/hooks";

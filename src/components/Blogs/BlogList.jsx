@@ -1,6 +1,5 @@
 import React from "react";
-import BlogCard from "./BlogCard";
-import FeatureCard from "./FeatureCard";
+import { BlogCard, BlogFeatureCard } from "..";
 
 const BlogList = ({ featureBlog, blogs }) => {
   console.log(featureBlog, "Blogs", blogs);
@@ -8,7 +7,7 @@ const BlogList = ({ featureBlog, blogs }) => {
     <div className="container mx-auto px-0 grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
       {/* Feature Blog */}
       <div className="col-span-1">
-        <FeatureCard
+        <BlogFeatureCard
           key={`content-${featureBlog.title}`}
           item={{
             image: featureBlog.thumbnail,

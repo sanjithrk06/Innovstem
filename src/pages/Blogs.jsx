@@ -26,7 +26,7 @@ const Blogs = () => {
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
   // Pagination handlers

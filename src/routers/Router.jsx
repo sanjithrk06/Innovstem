@@ -6,7 +6,6 @@ import DashboardLayout from "../layouts/Dashboard.jsx";
 import { Loader } from "../components/index.js";
 import {
   About,
-  AdminDashboard,
   BlogPage,
   Blogs,
   CoursePage,
@@ -15,7 +14,6 @@ import {
   Login,
   Resources,
   Services,
-  StudentDashboard,
   Webinars,
   Dashboard,
   CategoryPage,
