@@ -1,4 +1,4 @@
-# InnovSTEM Frontend
+# InnovSTEM ( Edu-tech Platform )
 
 A comprehensive edu-tech platform dedicated to nurturing the next generation of thinkers and leaders. InnovSTEM offers interactive STEM education, skills training, and development resources tailored specifically for school students.
 
