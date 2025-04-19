@@ -160,15 +160,15 @@ const BlogPage = () => {
                           variants={fadeInUp}
                         >
                           <img
-                            src="https://pagedone.io/asset/uploads/1696244059.png"
+                            src={`https://admin-dev.innovstem.com/storage/${blog.thumbnail}`}
                             alt={`Suggested blog ${index + 1}`}
                             className="w-20 h-20 object-cover rounded-lg"
                           />
                           <div>
-                            <h3 className="font-medium text-gray-900 line-clamp-1">
+                            <h3 className="font-publicsans font-semibold text-lg text-secondary line-clamp-1">
                               {blog.title}
                             </h3>
-                            <p className="text-sm text-gray-600 line-clamp-2">
+                            <p className="font-publicsans text-sm text-gray-600 line-clamp-2">
                               {blog.description}
                             </p>
                           </div>
@@ -198,6 +198,7 @@ const BlogPage = () => {
                       item={{
                         id: item.id,
                         name: item.title,
+                        image: item.thumbnail,
                         avail: item.class_level_name,
                         category: [item.category_name],
                         description: item.content_short_description,

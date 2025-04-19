@@ -26,7 +26,7 @@ const Blogs = () => {
   // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
   // Pagination handlers
@@ -59,6 +59,8 @@ const Blogs = () => {
 
     return pageNumbers;
   };
+
+  console.log("blogs:", blogs);
 
   return (
     <>
@@ -130,6 +132,7 @@ const Blogs = () => {
                       category: blog.category_name,
                       readTime: blog.created_at,
                       title: blog.title,
+                      image: blog.thumbnail,
                       description: blog.description,
                       slug: blog.slug,
                     }}

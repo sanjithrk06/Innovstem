@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../config/axios";
 
-// Utility function to get data from localStorage
 const getStoredData = (key) => {
   try {
     const data = localStorage.getItem(key);
@@ -12,7 +11,6 @@ const getStoredData = (key) => {
   }
 };
 
-// Fetch top blogs
 export const useTopBlogs = () =>
   useQuery({
     queryKey: ["topBlogs"],
@@ -27,7 +25,6 @@ export const useTopBlogs = () =>
     initialData: getStoredData("topBlogs"),
   });
 
-// Fetch top courses
 export const useTopCourses = () =>
   useQuery({
     queryKey: ["topCourses"],
@@ -42,7 +39,6 @@ export const useTopCourses = () =>
     initialData: getStoredData("topCourses"),
   });
 
-// Fetch course categories
 export const useCategories = () =>
   useQuery({
     queryKey: ["categories"],
@@ -54,7 +50,6 @@ export const useCategories = () =>
     initialData: getStoredData("categories"),
   });
 
-// Fetch courses by category slug
 export const useCategoryBySlug = (slug) =>
   useQuery({
     queryKey: ["category", slug],
@@ -68,10 +63,9 @@ export const useCategoryBySlug = (slug) =>
         categoryCourses: response.data.data.courses,
       };
     },
-    enabled: !!slug, // Only run query if slug exists
+    enabled: !!slug,
   });
 
-// Mutation to reset category data (optional if used in a form or other interactions)
 export const useResetCategoryData = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -93,7 +87,7 @@ export const useCourseDetails = (slug) => {
       const response = await api.get(`/courses/d/${slug}`);
       return response.data.data;
     },
-    enabled: !!slug, // Only run query if slug is available
+    enabled: !!slug,
   });
 };
 
@@ -108,7 +102,7 @@ export const useRecommendedCourses = (categoryId) => {
         response.data.data || { recommended_blogs: [], recommended_courses: [] }
       );
     },
-    enabled: !!categoryId, // Only fetch recommendations if categoryId is available
+    enabled: !!categoryId,
   });
 };
 
@@ -123,8 +117,8 @@ export const useBlogs = (page = 1, searchTerm = "") => {
       const response = await api.get(url);
       return response.data.data;
     },
-    keepPreviousData: true, // Keep previous data while fetching new data
-    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
   });
 };
 
@@ -133,11 +127,10 @@ export const useBlogDetails = (blogSlug) => {
     queryKey: ["blog", blogSlug],
     queryFn: async () => {
       if (!blogSlug) return null;
-      console.log(blogSlug);
       const response = await api.get(`/blogs/d/${blogSlug}`);
-      return response.data.data; // No need to parse `.json()`
+      return response.data.data;
     },
-    enabled: !!blogSlug, // Ensures fetch runs only if blogSlug exists
+    enabled: !!blogSlug,
   });
 };
 
@@ -165,7 +158,7 @@ export const useWebinarDetails = (slug) => {
       const response = await api.get(`/webinars/d/${slug}`);
       return response.data.data;
     },
-    enabled: !!slug, // Only run query if slug is available
+    enabled: !!slug,
   });
 };
 
@@ -173,11 +166,10 @@ export const useRecommendedWebinars = (categoryId) => {
   return useQuery({
     queryKey: ["recommendedWebinars", categoryId],
     queryFn: async () => {
-      if (!categoryId)
+      if (!categoryId) {
         return { recommended_blogs: [], recommended_webinars: [] };
-      const response = await api.get(
-        `/recommend-webinars?category_id=${categoryId}`
-      );
+      }
+      const response = await api.get(`/recommend?category_id=${categoryId}`);
       return (
         response.data.data || {
           recommended_blogs: [],
@@ -185,11 +177,10 @@ export const useRecommendedWebinars = (categoryId) => {
         }
       );
     },
-    enabled: !!categoryId, // Only fetch recommendations if categoryId is available
+    enabled: !!categoryId,
   });
 };
 
-// Helper function to format date and time
 export const formatDateTime = (dateTimeString) => {
   if (!dateTimeString) return { date: "TBD", time: "TBD" };
 
@@ -209,4 +200,124 @@ export const formatDateTime = (dateTimeString) => {
   });
 
   return { date, time };
+};
+
+// Handle API errors
+const handleApiError = (error) => {
+  if (error.response) {
+    // The request was made and the server responded with an error status
+    console.error("API Error Response:", error.response.data);
+    throw error;
+  } else if (error.request) {
+    // The request was made but no response was received
+    console.error("API Error Request:", error.request);
+    throw new Error(
+      "No response received from server. Please check your internet connection."
+    );
+  } else {
+    // Something happened in setting up the request
+    console.error("API Error:", error.message);
+    throw new Error("Error setting up request. Please try again.");
+  }
+};
+
+// Get all careers
+export const useCareers = (page = 1, search = "") => {
+  return useQuery({
+    queryKey: ["careers", { page, search }],
+    queryFn: async () => {
+      try {
+        const url = search
+          ? `/careers/search?query=${search}&page=${page}`
+          : `/careers?page=${page}`;
+
+        const response = await api.get(url);
+
+        if (response.data.status === "success") {
+          return response.data.data;
+        } else {
+          throw new Error(response.data.message || "Failed to fetch careers");
+        }
+      } catch (error) {
+        return handleApiError(error);
+      }
+    },
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+// Get career details by ID
+export const useCareerDetails = (careerId) => {
+  return useQuery({
+    queryKey: ["careerDetails", careerId],
+    queryFn: async () => {
+      try {
+        if (!careerId) throw new Error("Invalid career ID");
+
+        const response = await api.get(`/careers/${careerId}`);
+
+        if (response.data.status === "success") {
+          return response.data.data;
+        } else {
+          throw new Error(
+            response.data.message || "Failed to fetch career details"
+          );
+        }
+      } catch (error) {
+        return handleApiError(error);
+      }
+    },
+    enabled: !!careerId,
+  });
+};
+
+// Submit an application for a career
+export const useSubmitApplication = () => {
+  const mutationFn = async ({ careerId, formData }) => {
+    try {
+      const response = await api.post(`/careers/${careerId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.status === "success") {
+        return response.data.data;
+      } else {
+        throw new Error(
+          response.data.message || "Failed to submit application"
+        );
+      }
+    } catch (error) {
+      throw handleApiError(error);
+    }
+  };
+
+  return useMutation({ mutationFn });
+};
+
+// Get application status
+export const useApplicationStatus = (applicationId) => {
+  return useQuery({
+    queryKey: ["applicationStatus", applicationId],
+    queryFn: async () => {
+      try {
+        if (!applicationId) throw new Error("Invalid application ID");
+
+        const response = await api.get(`/careers/application/${applicationId}`);
+
+        if (response.data.status === "success") {
+          return response.data.data;
+        } else {
+          throw new Error(
+            response.data.message || "Failed to get application status"
+          );
+        }
+      } catch (error) {
+        return handleApiError(error);
+      }
+    },
+    enabled: !!applicationId,
+  });
 };

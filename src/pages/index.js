@@ -1,6 +1,3 @@
-export { default as StudentDashboard } from "./StudentDashboard.jsx";
-export { default as AdminDashboard } from "./AdminDashboard.jsx";
-
 // Auth Pages
 export { default as Login } from "./auth/Login.jsx";
 export { default as Register } from "./auth/Register.jsx";
@@ -16,6 +13,7 @@ export { default as BlogPage } from "./BlogPage.jsx";
 export { default as Webinars } from "./Webinars.jsx";
 export { default as WebinarPage } from "./WebinarPage.jsx";
 export { default as About } from "./About.jsx";
+export { default as ErrorPage } from "./ErrorPage.jsx";
 
 // Dashboard Pages
 export { default as Dashboard } from "./dashboard/Dashboard.jsx";

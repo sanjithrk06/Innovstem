@@ -6,7 +6,6 @@ import DashboardLayout from "../layouts/Dashboard.jsx";
 import { Loader } from "../components/index.js";
 import {
   About,
-  AdminDashboard,
   BlogPage,
   Blogs,
   CoursePage,
@@ -15,13 +14,14 @@ import {
   Login,
   Resources,
   Services,
-  StudentDashboard,
   Webinars,
   Dashboard,
   CategoryPage,
   Register,
   WebinarPage,
+  ErrorPage,
 } from "../pages";
+import CareersPage from "../pages/CareersPage.jsx";
 
 // Constants for roles
 const ROLES = {
@@ -40,6 +40,7 @@ const PATHS = {
   COURSES: "/courses",
   COURSES_CATEGORY: "/courses/:slug",
   COURSES_PAGE: "/courses/course/:slug",
+  CAREERS_PAGE: "/careers",
   BLOGS: "/blogs",
   BLOG_PAGE: "/blogs/:blogSlug",
   RESOURCES: "/resources",
@@ -48,6 +49,7 @@ const PATHS = {
   ABOUT: "/about",
   ADMIN_DASHBOARD: "/dashboard/admin",
   STUDENT_DASHBOARD: "/dashboard/student",
+  ERROR_PAGE: "/error",
 };
 
 // Protected Route Component
@@ -85,8 +87,7 @@ const withLoader = (WrappedComponent, pageName) => {
       const fetchData = async () => {
         setIsLoading(true);
         try {
-          // Simulate a 2-second delay for data fetching
-          await new Promise((resolve) => setTimeout(resolve, 2000));
+          await new Promise((resolve) => setTimeout(resolve, 1500));
           const result = {
             page: pageName,
             data: `Loaded data for ${pageName}`,
@@ -116,6 +117,7 @@ const ServicesWithLoader = withLoader(Services, "Services");
 const CoursesWithLoader = withLoader(Courses, "Courses");
 const CategoryPageWithLoader = withLoader(CategoryPage, "CategoryPage");
 const CoursePageWithLoader = withLoader(CoursePage, "CoursePage");
+const CareersPageWithLoader = withLoader(CareersPage, "CareersPage");
 const BlogsWithLoader = withLoader(Blogs, "Blogs");
 const BlogPageWithLoader = withLoader(BlogPage, "BlogPage");
 const ResourcesWithLoader = withLoader(Resources, "Resources");
@@ -125,11 +127,6 @@ const AboutWithLoader = withLoader(About, "About");
 const LoginWithLoader = withLoader(Login, "Login");
 const RegisterWithLoader = withLoader(Register, "Register");
 const DashboardWithLoader = withLoader(Dashboard, "Dashboard");
-const AdminDashboardWithLoader = withLoader(AdminDashboard, "AdminDashboard");
-const StudentDashboardWithLoader = withLoader(
-  StudentDashboard,
-  "StudentDashboard"
-);
 
 // Router Configuration
 const router = createBrowserRouter([
@@ -197,6 +194,10 @@ const router = createBrowserRouter([
         path: PATHS.ABOUT,
         element: <AboutWithLoader />,
       },
+      {
+        path: PATHS.CAREERS_PAGE,
+        element: <CareersPageWithLoader />,
+      },
     ],
   },
 
@@ -219,7 +220,7 @@ const router = createBrowserRouter([
   {
     path: PATHS.DASHBOARD,
     element: (
-      <ProtectedRoute role={[ROLES.ADMIN, ROLES.STUDENT, ROLES.USER]}>
+      <ProtectedRoute role={[ROLES.USER]}>
         <DashboardLayout />
       </ProtectedRoute>
     ),
@@ -232,23 +233,12 @@ const router = createBrowserRouter([
         path: "resources",
         element: <ResourcesWithLoader />,
       },
-      {
-        path: "admin",
-        element: (
-          <ProtectedRoute role={[ROLES.ADMIN]}>
-            <AdminDashboardWithLoader />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "student",
-        element: (
-          <ProtectedRoute role={[ROLES.STUDENT]}>
-            <StudentDashboardWithLoader />
-          </ProtectedRoute>
-        ),
-      },
     ],
+  },
+
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

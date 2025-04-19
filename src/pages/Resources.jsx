@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BlogCard, TitleBanner } from "../components";
-import { CourseHero } from "../sections";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 

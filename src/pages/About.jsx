@@ -5,7 +5,7 @@ import {
   AboutWhat,
   AboutWhy,
   VisionMission,
-} from "../sections";
+} from "../components";
 
 const About = () => {
   return (
