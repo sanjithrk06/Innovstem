@@ -34,6 +34,7 @@ export { default as AboutWhat } from "./Home/About.jsx";
 export { default as AboutBelieve } from "./About/Believe.jsx";
 export { default as VisionMission } from "./About/VisionMission.jsx";
 export { default as AboutConnection } from "./About/Connection.jsx";
+export { default as CareerBannar } from "./About/CareerBannar.jsx";
 
 // Blog Page
 export { default as BlogList } from "./Blogs/BlogList.jsx";
@@ -52,6 +53,7 @@ export { default as CareersList } from "./Careers/CareersList.jsx";
 // UI Components
 export { default as Loader } from "./ui/Loader.jsx";
 export { default as TitleBanner } from "./ui/TitleBanner.jsx";
+export { default as EnrolledCard } from "./ui/EnrolledCard.jsx";
 export { Button } from "./ui/Button.jsx";
 export { default as Toast } from "./ui/Toast.jsx";
 export { Textarea } from "./ui/Textarea.jsx";

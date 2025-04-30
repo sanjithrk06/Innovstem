@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   BadgeInfo,
@@ -14,9 +14,16 @@ import {
 } from "lucide-react";
 import { useRecommendedWebinars, useWebinarDetails } from "../hooks/hooks";
 import { WebinarCard } from "../components";
+import { Helmet } from "react-helmet-async";
+import { useAuthStore } from "../store/authStore";
+import api from "../config/axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const WebinarPage = () => {
   const { slug } = useParams();
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -73,10 +80,23 @@ const WebinarPage = () => {
 
   const { date, time } = formatDateTime(webinarDetails?.webinar_date_time);
 
-  useEffect(() => {
-    console.log("Recommendations Data:", recommendations);
-    console.log("Recommendations Loading:", recommendationsLoading);
-  }, [recommendations, recommendationsLoading]);
+  const handleRegister = async () => {
+    if (!isAuthenticated) {
+      navigate("/auth/login");
+      return;
+    }
+
+    try {
+      await api.post("student/attend-webinar", {
+        webinar_id: webinarDetails.id,
+      });
+
+      // Refetch webinar details
+      await queryClient.invalidateQueries(["webinarDetails", slug]);
+    } catch (err) {
+      console.error("Webinar registration failed:", err);
+    }
+  };
 
   if (webinarLoading) {
     return (
@@ -94,10 +114,11 @@ const WebinarPage = () => {
     );
   }
 
-  console.log(recommendations);
-
   return (
     <div className="bg-gray-50 py-1">
+      <Helmet>
+        <title>{webinarDetails.title || "Webinar"}</title>
+      </Helmet>
       <div className="container mx-auto px-4 text-left my-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Content Area */}
@@ -295,12 +316,18 @@ const WebinarPage = () => {
                               </span>
                             </div>
                           </div>
-                          <Link
-                            to="#"
-                            className="font-outfit font-medium text-cream text-center block w-full rounded-xl bg-secondary/80 text-lg cursor-pointer py-2"
+                          <button
+                            onClick={handleRegister}
+                            className={`font-outfit font-medium text-cream text-center block w-full rounded-xl ${
+                              webinarDetails?.user_registered
+                                ? "bg-green-600 text-white"
+                                : "bg-secondary/80 hover:bg-secondary"
+                            } text-lg cursor-pointer py-3 px-4 transition-all duration-300 hover:shadow-lg focus:outline-none`}
                           >
-                            Register Now
-                          </Link>
+                            {webinarDetails?.user_registered
+                              ? "Registered"
+                              : "Register Now"}
+                          </button>
                         </div>
                       </div>
                     </section>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { ServiceContent, ServiceHero } from "../components";
+import { Helmet } from "react-helmet-async";
 
 const Services = () => {
   useEffect(() => {
@@ -8,6 +9,9 @@ const Services = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Services</title>
+      </Helmet>
       <ServiceHero />
       <ServiceContent />
     </>

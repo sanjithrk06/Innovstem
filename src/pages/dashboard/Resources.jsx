@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { BlogCard, TitleBanner } from "../../components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
+import { Loader } from "lucide-react";
 
 const Resources = () => {
   const [resources, setResources] = useState([]);
@@ -20,6 +22,8 @@ const Resources = () => {
           ? `https://admin-dev.innovstem.com/api/resources/search?query=${search}&page=${page}`
           : `https://admin-dev.innovstem.com/api/resources?page=${page}`
       );
+
+      console.log(response);
 
       const responseData = response.data.data;
       setResources(responseData.data);
@@ -78,6 +82,9 @@ const Resources = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
+      <Helmet>
+        <title>Resources</title>
+      </Helmet>
       <div className="py-5">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 pt-8 bg-white rounded-2xl">
           {/* Search form */}
@@ -124,7 +131,9 @@ const Resources = () => {
 
           {/* Loading State */}
           {isLoading && (
-            <div className="text-center py-10">Loading resources...</div>
+            <div className="flex items-center justify-center p-10">
+              <Loader />
+            </div>
           )}
 
           {/* Resources Grid */}
@@ -138,6 +147,7 @@ const Resources = () => {
                       category: resource.category_name,
                       readTime: resource.created_at,
                       title: resource.title,
+                      image: resource.resource_thumbnail,
                       description: resource.resource_description,
                       slug: resource.resource_slug,
                     }}

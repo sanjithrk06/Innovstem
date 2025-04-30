@@ -2,21 +2,17 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-
-const user = {
-  name: "Santhosh",
-  email: "santhosh@gmail.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { ChevronDownIcon, LogOut, User } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { useAuthStore } from "../store/authStore";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -24,33 +20,42 @@ const navigation = [
   { name: "Resources", href: "/dashboard/resources" },
 ];
 
-const userNavigation = [
-  { name: "My Profile", href: "#" },
-  { name: "Sign out", href: "/" },
-];
+const userNavigation = [{ name: "Logout", href: "/" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Dashboard = () => {
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Get auth state from your auth store
+  const { user, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    setUserMenuOpen(false);
+    navigate("/");
+  };
+
   return (
     <>
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-white shadow border">
+        <Disclosure as="nav" className="bg-whiteDim shadow border">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0 py-2">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="shrink-0">
+                <Link to={"/"} className="shrink-0">
                   <img alt="Innovstem" src={logo} className="h-10 w-auto" />
-                </div>
+                </Link>
                 <div className="hidden md:block">
                   <div className="ml-16 flex items-baseline space-x-4">
                     {navigation.map((item) => (
                       <NavLink
                         key={item.name}
                         to={item.href}
-                        end // Ensures exact path match
+                        end
                         className={({ isActive }) =>
                           classNames(
                             isActive
@@ -69,34 +74,75 @@ const Dashboard = () => {
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
                   {/* Profile dropdown */}
-                  <Menu as="div" className="relative ml-3">
-                    <div>
-                      <MenuButton className="relative flex max-w-xs items-center rounded-full bg-white text-sm focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:outline-hidden">
-                        <span className="absolute -inset-1.5" />
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          alt=""
-                          src={user.imageUrl}
-                          className="size-8 rounded-full"
-                        />
-                      </MenuButton>
-                    </div>
-                    <MenuItems
-                      transition
-                      className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                    >
-                      {userNavigation.map((item) => (
-                        <MenuItem key={item.name}>
-                          <a
-                            href={item.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-primary"
+                  <Popover className="relative">
+                    {({ close }) => (
+                      <>
+                        <motion.div>
+                          <PopoverButton
+                            className="flex items-center gap-x-2 text-base font-semibold outline-none text-secondary/90 p-2 px-4 rounded-lg transition-colors duration-200"
+                            onClick={() => setUserMenuOpen(!userMenuOpen)}
+                            aria-expanded={userMenuOpen}
                           >
-                            {item.name}
-                          </a>
-                        </MenuItem>
-                      ))}
-                    </MenuItems>
-                  </Menu>
+                            <User size={20} />
+                            <span>{user?.name || "User"}</span>
+                            <motion.div
+                              animate={{ rotate: userMenuOpen ? 180 : 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <ChevronDownIcon
+                                aria-hidden="true"
+                                className="size-4"
+                              />
+                            </motion.div>
+                          </PopoverButton>
+                        </motion.div>
+
+                        <AnimatePresence>
+                          {userMenuOpen && (
+                            <PopoverPanel
+                              static
+                              as={motion.div}
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.95 }}
+                              transition={{ duration: 0.15 }}
+                              className="absolute right-0 mt-3 w-64 overflow-hidden rounded-2xl bg-white/70 backdrop-blur-md shadow-2xl ring-1 ring-gray-900/10"
+                            >
+                              <div className="p-4 border-b border-gray-200">
+                                <div className="font-semibold text-gray-900">
+                                  {user?.name}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {user?.email}
+                                </div>
+                                <div className="text-xs mt-1 inline-block bg-primary/20 text-primary px-2 py-0.5 rounded-full">
+                                  {user?.role || "Student"}
+                                </div>
+                              </div>
+
+                              <div className="p-2 space-y-1">
+                                <motion.div
+                                  whileHover={{
+                                    x: 4,
+                                    backgroundColor: "rgba(255,0,0,0.05)",
+                                  }}
+                                  className="group flex w-full items-center gap-x-3 rounded-lg py-2 px-3 text-sm font-medium text-red-600 transition"
+                                >
+                                  <button
+                                    onClick={handleLogout}
+                                    className="flex items-center gap-2 text-red-600 w-full"
+                                  >
+                                    <LogOut size={18} />
+                                    Logout
+                                  </button>
+                                </motion.div>
+                              </div>
+                            </PopoverPanel>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    )}
+                  </Popover>
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">
@@ -163,16 +209,28 @@ const Dashboard = () => {
                 </button>
               </div>
               <div className="mt-3 space-y-1 px-2">
-                {userNavigation.map((item) => (
-                  <DisclosureButton
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-orange-50 hover:text-primary"
+                {/* User info section */}
+                <div className="px-3 mb-4">
+                  <div className="font-medium text-gray-900">{user?.name}</div>
+                  <div className="text-sm text-gray-500">{user?.email}</div>
+                  <div className="text-xs mt-1 bg-primary/10 text-primary inline-block px-2 py-0.5 rounded-full">
+                    {user?.role || "Student"}
+                  </div>
+                </div>
+
+                {/* Logout button */}
+                <motion.div whileHover={{ x: 5 }} whileTap={{ scale: 0.98 }}>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="-mx-3 flex items-center gap-2 rounded-lg w-full text-left px-3 py-2.5 text-base/7 font-semibold text-red-600 hover:bg-gray-50"
                   >
-                    {item.name}
-                  </DisclosureButton>
-                ))}
+                    <LogOut size={18} />
+                    Logout
+                  </button>
+                </motion.div>
               </div>
             </div>
           </DisclosurePanel>

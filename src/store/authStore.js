@@ -1,102 +1,156 @@
-// State management tool (Zustand)
 import { create } from "zustand";
-import axios from "axios";
 import api from "../config/axios";
+import Cookies from "js-cookie";
 
-// Define API URL from environment variables
-const API_URL = "http://admin-dev.innovstem.com/api";
+// Configure axios to use the token for all requests
+const configureAxiosInterceptors = () => {
+  api.interceptors.request.use(
+    (config) => {
+      const token = Cookies.get("access_token");
+      if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+};
 
-// Zustand Store for Authentication
-export const useAuthStore = create((set) => ({
+// Initialize interceptors
+configureAxiosInterceptors();
+
+export const useAuthStore = create((set, get) => ({
   user: null,
   isAuthenticated: false,
-  error: null,
   isLoading: false,
   isCheckingAuth: false,
   message: null,
 
-  // Sign Up
-  signup: async (email, password, name) => {
-    set({ isLoading: true, error: null });
+  signup: async (userData) => {
+    set({ isLoading: true });
 
     try {
-      const response = await api.post(`signup`, {
-        email,
-        password,
-        name,
-      });
+      const response = await api.post(`register`, userData);
+
+      if (response.data.data.token) {
+        Cookies.set("access_token", response.data.data.token, {
+          expires: 7,
+          secure: process.env.REACT_APP_ENV === "production",
+          sameSite: "strict",
+        });
+      }
 
       set({
-        user: response.data.user,
+        user: response.data.data.user,
         isAuthenticated: true,
         isLoading: false,
-        message: "Signup successful!",
       });
+
+      return response.data;
     } catch (err) {
-      set({
-        error: err.response?.data?.message || "Error signing up",
-        isLoading: false,
-      });
+      set({ isLoading: false });
       throw err;
     }
   },
 
-  // Login
   login: async (email, password) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
 
     try {
-      const response = await api.post(`login`, {
-        email,
-        password,
-      });
+      const response = await api.post(`login`, { email, password });
+
+      if (response.data.data.token) {
+        Cookies.set("access_token", response.data.data.token, {
+          expires: 7,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        });
+      }
 
       set({
-        user: response.data.user,
+        user: response.data.data.user,
         isAuthenticated: true,
         isLoading: false,
         message: "Login successful!",
       });
+
+      return response.data;
     } catch (error) {
-      console.log(error.response.data.message);
-      set({
-        error: error.response?.data?.message || "Error logging in",
-        isLoading: false,
-      });
+      set({ isLoading: false });
       throw error;
     }
   },
 
-  // Logout
   logout: async () => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
 
     try {
-      await axios.post(`${API_URL}/logout`);
+      const token = Cookies.get("access_token");
+      if (token) {
+        try {
+          await api.post(`logout`);
+        } catch (error) {
+          console.error("Server logout failed, continuing with local logout");
+        }
+      }
+
+      Cookies.remove("access_token");
       set({
         user: null,
         isAuthenticated: false,
         isLoading: false,
         message: "Logout successful!",
       });
+
+      return true;
     } catch (error) {
-      set({
-        error: "Error logging out",
-        isLoading: false,
-      });
+      set({ isLoading: false });
       throw error;
     }
   },
 
-  // Verify Email
-  verifyEmail: async (code) => {
-    set({ isLoading: true, error: null });
+  checkAuth: async () => {
+    if (
+      get().isCheckingAuth ||
+      (!Cookies.get("access_token") && !get().isAuthenticated)
+    ) {
+      return false;
+    }
+
+    set({ isCheckingAuth: true });
 
     try {
-      const response = await axios.post(`${API_URL}/verify-email`, { code });
+      const response = await api.get(`user`);
 
       set({
-        user: response.data.user,
+        user: response.data.data.user,
+        isAuthenticated: true,
+        isCheckingAuth: false,
+      });
+
+      return true;
+    } catch (error) {
+      Cookies.remove("access_token");
+      set({
+        isAuthenticated: false,
+        isCheckingAuth: false,
+        user: null,
+      });
+
+      return false;
+    }
+  },
+
+  verifyEmail: async (code) => {
+    set({ isLoading: true });
+
+    try {
+      const response = await api.post(`verify-email`, { code });
+
+      set({
+        user: response.data.data?.user || response.data.user,
         isAuthenticated: true,
         isLoading: false,
         message: "Email verified successfully!",
@@ -104,77 +158,55 @@ export const useAuthStore = create((set) => ({
 
       return response.data;
     } catch (error) {
-      set({
-        error: error.response?.data?.message || "Error verifying email",
-        isLoading: false,
-      });
+      set({ isLoading: false });
       throw error;
     }
   },
 
-  // Check Authentication Status
-  checkAuth: async () => {
-    set({ isCheckingAuth: true, error: null });
-
-    try {
-      const response = await axios.get(`${API_URL}/check-auth`);
-
-      set({
-        user: response.data.user,
-        isAuthenticated: true,
-        isCheckingAuth: false,
-      });
-    } catch (error) {
-      set({
-        isAuthenticated: false,
-        isCheckingAuth: false,
-        user: null,
-      });
-    }
-  },
-
-  // Forgot Password
   forgotPassword: async (email) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
 
     try {
-      const response = await axios.post(`${API_URL}/forgot-password`, {
-        email,
-      });
+      const response = await api.post(`forgot-password`, { email });
 
       set({
         message: response.data.message || "Reset password email sent!",
         isLoading: false,
       });
+
+      return response.data;
     } catch (error) {
-      set({
-        error:
-          error.response?.data?.message || "Error sending reset password email",
-        isLoading: false,
-      });
+      set({ isLoading: false });
       throw error;
     }
   },
 
-  // Reset Password
-  resetPassword: async (token, password) => {
-    set({ isLoading: true, error: null });
+  resetPassword: async (token, password, password_confirmation) => {
+    set({ isLoading: true });
 
     try {
-      const response = await axios.post(`${API_URL}/reset-password/${token}`, {
+      const response = await api.post(`reset-password/${token}`, {
         password,
+        password_confirmation,
       });
 
       set({
         message: response.data.message || "Password reset successfully!",
         isLoading: false,
       });
+
+      return response.data;
     } catch (error) {
-      set({
-        error: error.response?.data?.message || "Error resetting password",
-        isLoading: false,
-      });
+      set({ isLoading: false });
       throw error;
     }
+  },
+
+  initialize: async () => {
+    const token = Cookies.get("access_token");
+    if (token) {
+      return get().checkAuth();
+    }
+    return false;
   },
 }));

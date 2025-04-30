@@ -234,7 +234,7 @@ const ApplicationForm = ({ careerId, jobTitle, onBackClick }) => {
                 <div className="relative">
                   <label
                     htmlFor="applicant_name"
-                    className="block text-base font-medium text-gray-600 mb-1 flex items-center"
+                    className="text-base font-medium text-gray-600 mb-1 flex items-center"
                   >
                     <User className="w-4 h-4 mr-2 text-blue-800" />
                     Full Name *
@@ -254,7 +254,7 @@ const ApplicationForm = ({ careerId, jobTitle, onBackClick }) => {
                 <div className="relative">
                   <label
                     htmlFor="email"
-                    className="block text-base font-medium text-gray-600 mb-1 flex items-center"
+                    className="text-base font-medium text-gray-600 mb-1 flex items-center"
                   >
                     <Mail className="w-4 h-4 mr-2 text-blue-800" />
                     Email *
@@ -274,7 +274,7 @@ const ApplicationForm = ({ careerId, jobTitle, onBackClick }) => {
                 <div className="relative">
                   <label
                     htmlFor="phone"
-                    className="block text-base font-medium text-gray-600 mb-1 flex items-center"
+                    className="text-base font-medium text-gray-600 mb-1 flex items-center"
                   >
                     <Phone className="w-4 h-4 mr-2 text-blue-800" />
                     Phone *

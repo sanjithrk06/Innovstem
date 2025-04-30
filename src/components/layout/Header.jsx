@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -13,8 +13,9 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../assets/logo.png";
-import { Link, NavLink } from "react-router-dom";
-import { ChevronDownIcon } from "lucide-react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { ChevronDownIcon, LogOut, User, LayoutDashboard } from "lucide-react";
+import { useAuthStore } from "../../store/authStore"; // Import the auth store
 
 const products = [
   {
@@ -119,6 +120,17 @@ const servicesNav = [
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Get auth state from your auth store
+  const { user, isAuthenticated, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    setUserMenuOpen(false);
+    navigate("/");
+  };
 
   return (
     <div className="bg-white sticky top-0 h-[12vh] z-20">
@@ -308,14 +320,106 @@ const Header = () => {
             variants={navItemVariants}
             className="hidden lg:flex lg:flex-1 lg:justify-end"
           >
-            <motion.div whileHover={{ y: -2 }}>
-              <NavLink
-                to="auth/login"
-                className="text-base/6 font-medium text-cream bg-secondary border-2 border-secondary p-2 px-3"
-              >
-                Log in
-              </NavLink>
-            </motion.div>
+            {isAuthenticated ? (
+              <Popover className="relative">
+                {({ close }) => (
+                  <>
+                    <motion.div>
+                      <PopoverButton
+                        className="flex items-center gap-x-2 text-base font-semibold outline-none text-secondary/90 p-2 px-4 rounded-lg transition-colors duration-200"
+                        onClick={() => setUserMenuOpen(!userMenuOpen)}
+                        aria-expanded={userMenuOpen}
+                      >
+                        <User size={20} />
+                        <span>{user?.name || "User"}</span>
+                        <motion.div
+                          animate={{ rotate: userMenuOpen ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="size-4"
+                          />
+                        </motion.div>
+                      </PopoverButton>
+                    </motion.div>
+
+                    <AnimatePresence>
+                      {userMenuOpen && (
+                        <PopoverPanel
+                          static
+                          as={motion.div}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.15 }}
+                          className="absolute right-0 mt-3 w-64 overflow-hidden rounded-2xl bg-white/70 backdrop-blur-md shadow-2xl ring-1 ring-gray-900/10"
+                        >
+                          <div className="p-4 border-b border-gray-200">
+                            <div className="font-semibold text-gray-900">
+                              {user?.name}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {user?.email}
+                            </div>
+                            <div className="text-xs mt-1 inline-block bg-primary/20 text-primary px-2 py-0.5 rounded-full">
+                              {user?.role || "Student"}
+                            </div>
+                          </div>
+
+                          <div className="p-2 space-y-1">
+                            <motion.div
+                              whileHover={{
+                                x: 4,
+                                backgroundColor: "rgba(0,0,0,0.04)",
+                              }}
+                              className="group flex w-full items-center gap-x-3 rounded-lg py-2 px-3 text-sm font-medium transition"
+                            >
+                              <NavLink
+                                to="/dashboard"
+                                onClick={() => {
+                                  close();
+                                  setUserMenuOpen(false);
+                                }}
+                                className="flex items-center gap-2 text-secondary hover:text-primary w-full"
+                              >
+                                <LayoutDashboard size={18} />
+                                My Dashboard
+                              </NavLink>
+                            </motion.div>
+
+                            <motion.div
+                              whileHover={{
+                                x: 4,
+                                backgroundColor: "rgba(255,0,0,0.05)",
+                              }}
+                              className="group flex w-full items-center gap-x-3 rounded-lg py-2 px-3 text-sm font-medium text-red-600 transition"
+                            >
+                              <button
+                                onClick={handleLogout}
+                                className="flex items-center gap-2 text-red-600 w-full"
+                              >
+                                <LogOut size={18} />
+                                Logout
+                              </button>
+                            </motion.div>
+                          </div>
+                        </PopoverPanel>
+                      )}
+                    </AnimatePresence>
+                  </>
+                )}
+              </Popover>
+            ) : (
+              <motion.div whileHover={{ y: -2, scale: 1.02 }}>
+                <NavLink
+                  to="/auth/login"
+                  className="text-base font-semibold text-cream bg-secondary border-2 border-secondary hover:bg-secondary/80 hover:border-secondary/70 transition-colors duration-200 p-2 px-4 rounded-lg shadow-sm"
+                >
+                  Log in
+                </NavLink>
+              </motion.div>
+            )}
           </motion.div>
         </nav>
 
@@ -462,18 +566,67 @@ const Header = () => {
                     </div>
 
                     <div className="py-6">
-                      <motion.div
-                        whileHover={{ x: 5 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <NavLink
-                          to="#"
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                      {isAuthenticated ? (
+                        <>
+                          {/* User info section */}
+                          <div className="px-3 mb-4">
+                            <div className="font-medium text-gray-900">
+                              {user?.name}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {user?.email}
+                            </div>
+                            <div className="text-xs mt-1 bg-primary/10 text-primary inline-block px-2 py-0.5 rounded-full">
+                              {user?.role || "Student"}
+                            </div>
+                          </div>
+
+                          {/* Dashboard link */}
+                          <motion.div
+                            whileHover={{ x: 5 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <NavLink
+                              to="/dashboard"
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="-mx-3 flex items-center gap-2 rounded-lg px-3 py-2.5 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                            >
+                              <LayoutDashboard size={18} />
+                              My Dashboard
+                            </NavLink>
+                          </motion.div>
+
+                          {/* Logout button */}
+                          <motion.div
+                            whileHover={{ x: 5 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <button
+                              onClick={() => {
+                                handleLogout();
+                                setMobileMenuOpen(false);
+                              }}
+                              className="-mx-3 flex items-center gap-2 rounded-lg w-full text-left px-3 py-2.5 text-base/7 font-semibold text-red-600 hover:bg-gray-50"
+                            >
+                              <LogOut size={18} />
+                              Logout
+                            </button>
+                          </motion.div>
+                        </>
+                      ) : (
+                        <motion.div
+                          whileHover={{ x: 5 }}
+                          whileTap={{ scale: 0.98 }}
                         >
-                          Log in
-                        </NavLink>
-                      </motion.div>
+                          <NavLink
+                            to="auth/login"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-secondary hover:text-primary hover:bg-gray-50"
+                          >
+                            Log in
+                          </NavLink>
+                        </motion.div>
+                      )}
                     </div>
                   </div>
                 </motion.div>

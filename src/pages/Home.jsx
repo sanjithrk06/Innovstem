@@ -8,6 +8,7 @@ import {
   Showcase,
   Testimonials,
 } from "../components";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   useEffect(() => {
@@ -16,6 +17,9 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       <HomeHero />
       <HomeAbout />
       <HomeCourses />

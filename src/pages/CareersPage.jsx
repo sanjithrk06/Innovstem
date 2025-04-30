@@ -4,6 +4,7 @@ import { BookOpen, Users, Sparkles, GraduationCap } from "lucide-react";
 import { useCareers } from "../hooks/hooks";
 import { CareerDetails, CareersList } from "../components";
 import { images } from "../assets/images";
+import { Helmet } from "react-helmet-async";
 // import banner from "../assets/"
 
 export default function CareersPage() {
@@ -28,6 +29,9 @@ export default function CareersPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50/20">
+      <Helmet>
+        <title>Careers</title>
+      </Helmet>
       {/* Page Header */}
       <div
         className="relative bg-cover bg-center bg-no-repeat"

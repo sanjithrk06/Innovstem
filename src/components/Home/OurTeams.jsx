@@ -1,28 +1,29 @@
 import { motion } from "framer-motion";
 import { Users, Lightbulb, ChevronRight, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import { images } from "../../assets/images";
 
 const teamMembers = [
   {
     name: "Sajesh Raju",
+    role: "Founder & Vision Strategist",
     vision:
       "InnovSTEM is a vision turned reality, empowering students with future-ready skills. We are committed to bridging the gap between education and industry needs. Together, we are shaping the leaders of tomorrow.",
-    image:
-      "https://innovstem.edumilestones.com/create_channel/createpage/uploads/Sajesh%20passport.jpg",
-  },
-  {
-    name: "Sriram",
-    vision:
-      "InnovSTEM is redefining learning with innovative training methods. Our mission is to equip students with skills that make them confident and career-ready. Proud to be part of this transformative journey.",
-    image:
-      "https://innovstem.edumilestones.com/create_channel/createpage/uploads/Sajesh%20passport.jpg",
+    image: images.Sajesh,
   },
   {
     name: "Jayaprakash",
+    role: "Co-Founder & Community Relations and Finance Lead",
     vision:
       "InnovSTEM is a movement towards a brighter future for students. We focus on holistic skill development, ensuring they excel in academics and beyond. Education with a purpose—this is our promise.",
-    image:
-      "https://innovstem.edumilestones.com/create_channel/createpage/uploads/Sajesh%20passport.jpg",
+    image: images.Jaya,
+  },
+  {
+    name: "Sriram",
+    role: "Co-Founder & Technology and Operations Head",
+    vision:
+      "InnovSTEM is redefining learning with innovative training methods. Our mission is to equip students with skills that make them confident and career-ready. Proud to be part of this transformative journey.",
+    image: images.Sri,
   },
 ];
 
@@ -149,22 +150,14 @@ export default function OurTeam() {
                         className="h-full w-full rounded-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     </div>
-                    {/* <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.5 + index * 0.2, duration: 0.5 }}
-                      className="absolute -bottom-2 -right-2 bg-indigo-600 text-white p-2 rounded-full shadow-lg"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </motion.div> */}
                   </motion.div>
 
                   <h3 className="font-outfit font-semibold text-secondary text-2xl text-center pb-1">
                     {member.name}
                   </h3>
 
-                  <p className="font-outfit font-thin text-primary text-xl text-center">
-                    Founder
+                  <p className="font-outfit font-extralight text-primary text-xl text-center">
+                    {member.role}
                   </p>
 
                   <motion.div

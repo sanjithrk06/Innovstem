@@ -67,7 +67,9 @@ const CourseCard = ({ item }) => {
             <div className=" flex flex-row items-center gap-2">
               <div className="flex flex-row gap-1">
                 <Eye className=" w-4 h-4 text-primary/60" />
-                <span className="text-xs text-slate-500 font-medium">103</span>
+                <span className="text-xs text-slate-500 font-medium">
+                  {item.view_count}
+                </span>
               </div>
               <div className="h-1 w-1 rounded-full bg-primary/60"></div>
               <p className="text-xs text-slate-400 font-medium">

@@ -96,16 +96,16 @@ const CareersList = ({ onJobSelect, setPage, setSearchTerm }) => {
           <h2 className="text-2xl font-bold font-outfit text-blue-800">
             Available Positions
           </h2>
-          <Button
+          {/* <Button
             onClick={() => setShowFilters(!showFilters)}
             className="border border-blue-800 text-blue-800 hover:bg-blue-50 rounded-lg px-4 py-2 transition-all duration-200 flex items-center gap-2"
           >
             <Filter size={16} />
             {showFilters ? "Hide Filters" : "Show Filters"}
-          </Button>
+          </Button> */}
         </div>
 
-        {showFilters && (
+        {/* {showFilters && (
           <motion.form
             onSubmit={handleSearch}
             className="grid grid-cols-6 gap-4 p-4 bg-blue-50 rounded-xl mb-4"
@@ -167,7 +167,7 @@ const CareersList = ({ onJobSelect, setPage, setSearchTerm }) => {
               </Button>
             </div>
           </motion.form>
-        )}
+        )} */}
       </motion.div>
 
       {/* Job Listings */}

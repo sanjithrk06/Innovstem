@@ -6,6 +6,7 @@ import { CourseCard } from "../components";
 import bg from "../assets/images/hero.jpg";
 import { useBlogDetails, useRecommendedCourses } from "../hooks/hooks";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const BlogPage = () => {
   const { blogSlug } = useParams();
@@ -56,6 +57,9 @@ const BlogPage = () => {
 
   return (
     <div className="bg-gray-50 py-1">
+      <Helmet>
+        <title>{blog.title}</title>
+      </Helmet>
       <div className="container mx-auto px-4 text-left my-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Main Content Area */}
@@ -153,7 +157,7 @@ const BlogPage = () => {
                   {recommendations.recommended_blogs
                     .slice(0, 3)
                     .map((blog, index) => (
-                      <Link to={`/blogs/${blog.slug}`}>
+                      <Link key={index} to={`/blogs/${blog.slug}`}>
                         <motion.div
                           key={index}
                           className="flex gap-4 cursor-pointer hover:bg-gray-50 p-4 rounded-lg"

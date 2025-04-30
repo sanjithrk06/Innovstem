@@ -4,9 +4,13 @@ import { ArrowRight, CircleCheckBig } from "lucide-react";
 import { Link } from "react-router-dom";
 import { images } from "../../assets/images";
 
-const fadeInVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
 };
 
 const servicesItem = [
@@ -67,22 +71,25 @@ const Content = () => {
   return (
     <>
       {servicesItem.map((item, index) => (
-        <motion.section
+        <section
           key={index}
           className={
             index % 2 === 0 ? "bg-gray-100 drop-shadow-sm" : "bg-white"
           }
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-          variants={fadeInVariants}
         >
           <div
             className={`gap-24 items-center py-16 px-8 mx-auto max-w-screen-xl flex ${
               index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"
             } flex-col lg:py-24 lg:px-6`}
           >
-            <div className="grid grid-cols-1 gap-4 lg:w-2/5">
+            {/* Image block */}
+            <motion.div
+              className="grid grid-cols-1 gap-4 lg:w-2/5"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={fadeInUp}
+            >
               <div className="relative group">
                 <img
                   className="w-full transition-transform duration-300 relative z-10"
@@ -94,8 +101,16 @@ const Content = () => {
                   <div className="absolute bottom-0 left-0 h-36 w-28 bg-secondary transition-transform duration-300 -translate-x-5 translate-y-5"></div>
                 </div>
               </div>
-            </div>
-            <div className="font-light text-gray-500 sm:text-lg text-left lg:w-3/5">
+            </motion.div>
+
+            {/* Text Content block */}
+            <motion.div
+              className="font-light text-gray-500 sm:text-lg text-left lg:w-3/5"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={fadeInUp}
+            >
               <h2
                 className={`mb-8 text-4xl font-outfit tracking-wide uppercase text-center ${
                   index % 2 === 1 ? "lg:text-right" : "lg:text-left"
@@ -114,10 +129,8 @@ const Content = () => {
                       key={idx}
                       className="flex flex-row gap-4 justify-start items-center font-semibold pb-2"
                     >
-                      <span>
-                        <CircleCheckBig className="w-5 h-5 text-primary" />
-                      </span>
-                      <div className="">
+                      <CircleCheckBig className="w-5 h-5 text-primary" />
+                      <div>
                         <span className="text-secondary">{title}</span>:{" "}
                         <span className="font-publicsans text-lg font-normal text-slate-500 mb-4 text-justify">
                           {desc.join(": ")}
@@ -136,9 +149,9 @@ const Content = () => {
                 Know More
                 <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </motion.div>
           </div>
-        </motion.section>
+        </section>
       ))}
     </>
   );

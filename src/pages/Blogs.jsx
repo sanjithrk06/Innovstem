@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BlogCard, TitleBanner } from "../components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useBlogs } from "../hooks/hooks";
+import { Loader } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const Blogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,11 +62,18 @@ const Blogs = () => {
     return pageNumbers;
   };
 
-  console.log("blogs:", blogs);
-
   return (
     <>
-      <TitleBanner title="Blogs" subtitle="Explore New Learning Horizons" />
+      <Helmet>
+        <title>Blogs</title>
+      </Helmet>
+      <TitleBanner
+        title="Blogs"
+        subtitle="Explore New Learning Horizons"
+        description={
+          "Dive into a world of inspiration with InnovSTEM’s blogs, packed with career tips, STEM insights, and success stories. Stay informed and motivated on your journey to a brighter future!"
+        }
+      />
       <div className="bg-gray-50 py-1 sm:py-1">
         <div className="container">
           {/* Search form */}
@@ -110,9 +119,7 @@ const Blogs = () => {
           </div>
 
           {/* Loading State */}
-          {isLoading && (
-            <div className="text-center py-10">Loading blogs...</div>
-          )}
+          {isLoading && <Loader className="mx-auto text-secondary w-8 h-8" />}
 
           {/* Error State */}
           {isError && (
