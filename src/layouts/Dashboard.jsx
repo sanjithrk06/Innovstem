@@ -59,9 +59,9 @@ const Dashboard = () => {
                         className={({ isActive }) =>
                           classNames(
                             isActive
-                              ? "bg-orange-50 text-primary"
-                              : "text-secondary hover:bg-orange-50 hover:text-primary",
-                            "rounded-md px-3 py-2 text-sm font-medium"
+                              ? "bg-orange-50 text-primary font-bold"
+                              : "text-secondary hover:bg-orange-50 hover:text-primary font-semibold",
+                            "rounded-md px-3 py-2 text-base"
                           )
                         }
                       >

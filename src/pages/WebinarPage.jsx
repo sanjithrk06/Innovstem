@@ -79,6 +79,8 @@ const WebinarPage = () => {
   };
 
   const { date, time } = formatDateTime(webinarDetails?.webinar_date_time);
+  const isPastWebinar =
+    new Date(webinarDetails?.webinar_date_time) < new Date();
 
   const handleRegister = async () => {
     if (!isAuthenticated) {
@@ -318,14 +320,21 @@ const WebinarPage = () => {
                           </div>
                           <button
                             onClick={handleRegister}
+                            disabled={
+                              isPastWebinar || webinarDetails?.user_registered
+                            }
                             className={`font-outfit font-medium text-cream text-center block w-full rounded-xl ${
                               webinarDetails?.user_registered
                                 ? "bg-green-600 text-white"
+                                : isPastWebinar
+                                ? "bg-gray-500/20 text-secondary cursor-not-allowed"
                                 : "bg-secondary/80 hover:bg-secondary"
                             } text-lg cursor-pointer py-3 px-4 transition-all duration-300 hover:shadow-lg focus:outline-none`}
                           >
                             {webinarDetails?.user_registered
                               ? "Registered"
+                              : isPastWebinar
+                              ? "Registration Closed!"
                               : "Register Now"}
                           </button>
                         </div>
@@ -430,6 +439,7 @@ const WebinarPage = () => {
                             category: item.category_name,
                             readTime: item.created_at,
                             title: item.title,
+                            date: item.webinar_date_time,
                             image: item.thumbnail,
                             description: item.description,
                             slug: item.slug,

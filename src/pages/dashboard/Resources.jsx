@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BlogCard, TitleBanner } from "../../components";
+import { BlogCard, ResourceCard, TitleBanner } from "../../components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
@@ -141,7 +141,7 @@ const Resources = () => {
             <div className="mx-auto grid max-w-2xl md:max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-6 gap-y-6 pt-2 lg:mx-0 lg:max-w-none text-left">
               {resources.map((resource) => (
                 <div key={resource.id}>
-                  <BlogCard
+                  <ResourceCard
                     item={{
                       key: resource.id,
                       category: resource.category_name,

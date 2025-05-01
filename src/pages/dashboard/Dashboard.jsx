@@ -246,6 +246,7 @@ const Dashboard = () => {
                       item={{
                         id: item.id,
                         name: item.title,
+                        date: item.webinar_date_time,
                         image: item.webinar_thumbnail,
                         description: item.webinar_description,
                       }}

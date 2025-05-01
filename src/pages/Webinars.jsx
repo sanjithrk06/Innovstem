@@ -121,6 +121,7 @@ const Webinars = () => {
                     readTime: webinar.created_at,
                     title: webinar.title,
                     image: webinar.webinar_thumbnail,
+                    date: webinar.webinar_date_time,
                     description: webinar.webinar_description,
                     slug: webinar.webinar_slug,
                   }}

@@ -45,6 +45,9 @@ export { default as BlogCardVertical } from "./Blogs/BlogCardVertical.jsx";
 // Webinar Page
 export { default as WebinarCard } from "./Webinars/WebinarCard.jsx";
 
+// Resource Page
+export { default as ResourceCard } from "./Resources/ResourceCard.jsx";
+
 // Career Page
 export { default as ApplicationForm } from "./Careers/ApplicationForm.jsx";
 export { default as CareerDetails } from "./Careers/CareerDetails.jsx";

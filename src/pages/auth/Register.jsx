@@ -9,7 +9,7 @@ import { GraduationCap } from "lucide-react";
 const Register = () => {
   const [step, setStep] = useState(1);
   const { signup, isAuthenticated } = useAuthStore();
-  const { error, setError } = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -267,10 +267,10 @@ const Register = () => {
         pincode: data.pincode,
       });
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Registration failed. Please try again."
-      );
       console.error("Registration failed:", err);
+      setError(
+        err.response.data.message || "Registration failed. Please try again."
+      );
     }
   };
 

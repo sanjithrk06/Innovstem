@@ -62,7 +62,7 @@ const Banner = () => {
             {[...newsItems, ...newsItems].map((item, index) => (
               <div
                 key={index}
-                className="inline-block px-4"
+                className="inline-block px-12"
                 dangerouslySetInnerHTML={{
                   __html: item.content,
                 }}

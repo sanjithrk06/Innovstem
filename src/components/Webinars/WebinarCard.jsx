@@ -1,6 +1,5 @@
 import React from "react";
-import { UserRoundPlus } from "lucide-react";
-import { formatDistance, parseISO } from "date-fns";
+import { CalendarCheck, UserRoundPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const WebinarCard = ({ item }) => {
@@ -28,6 +27,19 @@ const WebinarCard = ({ item }) => {
         <p className="text-gray-500 font-publicsans text-left line-clamp-2 duration-500">
           {item.description || "No description available"}
         </p>
+
+        {item.date && (
+          <div className="flex flex-row gap-2 items-center justify-start text-secondary/80 text-sm font-medium font-publicsans mt-4">
+            <CalendarCheck className=" w-5 h-5 text-secondary/70" />
+            <p>
+              {new Date(item.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          </div>
+        )}
 
         <div className="w-full mt-4">
           <Link

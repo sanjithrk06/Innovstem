@@ -1,7 +1,7 @@
 // Auth Pages
 export { default as Login } from "./auth/Login.jsx";
 export { default as Register } from "./auth/Register.jsx";
-export { default as Forget } from "./auth/Forget.jsx";
+export { default as Forgot } from "./auth/Forgot.jsx";
 export { default as Reset } from "./auth/Reset.jsx";
 
 // Public Pages
@@ -21,4 +21,4 @@ export { default as ErrorPage } from "./ErrorPage.jsx";
 // Dashboard Pages
 export { default as Dashboard } from "./dashboard/Dashboard.jsx";
 export { default as Resources } from "./dashboard/Resources.jsx";
-// export { default as Courses } from "./dashboard/Courses.jsx";
+export { default as ResourcesPage } from "./dashboard/ResourcesPage.jsx";

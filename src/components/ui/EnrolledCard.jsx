@@ -1,3 +1,4 @@
+import { CalendarCheck } from "lucide-react";
 import React from "react";
 
 const EnrolledCard = ({ item }) => {
@@ -23,6 +24,19 @@ const EnrolledCard = ({ item }) => {
         <p className="text-slate-500 font-publicsans text-left line-clamp-2 duration-500">
           {item.description}
         </p>
+
+        {item.date && (
+          <div className="flex flex-row gap-2 items-center justify-start text-secondary/80 text-sm font-medium font-publicsans mt-4">
+            <CalendarCheck className=" w-5 h-5 text-secondary/70" />
+            <p>
+              {new Date(item.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

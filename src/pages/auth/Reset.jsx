@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Eye, EyeOff, ArrowRight, Check, GraduationCap } from "lucide-react";
-import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { images } from "../../assets/images"; // Replace with actual image path
+import api from "../../config/axios";
 
 const Reset = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +17,11 @@ const Reset = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const token = useParams();
+  const { token } = useParams();
+
+  // Extract email from query params
+  const queryParams = new URLSearchParams(location.search);
+  const email = queryParams.get("email");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,20 +41,29 @@ const Reset = () => {
       return;
     }
 
+    if (!email || !token) {
+      setErrorMessage("Invalid or expired reset link.");
+      return;
+    }
+
+    const payload = {
+      email,
+      token,
+      password: formData.password,
+      password_confirmation: formData.confirmPassword,
+    };
+
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      if (!token) {
-        setErrorMessage("Invalid or expired reset token");
-        return;
-      }
-
+      await api.post("reset-password", payload);
       setIsSuccess(true);
       setTimeout(() => navigate("/auth/login"), 3000);
     } catch (err) {
-      setErrorMessage("Failed to reset password. Please try again.");
+      setErrorMessage(
+        err.response?.data?.message ||
+          "Failed to reset password. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }

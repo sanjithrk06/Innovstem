@@ -21,15 +21,16 @@ import {
   WebinarPage,
   ErrorPage,
   CareersPage,
-  Forget,
+  Forgot,
   Reset,
+  ResourcesPage,
 } from "../pages";
 
 const PATHS = {
   HOME: "/",
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
-  FORGET: "/auth/forget-password",
+  FORGOT: "/auth/forgot-password",
   RESET: "/auth/reset-password/:token",
   DASHBOARD: "/dashboard",
   SERVICES: "/services",
@@ -118,12 +119,13 @@ const CareersPageWithLoader = withLoader(CareersPage, "CareersPage");
 const BlogsWithLoader = withLoader(Blogs, "Blogs");
 const BlogPageWithLoader = withLoader(BlogPage, "BlogPage");
 const ResourcesWithLoader = withLoader(Resources, "Resources");
+const ResourcesPageWithLoader = withLoader(ResourcesPage, "ResourcesPage");
 const WebinarsWithLoader = withLoader(Webinars, "Webinars");
 const WebinarPageWithLoader = withLoader(WebinarPage, "WebinarPage");
 const AboutWithLoader = withLoader(About, "About");
 const LoginWithLoader = withLoader(Login, "Login");
 const RegisterWithLoader = withLoader(Register, "Register");
-const ForgetWithLoader = withLoader(Forget, "Forget");
+const ForgotWithLoader = withLoader(Forgot, "Forgot");
 const ResetWithLoader = withLoader(Reset, "Reset");
 const DashboardWithLoader = withLoader(Dashboard, "Dashboard");
 
@@ -222,7 +224,7 @@ const router = createBrowserRouter([
         path: "forgot-password",
         element: (
           <RedirectRoute>
-            <ForgetWithLoader />
+            <ForgotWithLoader />
           </RedirectRoute>
         ),
       },
@@ -251,6 +253,10 @@ const router = createBrowserRouter([
       {
         path: "resources",
         element: <ResourcesWithLoader />,
+      },
+      {
+        path: "resources/:slug",
+        element: <ResourcesPageWithLoader />,
       },
     ],
   },
