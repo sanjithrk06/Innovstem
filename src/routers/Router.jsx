@@ -20,21 +20,18 @@ import {
   Register,
   WebinarPage,
   ErrorPage,
+  CareersPage,
+  Forgot,
+  Reset,
+  ResourcesPage,
 } from "../pages";
-import CareersPage from "../pages/CareersPage.jsx";
 
-// Constants for roles
-const ROLES = {
-  ADMIN: "admin",
-  STUDENT: "student",
-  USER: "user",
-};
-
-// Constants for paths
 const PATHS = {
   HOME: "/",
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
+  FORGOT: "/auth/forgot-password",
+  RESET: "/auth/reset-password/:token",
   DASHBOARD: "/dashboard",
   SERVICES: "/services",
   COURSES: "/courses",
@@ -52,9 +49,8 @@ const PATHS = {
   ERROR_PAGE: "/error",
 };
 
-// Protected Route Component
-const ProtectedRoute = ({ role, children }) => {
-  const { user, isAuthenticated, isCheckingAuth } = useAuthStore();
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, isCheckingAuth } = useAuthStore();
 
   if (isCheckingAuth) {
     return <Loader />;
@@ -64,20 +60,23 @@ const ProtectedRoute = ({ role, children }) => {
     return <Navigate to={PATHS.LOGIN} replace />;
   }
 
-  if (role && !role.includes(user?.role)) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5E8C7]">
-        <h1 className="text-2xl font-semibold text-[#5A7D9A]">
-          Access Denied: You do not have permission to view this page.
-        </h1>
-      </div>
-    );
+  return children;
+};
+
+const RedirectRoute = ({ children }) => {
+  const { isAuthenticated, isCheckingAuth } = useAuthStore();
+
+  if (isCheckingAuth) {
+    return <Loader />;
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to={PATHS.HOME} replace />;
   }
 
   return children;
 };
 
-// Higher-Order Component to add loading state to pages
 const withLoader = (WrappedComponent, pageName) => {
   return (props) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -111,7 +110,6 @@ const withLoader = (WrappedComponent, pageName) => {
   };
 };
 
-// Wrap each page component with the loader HOC
 const HomeWithLoader = withLoader(Home, "Home");
 const ServicesWithLoader = withLoader(Services, "Services");
 const CoursesWithLoader = withLoader(Courses, "Courses");
@@ -121,11 +119,14 @@ const CareersPageWithLoader = withLoader(CareersPage, "CareersPage");
 const BlogsWithLoader = withLoader(Blogs, "Blogs");
 const BlogPageWithLoader = withLoader(BlogPage, "BlogPage");
 const ResourcesWithLoader = withLoader(Resources, "Resources");
+const ResourcesPageWithLoader = withLoader(ResourcesPage, "ResourcesPage");
 const WebinarsWithLoader = withLoader(Webinars, "Webinars");
 const WebinarPageWithLoader = withLoader(WebinarPage, "WebinarPage");
 const AboutWithLoader = withLoader(About, "About");
 const LoginWithLoader = withLoader(Login, "Login");
 const RegisterWithLoader = withLoader(Register, "Register");
+const ForgotWithLoader = withLoader(Forgot, "Forgot");
+const ResetWithLoader = withLoader(Reset, "Reset");
 const DashboardWithLoader = withLoader(Dashboard, "Dashboard");
 
 // Router Configuration
@@ -200,27 +201,47 @@ const router = createBrowserRouter([
       },
     ],
   },
-
-  // Authentication Routes
   {
     path: "/auth",
     children: [
       {
         path: "login",
-        element: <LoginWithLoader />,
+        element: (
+          <RedirectRoute>
+            <LoginWithLoader />
+          </RedirectRoute>
+        ),
       },
       {
         path: "register",
-        element: <RegisterWithLoader />,
+        element: (
+          <RedirectRoute>
+            <RegisterWithLoader />
+          </RedirectRoute>
+        ),
+      },
+      {
+        path: "forgot-password",
+        element: (
+          <RedirectRoute>
+            <ForgotWithLoader />
+          </RedirectRoute>
+        ),
+      },
+      {
+        path: "reset-password/:token",
+        element: (
+          <RedirectRoute>
+            <ResetWithLoader />
+          </RedirectRoute>
+        ),
       },
     ],
   },
-
-  // Protected Routes (Dashboard Layout)
   {
     path: PATHS.DASHBOARD,
     element: (
-      <ProtectedRoute role={[ROLES.USER]}>
+      <ProtectedRoute>
         <DashboardLayout />
       </ProtectedRoute>
     ),
@@ -232,6 +253,10 @@ const router = createBrowserRouter([
       {
         path: "resources",
         element: <ResourcesWithLoader />,
+      },
+      {
+        path: "resources/:slug",
+        element: <ResourcesPageWithLoader />,
       },
     ],
   },

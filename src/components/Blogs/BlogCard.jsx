@@ -10,8 +10,6 @@ const BlogCard = ({ item }) => {
     { addSuffix: true }
   );
 
-  console.log(item);
-
   return (
     <div
       key={item.key}

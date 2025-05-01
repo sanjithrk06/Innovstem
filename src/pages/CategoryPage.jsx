@@ -5,6 +5,7 @@ import { CategoryHero } from "../components";
 import { CourseGrid, Loader, SearchBar } from "../components";
 import { useParams } from "react-router-dom";
 import { useCategoryBySlug } from "../hooks/hooks";
+import { Helmet } from "react-helmet-async";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -41,11 +42,6 @@ const CategoryPage = () => {
   const onPageChange = (page) => setCurrentPage(page);
 
   if (isLoading) {
-    // return (
-    //   <div className="flex justify-center items-center h-screen">
-    //     <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-primary"></div>
-    //   </div>
-    // );
     return <Loader />;
   }
 
@@ -65,7 +61,9 @@ const CategoryPage = () => {
               imageUrl={categoryData.categoryData.image_url}
             />
           )}
-
+          <Helmet>
+            <title>{categoryData.categoryData.name}</title>
+          </Helmet>
           <div className="bg-gray-50 py-6">
             <div className="container">
               <div className="flex flex-col sm:flex-row justify-between items-center mb-6">

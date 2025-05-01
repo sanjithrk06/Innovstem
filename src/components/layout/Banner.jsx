@@ -1,21 +1,30 @@
 import { Mail, Phone } from "lucide-react";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import api from "../../config/axios";
 
 const Banner = () => {
-  const newsItems = [
-    "Breaking: New product launch scheduled for next month",
-    "Update: Company wins innovation award 2025",
-    "Alert: Special discount ends tomorrow",
-  ];
-
+  const [newsItems, setNewsItems] = useState([]);
   const controls = useAnimation();
   const newsRef = useRef(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await api.get("news");
+        setNewsItems(response.data.data);
+      } catch (error) {
+        console.error("Failed to fetch news items:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  useEffect(() => {
     const scrollAnimation = async () => {
-      const newsWidth = newsRef.current?.scrollWidth / 2; // Divide by 2 since we duplicate content
+      const newsWidth = newsRef.current?.scrollWidth / 2;
       const containerWidth = containerRef.current?.offsetWidth;
 
       if (newsWidth && containerWidth) {
@@ -51,12 +60,13 @@ const Banner = () => {
           >
             {/* Render news items twice for seamless looping */}
             {[...newsItems, ...newsItems].map((item, index) => (
-              <span
+              <div
                 key={index}
-                className="inline-block px-4" // Add padding between items
-              >
-                {item}
-              </span>
+                className="inline-block px-12"
+                dangerouslySetInnerHTML={{
+                  __html: item.content,
+                }}
+              />
             ))}
           </motion.div>
           <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-secondary to-transparent pointer-events-none" />
@@ -65,19 +75,19 @@ const Banner = () => {
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 flex-shrink-0">
           <a
-            href="tel:9876541235"
+            href="tel:9150521167"
             className="flex flex-row items-center gap-2 text-cream"
           >
             <Phone className="text-cream w-4 h-4 font-bold" />
-            <span className="hidden sm:inline">9876541235</span>
+            <span className="hidden sm:inline">9150521167</span>
           </a>
           <div className="h-2 w-0.5 bg-cream hidden sm:block" />
           <a
-            href="mailto:office@innovstem.com"
+            href="mailto:info@innovstem.com"
             className="flex flex-row items-center gap-2 text-cream"
           >
             <Mail className="text-cream w-4 h-4 font-bold" />
-            <span className="hidden sm:inline">office@innovstem.com</span>
+            <span className="hidden sm:inline">info@innovstem.com</span>
           </a>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import CourseViewCard from "./CourseViewCard";
 import { Link } from "react-router-dom";
+import { Loader } from "lucide-react";
 
 const CategoryGrid = ({ courses, isLoading }) => {
   if (isLoading) {
-    return <div className="text-center py-10">Loading courses...</div>;
+    return <Loader className="mx-auto text-secondary w-8 h-8" />;
   }
 
   if (courses.length === 0) {
@@ -40,6 +41,7 @@ const CategoryGrid = ({ courses, isLoading }) => {
                 item={{
                   id: item.id,
                   name: item.name,
+                  view_count: item.view_count,
                   image: item.image_url,
                   description: item.short_description,
                   link: item.slug,

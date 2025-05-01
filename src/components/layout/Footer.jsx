@@ -1,6 +1,6 @@
 import React from "react";
 import { Mail, Phone, ChevronRight } from "lucide-react";
-import { FaLinkedinIn } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -134,7 +134,22 @@ const Footer = () => {
           </motion.h2>
           <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start sm:text-start gap-4 sm:gap-8">
             <motion.ul className="flex flex-col flex-wrap gap-3 lg:pl-4 font-normal">
-              {["About", "Services", "Webinars", "Blogs"].map((item) => (
+              <motion.li
+                variants={listItemVariants}
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-2"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronRight className="w-4 h-4 text-primary/60" />
+                </motion.div>
+                <a href="/careers" className=" nav-content">
+                  Careers
+                </a>
+              </motion.li>
+              {["About", "Services", "Webinars"].map((item) => (
                 <motion.li
                   key={item}
                   variants={listItemVariants}
@@ -156,7 +171,7 @@ const Footer = () => {
                 </motion.li>
               ))}
             </motion.ul>
-            <motion.ul className="flex flex-col flex-wrap gap-3 lg:pl-4 font-normal">
+            <motion.ul className="flex flex-col flex-wrap gap-3 lg:pl-4 font-normal max-md:hidden">
               {[
                 "Career Guidance",
                 "STEM Skills",
@@ -205,7 +220,7 @@ const Footer = () => {
             />
           </motion.h2>
           <motion.a
-            href="tel:9876541235"
+            href="tel:9150521167"
             variants={listItemVariants}
             className="flex flex-row items-center justify-center gap-2 text-secondary/80 hover:text-[#F5A623] transition-colors duration-200"
           >
@@ -213,11 +228,11 @@ const Footer = () => {
               <Phone className="w-5 h-5" />
             </motion.div>
             <span className="nav-content text-sm font-semibold">
-              9876541235
+              9150521167
             </span>
           </motion.a>
           <motion.a
-            href="mailto:office@innovstem.com"
+            href="mailto:info@innovstem.com"
             variants={listItemVariants}
             className="flex flex-row items-center justify-center gap-2 text-secondary/80 hover:text-[#F5A623] transition-colors duration-200"
           >
@@ -225,7 +240,7 @@ const Footer = () => {
               <Mail className="w-5 h-5" />
             </motion.div>
             <span className="nav-content text-sm font-semibold">
-              office@innovstem.com
+              info@innovstem.com
             </span>
           </motion.a>
           <motion.ul
@@ -234,13 +249,12 @@ const Footer = () => {
           >
             <motion.li variants={iconVariants} whileHover="hover">
               <a
-                href="#"
+                href="https://www.instagram.com/innovstem?igsh=dnVjM2xwcGFidWIy"
                 className="text-secondary/80 hover:text-hover transition-colors duration-200"
               >
-                <FaLinkedinIn className="w-5 h-5" />
+                <FaInstagram className="w-5 h-5" />
               </a>
             </motion.li>
-            {/* Add more social icons as needed */}
           </motion.ul>
         </motion.div>
       </motion.div>

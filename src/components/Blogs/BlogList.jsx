@@ -2,7 +2,6 @@ import React from "react";
 import { BlogCard, BlogFeatureCard } from "..";
 
 const BlogList = ({ featureBlog, blogs }) => {
-  console.log(featureBlog, "Blogs", blogs);
   return (
     <div className="container mx-auto px-0 grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
       {/* Feature Blog */}

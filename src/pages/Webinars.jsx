@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { TitleBanner, WebinarCard } from "../components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useWebinars } from "../hooks/hooks";
+import { Loader } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const Webinars = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,9 +54,15 @@ const Webinars = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Webinars</title>
+      </Helmet>
       <TitleBanner
         title={"Webinars"}
         subtitle={"Explore New Learning Horizons"}
+        description={
+          "Join InnovSTEM’s engaging webinars to connect with industry leaders and explore cutting-edge career trends. Gain exclusive insights and answers to fuel your aspirations in real time!"
+        }
       />
       <div className="bg-gray-50 py-1 sm:py-1">
         <div className="container">
@@ -100,9 +108,7 @@ const Webinars = () => {
           </div>
 
           {/* Loading State */}
-          {isLoading && (
-            <div className="text-center py-10">Loading webinars...</div>
-          )}
+          {isLoading && <Loader className="mx-auto text-secondary w-8 h-8" />}
 
           {/* Webinars Grid */}
           {!isLoading && data?.data?.length > 0 && (
@@ -115,6 +121,7 @@ const Webinars = () => {
                     readTime: webinar.created_at,
                     title: webinar.title,
                     image: webinar.webinar_thumbnail,
+                    date: webinar.webinar_date_time,
                     description: webinar.webinar_description,
                     slug: webinar.webinar_slug,
                   }}

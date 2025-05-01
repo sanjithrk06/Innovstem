@@ -111,7 +111,7 @@ export const useBlogs = (page = 1, searchTerm = "") => {
     queryKey: ["blogs", page, searchTerm],
     queryFn: async () => {
       const url = searchTerm
-        ? `/blogs/search?query=${searchTerm}&page=${page}`
+        ? `/blogs/search?keyword=${searchTerm}&page=${page}`
         : `/blogs?page=${page}`;
 
       const response = await api.get(url);
@@ -139,7 +139,7 @@ export const useWebinars = (page = 1, search = "") => {
     queryKey: ["webinars", { page, search }],
     queryFn: async () => {
       const url = search
-        ? `/webinars/search?query=${search}&page=${page}`
+        ? `/webinars/search?keyword=${search}&page=${page}`
         : `/webinars?page=${page}`;
 
       const response = await api.get(url);

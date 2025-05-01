@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom"; // Assuming you're using React Router
 import { BookOpen, ChevronLeft, GraduationCap } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 // Custom SVG for a student with a "404" book
 const StudentIllustration = () => (
@@ -148,9 +149,12 @@ const ErrorPage = () => {
 
   return (
     <div className="min-h-screen bg-cream/40 flex items-center justify-center p-6 relative overflow-hidden">
-        
+      <Helmet>
+        <title>Error 404</title>
+      </Helmet>
+
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/blackboard.png')] opacity-10" />
-      
+
       {[...Array(8)].map((_, i) => (
         <motion.div
           key={i}
@@ -183,14 +187,13 @@ const ErrorPage = () => {
         animate="visible"
         className="text-center max-w-md relative z-10 bg-white/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl shadow-[#1E3A8A]/20"
       >
-        
         <motion.div
           variants={studentVariants}
           animate={["visible", "wave"]}
           className="mx-auto mb-8 relative flex justify-center items-center"
         >
           <StudentIllustration />
-          
+
           <motion.div
             className="absolute inset-0 rounded-full bg-[#F5A623]/20 blur-xl"
             animate={{ scale: [1, 1.2, 1] }}

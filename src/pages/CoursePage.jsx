@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   BadgeInfo,
@@ -14,9 +14,16 @@ import {
 import { CourseCard } from "../components";
 import { useCourseDetails, useRecommendedCourses } from "../hooks/hooks";
 import CourseQuiz from "./CourseQuiz";
+import { Helmet } from "react-helmet-async";
+import { useAuthStore } from "../store/authStore";
+import api from "../config/axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CoursePage = () => {
   const { slug } = useParams();
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,9 +99,29 @@ const CoursePage = () => {
     );
   }
 
+  const handleRegister = async () => {
+    if (!isAuthenticated) {
+      navigate("/auth/login");
+      return;
+    }
+
+    try {
+      await api.post("student/enroll-course", {
+        course_id: courseDetails.id,
+      });
+
+      // Refetch course details
+      await queryClient.invalidateQueries(["courseDetails", slug]);
+    } catch (err) {
+      console.error("Enrollment failed:", err);
+    }
+  };
 
   return (
     <div className="bg-gray-50 py-1">
+      <Helmet>
+        <title>{courseDetails.title || "Course"}</title>
+      </Helmet>
       <div className="container mx-auto px-4 text-left my-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <motion.main
@@ -284,25 +311,45 @@ const CoursePage = () => {
                     </h3>
 
                     {!activeQuiz ? (
-                      <div className="space-y-4">
-                        {defaultQuizzes.map((quiz, index) => (
-                          <motion.div
-                            key={`quiz-${index}`} // Added unique key
-                            className="bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
-                            variants={fadeInUp}
-                            onClick={() => setActiveQuiz(quiz)}
-                          >
-                            <h4 className="font-medium text-secondary">
-                              {quiz.title}
-                            </h4>
-                            <div className="mt-2 flex flex-wrap gap-4 text-sm text-gray-600">
-                              <span>{quiz.questions} Questions</span>
-                              <span>{quiz.timeLimit}</span>
-                              <span>{quiz.difficulty} Level</span>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
+                      !courseDetails?.quiz ||
+                      courseDetails.quiz.length === 0 ? (
+                        <p className="text-gray-600 italic">
+                          No quizzes available for this course.
+                        </p>
+                      ) : (
+                        <div className="space-y-4">
+                          {courseDetails.quiz.map((quiz, index) => (
+                            <motion.div
+                              key={`quiz-${index}`}
+                              className="bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                              variants={fadeInUp}
+                              onClick={() => {
+                                if (isAuthenticated) {
+                                  setActiveQuiz(quiz);
+                                } else {
+                                  navigate("/auth/login");
+                                }
+                              }}
+                            >
+                              <h4 className="font-medium text-secondary">
+                                {quiz.quiz_title}
+                              </h4>
+                              <div className="mt-2 flex flex-wrap gap-4 text-sm text-gray-600">
+                                <span>
+                                  {quiz.number_of_questions} Question
+                                  {quiz.number_of_questions > 1 ? "s" : ""}
+                                </span>
+                                <span>
+                                  Score:{" "}
+                                  {quiz.score !== -1
+                                    ? quiz.score + "%"
+                                    : "Not Attempted"}
+                                </span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      )
                     ) : (
                       <CourseQuiz
                         quiz={activeQuiz}
@@ -334,12 +381,18 @@ const CoursePage = () => {
                           alt="Course thumbnail"
                           className="w-full rounded-lg"
                         />
-                        <Link
-                          to="#"
-                          className="font-outfit font-medium text-cream text-center w-full rounded-xl bg-secondary/80 text-lg cursor-pointer py-2"
+                        <button
+                          onClick={handleRegister}
+                          className={`font-outfit font-medium text-cream text-center block w-full rounded-xl ${
+                            courseDetails.user_registered
+                              ? "bg-green-600 text-white"
+                              : " bg-secondary/80 hover:bg-secondary"
+                          } text-lg cursor-pointer py-3 px-4 transition-all duration-300   hover:shadow-lg focus:outline-none`}
                         >
-                          Enroll Now
-                        </Link>
+                          {courseDetails.user_registered
+                            ? "Registered"
+                            : "Enroll Now"}
+                        </button>
                       </div>
                     </section>
                   </div>
