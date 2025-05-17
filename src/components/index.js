@@ -11,6 +11,7 @@ export { default as HomeCourses } from "./Home/Courses.jsx";
 export { default as Showcase } from "./Home/Showcase.jsx";
 export { default as OurTeams } from "./Home/OurTeams.jsx";
 export { default as Testimonials } from "./Home/Testimonials.jsx";
+export { default as StatsCounter } from "./Home/StatsCounter.jsx";
 
 // Service Page
 export { default as ServiceHero } from "./Services/Hero.jsx";
@@ -62,3 +63,9 @@ export { default as Toast } from "./ui/Toast.jsx";
 export { Textarea } from "./ui/Textarea.jsx";
 export { Input } from "./ui/Input.jsx";
 export { Checkbox } from "./ui/Checkbox.jsx";
+
+// Bookings Componentss
+export { default as BookingButton } from "./Booking/BookingButton.jsx";
+export { default as BookingForm } from "./Booking/BookingForm.jsx";
+export { default as PackagesModal } from "./Booking/PackagesModal.jsx";
+export { default as StatusChecker } from "./Booking/StatusChecker.jsx";

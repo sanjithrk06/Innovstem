@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/Router";
-import { Loader } from "./components";
+import { BookingButton, Loader } from "./components";
 import { useAuthStore } from "./store/authStore";
 import { useZoomControl } from "./hooks/useZoomControl";
 import { HelmetProvider } from "react-helmet-async";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [isAppLoading, setIsAppLoading] = useState(true);
@@ -33,6 +35,19 @@ const App = () => {
           <RouterProvider router={router} fallbackElement={<Loader />} />
         )}
       </div>
+      <BookingButton />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </HelmetProvider>
   );
 };

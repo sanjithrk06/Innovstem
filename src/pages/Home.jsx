@@ -6,6 +6,7 @@ import {
   HomeHero,
   OurTeams,
   Showcase,
+  StatsCounter,
   Testimonials,
 } from "../components";
 
@@ -20,6 +21,7 @@ const Home = () => {
       <HomeAbout />
       <HomeCourses />
       <HomeBlogs />
+      <StatsCounter />
       <Showcase />
       <OurTeams />
       <Testimonials />
