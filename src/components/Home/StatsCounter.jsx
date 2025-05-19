@@ -28,9 +28,9 @@ const StatsCounter = () => {
     {
       id: 4,
       icon: <FaAward className="text-primary w-10 h-10" />,
-      value: 98,
-      label: "Success Rate",
-      suffix: "%",
+      value: 12,
+      label: "Services Offering",
+      suffix: "+",
     },
   ];
 

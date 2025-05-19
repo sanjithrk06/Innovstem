@@ -58,6 +58,7 @@ export { default as CareersList } from "./Careers/CareersList.jsx";
 export { default as Loader } from "./ui/Loader.jsx";
 export { default as TitleBanner } from "./ui/TitleBanner.jsx";
 export { default as EnrolledCard } from "./ui/EnrolledCard.jsx";
+export { default as Errors } from "./ui/ErrorPage.jsx";
 export { Button } from "./ui/Button.jsx";
 export { default as Toast } from "./ui/Toast.jsx";
 export { Textarea } from "./ui/Textarea.jsx";

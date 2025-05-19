@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
@@ -6,6 +6,7 @@ import { FaQuoteRight } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { useTestimonials } from "../../hooks/hooks";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -16,42 +17,58 @@ const fadeIn = {
   },
 };
 
-const testimonials = [
-  {
-    rating: 4.9,
-    content:
-      "Collaborating with InnovSTEM has been an incredible experience. Their commitment to empowering young minds through innovative STEM training and career guidance is truly inspiring. As a digital marketing company focused on educational alliances, we've witnessed firsthand the impact of their tailored programs on students' growth and confidence. InnovSTEM's dedication to nurturing future leaders aligns perfectly with our mission to create meaningful educational connections. We are proud to be associated with such a forward-thinking organization and look forward to many more successful endeavors together.",
-    name: "KAYTEEGEE Adtech Private Limited",
-    position: "CEO",
-    avatar: "https://pagedone.io/asset/uploads/1696229969.png",
-  },
-  {
-    rating: 4.9,
-    content:
-      "InnovSTEM has redefined how career guidance and defense training can transform young aspirants into confident leaders. As a defense training academy, we value their holistic approach to empowering students with the skills, discipline, and mindset needed to excel in defense careers. InnovSTEM's dedication to preparing the next generation of officers is unmatched, and their collaboration with us has been instrumental in shaping future leaders. It's an honor to partner with an organization that shares our vision of excellence and commitment to national service.",
-    name: "OS Defense Training Academy",
-    position: "CEO",
-    avatar: "https://pagedone.io/asset/uploads/1696229969.png",
-  },
-  {
-    rating: 4.9,
-    content:
-      "Partnering with InnovSTEM has been an exceptional journey in promoting hands-on STEM education and fostering innovation among young minds. As a robotics company, we've seen how InnovSTEM integrates advanced technologies into their training programs, inspiring students to explore robotics and automation with enthusiasm and creativity. Their focus on experiential learning and skill development aligns seamlessly with our mission to ignite a passion for technology and problem-solving. We're proud to collaborate with InnovSTEM and look forward to driving future innovations together.",
-    name: "Nexomation",
-    position: "CEO",
-    avatar: "https://pagedone.io/asset/uploads/1696229969.png",
-  },
-  {
-    rating: 4.9,
-    content:
-      "InnovSTEM has proven to be a game-changer in bridging the gap between education and industry readiness. As a manufacturing and R&D company, we deeply value their efforts to equip students with practical skills and innovative thinking. Their programs not only foster technical expertise but also instill the confidence and curiosity needed to excel in real-world challenges. Collaborating with InnovSTEM has allowed us to contribute to shaping the next generation of skilled professionals, and we are honored to be part of their impactful journey.",
-    name: "Able Industries",
-    position: "CEO",
-    avatar: "https://pagedone.io/asset/uploads/1696229969.png",
-  },
-];
-
 const Testimonials = () => {
+  const { data: testimonials, isLoading, error } = useTestimonials();
+
+  // Throw error to trigger ErrorBoundary
+  useEffect(() => {
+    if (error) {
+      throw new Error("Failed to fetch testimonials: " + error.message);
+    }
+  }, [error]);
+
+  if (isLoading) {
+    return (
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+        className="bg-gray-50 py-1"
+      >
+        <section className="container text-left mb-8 md:mb-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <p className="font-publicsans text-base md:text-lg font-normal text-slate-500">
+                Loading testimonials...
+              </p>
+            </div>
+          </div>
+        </section>
+      </motion.div>
+    );
+  }
+
+  if (!testimonials || testimonials.length === 0) {
+    return (
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+        className="bg-gray-50 py-1"
+      >
+        <section className="container text-left mb-8 md:mb-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <p className="font-publicsans text-base md:text-lg font-normal text-slate-500">
+                No testimonials available.
+              </p>
+            </div>
+          </div>
+        </section>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial="hidden"
@@ -132,15 +149,15 @@ const Testimonials = () => {
                       </div>
                       <div className="flex-grow max-w-4xl mx-auto mb-4">
                         <p className="text-base md:text-lg leading-relaxed md:leading-9 text-center text-slate-500 transition-all duration-500 p-2 pb-6 md:pb-8 group-hover:text-gray-800 line-clamp-6 lg:line-clamp-none">
-                          {testimonial.content}
+                          {testimonial.testimonial || "No comment provided."}
                         </p>
                       </div>
                       <div className="flex flex-col items-center justify-center border-t border-gray-200 pt-4 md:pt-5">
                         <h5 className="text-lg md:text-xl mb-1 font-outfit font-semibold text-secondary">
-                          {testimonial.name}
+                          {testimonial.testimonial_name || "Anonymous"}
                         </h5>
                         <span className="text-sm md:text-base mb-1 font-outfit font-normal text-primary">
-                          {testimonial.position}
+                          {testimonial.designation || "Contributor"}
                         </span>
                       </div>
                     </div>

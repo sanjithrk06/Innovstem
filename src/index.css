@@ -69,6 +69,10 @@
   .blogs h3 {
     @apply text-secondary/90 pt-6 pb-2;
   }
+
+  .news a {
+    @apply underline underline-offset-2;
+  }
 }
 
 /* Ensure this targets Swiper components */

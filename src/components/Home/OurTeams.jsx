@@ -6,21 +6,21 @@ import { images } from "../../assets/images";
 const teamMembers = [
   {
     name: "Sajesh Raju",
-    role: "Founder & Vision Strategist",
+    role: "Vision Strategist",
     vision:
       "InnovSTEM is a vision turned reality, empowering students with future-ready skills. We are committed to bridging the gap between education and industry needs. Together, we are shaping the leaders of tomorrow.",
     image: images.Sajesh,
   },
   {
     name: "Jayaprakash",
-    role: "Co-Founder & Community Relations and Finance Lead",
+    role: "Community Relations and Finance Lead",
     vision:
       "InnovSTEM is a movement towards a brighter future for students. We focus on holistic skill development, ensuring they excel in academics and beyond. Education with a purpose—this is our promise.",
     image: images.Jaya,
   },
   {
     name: "Sriram",
-    role: "Co-Founder & Technology and Operations Head",
+    role: "Technology and Operations Head",
     vision:
       "InnovSTEM is redefining learning with innovative training methods. Our mission is to equip students with skills that make them confident and career-ready. Proud to be part of this transformative journey.",
     image: images.Sri,

@@ -3,6 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // Framer Motion variants
 const formVariants = {
@@ -67,9 +68,7 @@ export default function BookingForm({ selectedPackage, onBack }) {
               params: { date: selectedDate },
             }
           );
-          console.log("Slots Response:", response.data);
           const slotsArray = Object.values(response.data.data || {});
-          console.log("Slots Array:", slotsArray);
           setSlots(slotsArray);
           if (slotsArray.length === 0) {
             toast.warn("No slots available for the selected date");
@@ -128,101 +127,97 @@ export default function BookingForm({ selectedPackage, onBack }) {
       return;
     }
 
+    const amountInPaise = selectedPackage.price_inr * 100;
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
     try {
       setLoading(true);
 
       // Retry create-order API up to 2 times
       let orderResponse;
       let retries = 2;
+
       while (retries > 0) {
         try {
           orderResponse = await axios.post(
             "https://admin-dev.innovstem.com/api/create-order",
             {
-              amount: selectedPackage.price_inr * 100,
+              amount: amountInPaise,
               currency: "INR",
               package_id: selectedPackage.id,
               slot_id: parseInt(formData.slot_id),
             },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
+            { headers }
           );
           break;
         } catch (retryError) {
           retries--;
+          console.warn(`Retrying create-order API (${retries} retries left)`);
           if (retries === 0) throw retryError;
-          console.warn(`Retrying create-order API (${retries} attempts left)`);
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
 
-      // Debug order response
-      console.log("Order Response:", orderResponse.data);
-
-      const { order_id } = orderResponse.data.data || {};
+      const { order_id } = orderResponse?.data?.data || {};
       if (!order_id) {
         throw new Error("Order ID not received from create-order API");
       }
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: selectedPackage.price_inr * 100,
+        amount: amountInPaise,
         currency: "INR",
         name: "Counseling Services",
         description: `Booking for ${selectedPackage.package_name}`,
         order_id,
         handler: async (response) => {
           try {
-            // Debug payment response
-            console.log("Payment Response:", response);
+            // Ensure all Razorpay response fields exist
+            const {
+              razorpay_payment_id,
+              razorpay_order_id,
+              razorpay_signature,
+            } = response;
 
-            // Check if all required fields are present
             if (
-              !response.razorpay_payment_id ||
-              !response.razorpay_order_id ||
-              !response.razorpay_signature
+              !razorpay_payment_id ||
+              !razorpay_order_id ||
+              !razorpay_signature
             ) {
-              throw new Error(
-                "Incomplete payment response from Razorpay: Missing required fields"
-              );
+              throw new Error("Incomplete payment response from Razorpay");
             }
 
-            // Verify payment
             const verificationResponse = await axios.post(
               "https://admin-dev.innovstem.com/api/verify-payment",
               {
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
+                razorpay_order_id,
+                razorpay_payment_id,
+                razorpay_signature,
                 appointment_data: {
-                  name: formData.name || "",
-                  mobile_number: formData.mobile_number || "",
-                  email: formData.email || "",
-                  class: formData.class || "",
-                  gender: formData.gender || "",
-                  ambition: formData.ambition || "",
+                  name: formData.name,
+                  mobile_number: formData.mobile_number,
+                  email: formData.email,
+                  class: formData.class,
+                  gender: formData.gender,
+                  ambition: formData.ambition,
                   user_type: formData.user_type || "Student",
                   package_id: selectedPackage.id,
                   slot_id: parseInt(formData.slot_id),
-                  amount: selectedPackage.price_inr * 100,
+                  amount: amountInPaise,
                 },
               },
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
+              { headers }
             );
 
-            if (verificationResponse.data.status === "success") {
+            if (verificationResponse?.data?.status === "success") {
               toast.success("Booking confirmed successfully!");
+              navigate("/");
               onBack();
             } else {
               toast.error(
-                verificationResponse.data.message ||
+                verificationResponse?.data?.message ||
                   "Payment verification failed"
               );
             }
@@ -243,9 +238,9 @@ export default function BookingForm({ selectedPackage, onBack }) {
           }
         },
         prefill: {
-          name: formData.name || "",
-          email: formData.email || "",
-          contact: formData.mobile_number || "",
+          name: formData.name,
+          email: formData.email,
+          contact: formData.mobile_number,
         },
         theme: {
           color: "#4F46E5",
@@ -260,12 +255,11 @@ export default function BookingForm({ selectedPackage, onBack }) {
 
       const rzp = new window.Razorpay(options);
 
-      // Handle payment failure
       rzp.on("payment.failed", (response) => {
-        console.log("Payment Failed:", response);
-        toast.error(
-          response.error.description || "Payment failed. Please try again."
-        );
+        console.error("Payment Failed:", response);
+        const errorDescription =
+          response?.error?.description || "Payment failed. Please try again.";
+        toast.error(errorDescription);
         setLoading(false);
       });
 

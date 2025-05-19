@@ -38,30 +38,31 @@ export default function BookingButton() {
         >
           <motion.button
             onClick={() => setShowPackages(true)}
-            className="flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-indigo-300 border border-indigo-200/50 transition-all duration-300"
-            whileHover={{ scale: 1.1, rotate: 15 }}
+            className="flex items-center justify-center rounded-full p-2 md:px-4 max-md:p-3 bg-gradient-to-r from-indigo-600 to-blue-500 text-white shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-indigo-300 border border-indigo-200/50 transition-all duration-300"
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             animate={{
               scale: [1, 1.05, 1],
-              transition: { repeat: Infinity, duration: 2 },
+              // transition: { repeat: Infinity, duration: 2 },
             }}
           >
-            <CalendarIcon className="h-7 w-7" />
+            <CalendarIcon className="h-7 w-7 md:pr-1" />
+            <p className=" max-md:hidden pl-1">Appointment</p>
             <span className="sr-only">Book Appointment</span>
           </motion.button>
-          <AnimatePresence>
+          {/* <AnimatePresence>
             {isHovered && (
               <motion.div
                 variants={tooltipVariants}
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                className="absolute bottom-20 right-0 px-3 py-2 bg-indigo-900 text-white text-sm font-publicsans rounded-lg shadow-lg"
+                className="hidden sm:block absolute bottom-20 right-0 px-3 py-2 bg-indigo-900 text-white text-sm font-publicsans rounded-lg shadow-lg"
               >
                 Book Appointment
               </motion.div>
             )}
-          </AnimatePresence>
+          </AnimatePresence> */}
         </motion.div>
       </div>
 

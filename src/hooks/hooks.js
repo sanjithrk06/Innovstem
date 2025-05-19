@@ -11,34 +11,42 @@ const getStoredData = (key) => {
   }
 };
 
-export const useTopBlogs = () =>
+// Consolidated hook for fetching /home data
+export const useHomeData = () =>
   useQuery({
-    queryKey: ["topBlogs"],
+    queryKey: ["homeData"],
     queryFn: async () => {
       const response = await api.get("/home");
-      localStorage.setItem(
-        "topBlogs",
-        JSON.stringify(response.data.data.blogs)
-      );
-      return response.data.data.blogs;
+      const { blogs, testimonials, courses } = response.data.data;
+      localStorage.setItem("topBlogs", JSON.stringify(blogs));
+      localStorage.setItem("testimonials", JSON.stringify(testimonials));
+      localStorage.setItem("topCourses", JSON.stringify(courses));
+      return { blogs, testimonials, courses };
     },
-    initialData: getStoredData("topBlogs"),
+    initialData: {
+      blogs: getStoredData("topBlogs"),
+      testimonials: getStoredData("testimonials"),
+      courses: getStoredData("topCourses"),
+    },
   });
 
-export const useTopCourses = () =>
-  useQuery({
-    queryKey: ["topCourses"],
-    queryFn: async () => {
-      const response = await api.get("/home");
-      localStorage.setItem(
-        "topCourses",
-        JSON.stringify(response.data.data.courses)
-      );
-      return response.data.data.courses;
-    },
-    initialData: getStoredData("topCourses"),
-  });
+// Individual hooks to access specific parts of home data
+export const useTopBlogs = () => {
+  const { data, ...rest } = useHomeData();
+  return { data: data.blogs, ...rest };
+};
 
+export const useTestimonials = () => {
+  const { data, ...rest } = useHomeData();
+  return { data: data.testimonials, ...rest };
+};
+
+export const useTopCourses = () => {
+  const { data, ...rest } = useHomeData();
+  return { data: data.courses, ...rest };
+};
+
+// Rest of your hooks remain unchanged
 export const useCategories = () =>
   useQuery({
     queryKey: ["categories"],
@@ -205,17 +213,14 @@ export const formatDateTime = (dateTimeString) => {
 // Handle API errors
 const handleApiError = (error) => {
   if (error.response) {
-    // The request was made and the server responded with an error status
     console.error("API Error Response:", error.response.data);
     throw error;
   } else if (error.request) {
-    // The request was made but no response was received
     console.error("API Error Request:", error.request);
     throw new Error(
       "No response received from server. Please check your internet connection."
     );
   } else {
-    // Something happened in setting up the request
     console.error("API Error:", error.message);
     throw new Error("Error setting up request. Please try again.");
   }

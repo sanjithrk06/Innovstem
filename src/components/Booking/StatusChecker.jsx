@@ -7,16 +7,14 @@ import {
 } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-import { dummyBookings } from "../../constants/dummy.js";
+import api from "./../../config/axios";
 
-// Framer Motion variants for modal
 const modalVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
   exit: { opacity: 0, y: 50, transition: { duration: 0.2, ease: "easeIn" } },
 };
 
-// Variants for booking details
 const detailVariants = {
   hidden: { opacity: 0, x: -20 },
   visible: (i) => ({
@@ -30,7 +28,7 @@ export default function StatusChecker({ isOpen, onClose, onBackToPackages }) {
   const [searchType, setSearchType] = useState("mobile");
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [bookingStatus, setBookingStatus] = useState(null);
+  const [bookingList, setBookingList] = useState([]);
   const [error, setError] = useState("");
 
   const handleSearch = async (e) => {
@@ -43,28 +41,29 @@ export default function StatusChecker({ isOpen, onClose, onBackToPackages }) {
 
     setError("");
     setLoading(true);
+    setBookingList([]);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      let foundBooking = null;
+      let response;
       if (searchType === "mobile") {
-        foundBooking = dummyBookings.find(
-          (booking) => booking.phone === searchValue
+        response = await api.get(
+          `/appointments?mobile_number=${encodeURIComponent(searchValue)}`
         );
       } else {
-        foundBooking = dummyBookings.find(
-          (booking) => booking.acknowledgment_number === searchValue
+        response = await api.get(
+          `/appointments?ack=${encodeURIComponent(searchValue)}`
         );
       }
 
-      if (foundBooking) {
-        setBookingStatus(foundBooking);
+      const data = response.data.data.appointments;
+      if (data && (Array.isArray(data) ? data.length > 0 : data.id)) {
+        setBookingList(Array.isArray(data) ? data : [data]);
       } else {
-        toast.error("We couldn't find any booking with the provided details.");
+        toast.error("No records found");
       }
     } catch (error) {
       console.error("Error checking status:", error);
-      toast.error("Please try again later.");
+      toast.error("No records found");
     } finally {
       setLoading(false);
     }
@@ -72,19 +71,15 @@ export default function StatusChecker({ isOpen, onClose, onBackToPackages }) {
 
   const getStatusBadge = (status) => {
     const statusStyles = {
-      pending:
-        "bg-gradient-to-r from-amber-100 to-amber-200 text-amber-800 border-amber-300",
-      confirmed:
-        "bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 border-emerald-300",
-      completed:
-        "bg-gradient-to-r from-sky-100 to-sky-200 text-sky-800 border-sky-300",
-      cancelled:
-        "bg-gradient-to-r from-rose-100 to-rose-200 text-rose-800 border-rose-300",
+      pending: "bg-amber-100 text-amber-800 border-amber-300",
+      booked: "bg-emerald-100 text-emerald-800 border-emerald-300",
+      completed: "bg-sky-100 text-sky-800 border-sky-300",
+      rejected: "bg-rose-100 text-rose-800 border-rose-300",
     };
 
     const statusClass =
-      statusStyles[status.toLowerCase()] ||
-      "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 border-gray-300";
+      statusStyles[status?.toLowerCase()] ||
+      "bg-gray-100 text-gray-800 border-gray-300";
 
     return (
       <motion.span
@@ -92,12 +87,13 @@ export default function StatusChecker({ isOpen, onClose, onBackToPackages }) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        {status.charAt(0).toUpperCase() + status.slice(1)}
+        {status ? status.charAt(0).toUpperCase() + status.slice(1) : "Unknown"}
       </motion.span>
     );
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -140,7 +136,7 @@ export default function StatusChecker({ isOpen, onClose, onBackToPackages }) {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="w-full max-w-md sm:max-w-lg md:max-w-xl transform rounded-2xl bg-white p-6 sm:p-8 text-left shadow-2xl transition-all"
+                className="w-full max-w-3xl transform rounded-2xl bg-white p-6 sm:p-8 text-left shadow-2xl transition-all"
               >
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
@@ -278,63 +274,87 @@ export default function StatusChecker({ isOpen, onClose, onBackToPackages }) {
                 </form>
 
                 <AnimatePresence>
-                  {bookingStatus && (
+                  {bookingList.length > 0 && (
                     <motion.div
-                      className="mt-6 border rounded-xl overflow-hidden shadow-md bg-white"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
+                      className="mt-6 grid gap-6"
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
                     >
-                      <div className="p-4 sm:p-5 border-b bg-gradient-to-r from-gray-50 to-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                        <h3 className="text-lg sm:text-xl font-semibold text-indigo-900">
-                          Booking Details
-                        </h3>
-                        {getStatusBadge(bookingStatus.status)}
-                      </div>
-                      <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                        {[
-                          {
-                            label: "Acknowledgment",
-                            value: bookingStatus.acknowledgment_number,
-                          },
-                          {
-                            label: "Package",
-                            value: bookingStatus.package_name,
-                          },
-                          {
-                            label: "Amount",
-                            value: `₹${bookingStatus.amount}`,
-                          },
-                          {
-                            label: "Booked on",
-                            value: formatDate(bookingStatus.created_at),
-                          },
-                          bookingStatus.appointment_date && {
-                            label: "Appointment",
-                            value: formatDate(bookingStatus.appointment_date),
-                          },
-                          { label: "Name", value: bookingStatus.name },
-                          { label: "Contact", value: bookingStatus.phone },
-                        ]
-                          .filter(Boolean)
-                          .map((item, index) => (
-                            <motion.div
-                              key={item.label}
-                              className="flex flex-col"
-                              custom={index}
-                              variants={detailVariants}
-                              initial="hidden"
-                              animate="visible"
-                            >
-                              <span className="text-gray-500 text-xs sm:text-sm">
-                                {item.label}:
-                              </span>
-                              <span className="font-medium text-gray-800 text-sm sm:text-base">
-                                {item.value}
-                              </span>
-                            </motion.div>
-                          ))}
-                      </div>
+                      {bookingList.map((booking, idx) => (
+                        <motion.div
+                          key={booking.id}
+                          className="border rounded-xl overflow-hidden shadow bg-white"
+                          custom={idx}
+                          variants={detailVariants}
+                          initial="hidden"
+                          animate="visible"
+                        >
+                          <div className="p-4 sm:p-5 border-b bg-gradient-to-r from-gray-50 to-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <h3 className="text-lg sm:text-xl font-semibold text-indigo-900">
+                              Booking #{booking.ack || booking.id}
+                            </h3>
+                            {getStatusBadge(booking.appointment_status)}
+                          </div>
+                          <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            {[
+                              {
+                                label: "Acknowledgment",
+                                value: booking.ack || booking.id,
+                              },
+                              {
+                                label: "Package",
+                                value: booking.package?.package_name || "N/A",
+                              },
+                              {
+                                label: "Amount",
+                                value: booking.amount_paid
+                                  ? `₹ ${booking.amount_paid}`
+                                  : "N/A",
+                              },
+                              {
+                                label: "Booked on",
+                                value: formatDate(booking.created_at),
+                              },
+                              {
+                                label: "Name",
+                                value: booking.name || "N/A",
+                              },
+                              {
+                                label: "Contact",
+                                value:
+                                  booking.mobile_number ||
+                                  booking.phone ||
+                                  "N/A",
+                              },
+                              {
+                                label: "Slot Date",
+                                value: booking.slot?.slot_date || "N/A",
+                              },
+                              {
+                                label: "Slot Time",
+                                value:
+                                  booking.slot?.start_time &&
+                                  booking.slot?.end_time
+                                    ? `${booking.slot.start_time} - ${booking.slot.end_time}`
+                                    : "N/A",
+                              },
+                            ].map((item, index) => (
+                              <motion.div
+                                key={item.label}
+                                className="flex flex-col"
+                              >
+                                <span className="text-gray-500 text-xs sm:text-sm">
+                                  {item.label}:
+                                </span>
+                                <span className="font-medium text-gray-800 text-sm sm:text-base">
+                                  {item.value}
+                                </span>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      ))}
                     </motion.div>
                   )}
                 </AnimatePresence>

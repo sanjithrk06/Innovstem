@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
 import MainLayout from "../layouts/MainLayout.jsx";
 import DashboardLayout from "../layouts/Dashboard.jsx";
-import { Loader } from "../components/index.js";
+import { Errors, Loader } from "../components/index.js";
 import {
   About,
   BlogPage,
@@ -46,7 +46,8 @@ const PATHS = {
   ABOUT: "/about",
   ADMIN_DASHBOARD: "/dashboard/admin",
   STUDENT_DASHBOARD: "/dashboard/student",
-  ERROR_PAGE: "/error",
+  ERROR_PAGE: "/err",
+  ERROR: "/error",
 };
 
 const ProtectedRoute = ({ children }) => {
@@ -81,6 +82,8 @@ const withLoader = (WrappedComponent, pageName) => {
   return (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
       const fetchData = async () => {
@@ -94,22 +97,29 @@ const withLoader = (WrappedComponent, pageName) => {
           setData(result);
         } catch (error) {
           console.error(`Error loading data for ${pageName}:`, error);
+          setError(error);
+          navigate(PATHS.ERROR, { state: { error: error.message } }); // Redirect to error page with error info
         } finally {
           setIsLoading(false);
         }
       };
 
       fetchData();
-    }, []);
+    }, [navigate]);
 
     if (isLoading) {
       return <Loader />;
+    }
+
+    if (error) {
+      return null; // Navigation will handle rendering the error page
     }
 
     return <WrappedComponent {...props} data={data} />;
   };
 };
 
+// Wrap components with the loader HOC
 const HomeWithLoader = withLoader(Home, "Home");
 const ServicesWithLoader = withLoader(Services, "Services");
 const CoursesWithLoader = withLoader(Courses, "Courses");
@@ -135,6 +145,7 @@ const router = createBrowserRouter([
   {
     path: PATHS.HOME,
     element: <MainLayout />,
+    errorElement: <Errors />, // Handle errors for all routes under MainLayout
     children: [
       {
         index: true,
@@ -203,6 +214,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/auth",
+    errorElement: <Errors />, // Handle errors for auth routes
     children: [
       {
         path: "login",
@@ -239,12 +251,17 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: PATHS.ERROR,
+    element: <Errors />,
+  },
+  {
     path: PATHS.DASHBOARD,
     element: (
       <ProtectedRoute>
         <DashboardLayout />
       </ProtectedRoute>
     ),
+    errorElement: <Errors />, // Handle errors for dashboard routes
     children: [
       {
         index: true,
@@ -260,10 +277,14 @@ const router = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: PATHS.ERROR_PAGE,
+    element: <ErrorPage />,
+  },
   {
     path: "*",
     element: <ErrorPage />,
+    errorElement: <Errors />, // Handle errors for unmatched routes
   },
 ]);
 
